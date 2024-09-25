@@ -318,7 +318,8 @@ export default function Portfolio() {
             </div>
           </div>
         </section>
-
+        
+        
         <div id="skill" className="md:flex md:items-center md:justify-between py-20">
           <div className="md:w-1/2 mb-6 md:mb-0">
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-8">
@@ -372,8 +373,9 @@ export default function Portfolio() {
             </div>
           </div>
         </div>
-
-        <section id="projects" className="py-12 sm:py-20">
+     
+       
+        <section id="projects" className="py-20">
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-8">Recent Projects</h2>
           <p className="text-lg md:text-xl mb-6  ">
             Explore our latest web development projects, showcasing our expertise in creating innovative and efficient digital solutions.
