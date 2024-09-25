@@ -106,7 +106,7 @@ function ProjectCard({ project, theme }) {
         <h3 className="text-xl font-bold mb-2">{project.title}</h3>
         <p className="text-sm mb-4">{project.description}</p>
         <div className="flex space-x-4">
-          <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md bg-gray-800 hover:bg-gray-700 text-white transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900">
+          <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md bg-gray-600 hover:bg-gray-700 text-white transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900">
             <Github className="mr-2 h-4 w-4" />
             Source Code
           </a>
