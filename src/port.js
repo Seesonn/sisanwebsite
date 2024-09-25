@@ -281,7 +281,7 @@ export default function Portfolio() {
       </div>
 
       <main className="container mx-auto px-4 pt-20">
-        <section id="home" className="min-h-screen flex flex-col justify-center py-12 sm:py-20">
+        <section id="home" className="min-h-screen flex flex-col justify-center py-20">
           <div className="flex flex-col md:flex-row items-center">
             <div className="md:w-1/2 mb-8 md:mb-0">
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">I'M SISAN BHATTARAI</h2>
