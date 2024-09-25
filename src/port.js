@@ -477,7 +477,11 @@ export default function Portfolio() {
                 }
                  }}
                 style={{ resize: 'none' }} // Prevent stretching
-/>
+
+/>            <button type="submit" className="bg-yellow-400 text-gray-900 px-4 py-2 rounded-full font-bold w-full transition-transform hover:scale-105 text-sm sm:text-base">
+                  Submit
+                </button>
+
 
               </form>
             </div>
