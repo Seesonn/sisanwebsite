@@ -406,7 +406,7 @@ export default function Portfolio() {
         </section>
 
 
-        <section id="portfolio" className="py-12 sm:py-20">
+        <section id="portfolio" className="py-20">
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-8">Portfolio</h2>
           <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             <div className={`p-4 rounded-lg shadow-md overflow-hidden group ${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-100'}`}>
@@ -424,7 +424,9 @@ export default function Portfolio() {
           </div>
         </section>
 
-        <section id="creative-outlets" className="py-12 sm:py-20">
+        
+            
+        <section id="creative-outlets" className="py-20">
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-8">Creative Outlets</h2>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
             {creativeOutlets.map((outlet) => (
