@@ -70,7 +70,7 @@ function ProjectCard({ project, theme }) {
   }
 
   useEffect(() => {
-    const timer = setInterval(nextImage, 5000) // Change image every 5 seconds
+    const timer = setInterval(nextImage, 2000) // Change image every 5 seconds
     return () => clearInterval(timer)
   }, [])
 
