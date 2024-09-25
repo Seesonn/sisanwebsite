@@ -50,16 +50,8 @@ const projects = [
     images: [ms, msm],
     githubUrl: "https://github.com/username/messenger-clone",
     linkedinUrl: "https://linkedin.com/post/messenger-clone"
-  },
-  {
-    id: 3,
-    title: "E-commerce Admin Dashboard",
-    description: "A fully responsive online store Admin Dashboard with advanced features.",
-    type: "Original",
-    images: [ea1, ea2, ea3, ea4, ea5],
-    githubUrl: "https://github.com/username/portfolio-website",
-    linkedinUrl: "https://linkedin.com/post/portfolio-website"
   }
+ 
 ]
 
 function ProjectCard({ project, theme }) {
@@ -158,7 +150,7 @@ export default function Portfolio() {
 
   const creativeOutlets = [
     { id: 'song', title: 'Song', description: 'Dive into my songs that fuel and inspire your Music Passion.', icon: Music, image: so },
-    { id: 'poetry', title: 'Poem', description: 'Collection of verses that capture the  emotions.', icon: Feather, image: po },
+    { id: 'poetry', title: 'Poem', description: 'Collection of verses that capture emotions ,reflection.', icon: Feather, image: po },
     { id: 'story', title: 'Story', description: 'Collection of stories that blend reality with imagination.', icon: Book, image: st },
     { id: 'novel', title: 'Novel', description: 'Delve into the realms of thought-provoking novels.', icon: BookOpen, image: no }
   ]
@@ -456,9 +448,9 @@ export default function Portfolio() {
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-8">Get in Touch</h2>
               <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-4">Social Media</h3>
               <div className="flex space-x-4">
-                <a href="#" className="text-2xl sm:text-3xl lg:text-4xl hover:text-yellow-400 transition-colors"><Linkedin /></a>
-                <a href="#" className="text-2xl sm:text-3xl lg:text-4xl hover:text-yellow-400 transition-colors"><Facebook /></a>
-                <a href="#" className="text-2xl sm:text-3xl lg:text-4xl hover:text-yellow-400 transition-colors"><Instagram /></a>
+                <a href="https://www.linkedin.com/in/sisan-bhattarai-7006242b2?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" className="text-2xl sm:text-3xl lg:text-4xl hover:text-yellow-400 transition-colors"><Linkedin /></a>
+                <a href="https://www.facebook.com/seeson.777" className="text-2xl sm:text-3xl lg:text-4xl hover:text-yellow-400 transition-colors"><Facebook /></a>
+                <a href="https://www.instagram.com/see_son_?igsh=MTFhc25td2RpbGF0bw==" className="text-2xl sm:text-3xl lg:text-4xl hover:text-yellow-400 transition-colors"><Instagram /></a>
               </div>
             </div>
             <div className="lg:w-1/2">
@@ -498,7 +490,7 @@ export default function Portfolio() {
       </footer>
 
       <div 
-        className={`fixed inset-0 pointer-events-none z-0 transition-opacity duration-600 ease-in-out ${isScrolling ? 'opacity-14' : 'opacity-0'}`}
+        className={`fixed inset-0 pointer-events-none z-0 transition-opacity duration-600 ease-in-out ${isScrolling ? 'opacity-10' : 'opacity-0'}`}
         style={{
           background: `radial-gradient(circle at ${touchPosition.x}px ${touchPosition.y}px, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 50%)`,
         }}
