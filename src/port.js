@@ -498,7 +498,7 @@ export default function Portfolio() {
       </footer>
 
       <div 
-        className={`fixed inset-0 pointer-events-none z-0 transition-opacity duration-600 ease-in-out ${isScrolling ? 'opacity-10' : 'opacity-0'}`}
+        className={`fixed inset-0 pointer-events-none z-0 transition-opacity duration-600 ease-in-out ${isScrolling ? 'opacity-14' : 'opacity-0'}`}
         style={{
           background: `radial-gradient(circle at ${touchPosition.x}px ${touchPosition.y}px, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 50%)`,
         }}
