@@ -341,8 +341,8 @@ export default function Portfolio() {
                   key={tab}
                   className={`px-6 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
                     activeTab === tab
-                      ? 'bg-gray-900 bg-yellow-400 hover:bg-yellow-600 shadow-lg'
-                      : 'bg-gray-200 dark:bg-gray-200 text-gray-700  hover:bg-gray-300 dark:hover:bg-gray-600'
+                      ? 'bg-gray-900 bg-yellow-400 shadow-lg'
+                      : 'bg-gray-200 dark:bg-gray-200 text-gray-700 '
                   }`}
                   onClick={() => setActiveTab(tab)}
                 >
