@@ -90,7 +90,7 @@ function ProjectCard({ project, theme }) {
         <div className="absolute top-2 left-2 px-2 py-1 bg-white bg-opacity-75 backdrop-blur-sm rounded-full text-xs font-semibold text-gray-700 flex items-center">
           {project.type === 'Original' && <Code2 className="mr-1 h-3 w-3" />}
           {project.type === 'Clone' && <Briefcase className="mr-1 h-3 w-3" />}
-          {project.type === 'Creative' && <Palette className="mr-1 h-3 w-3" />}
+          //{project.type === 'Creative' && <Palette className="mr-1 h-3 w-3" />}
           {project.type}
         </div>
         <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-between px-4">
