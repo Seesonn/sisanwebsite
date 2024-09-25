@@ -224,7 +224,7 @@ export default function Portfolio() {
       className={`min-h-screen w-full transition-colors duration-300 ease-in-out ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'}`}
       onTouchMove={handleTouchMove}
     >
-    <header className={`fixed w-full z-10 transition-all duration-300 ${isScrolled ? 'bg-opacity-100 backdrop-blur-md' : 'bg-transparent'}`}>
+    <header className={`fixed w-full z-10 transition-all duration-300 ${isScrolled ? 'bg-opacity-100 ' : 'bg-transparent'}`}>
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <h1 className="text-xl sm:text-2xl font-bold">SISAN</h1>
           <nav className="hidden md:block">
