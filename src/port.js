@@ -225,9 +225,10 @@ export default function Portfolio() {
       className={`min-h-screen w-full transition-colors duration-300 ease-in-out ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'}`}
       onTouchMove={handleTouchMove}
     >
-    <header className={`fixed w-full z-10 transition-all duration-300 ${isScrolled ? 'bg-opacity-80 backdrop-blur-md' : 'bg-transparent'}`}>
-         <div className="container mx-auto px-4 py-2 flex justify-between items-center">
-    <div className="relative w-8 h-8 sm:w-10 sm:h-10 overflow-hidden rounded-full shadow-lg hover:shadow-xl transition-shadow duration-300">
+    //<header className={`fixed w-full z-10 transition-all duration-300 ${isScrolled ? 'bg-opacity-80 backdrop-blur-md' : 'bg-transparent'}`}>
+       <header className={`fixed w-full z-10 transition-all duration-300 ${isScrolled ? (theme === 'dark' ? 'bg-gray-900 shadow-md' : 'bg-white shadow-md') : 'bg-transparent'}`}>
+  <div className="container mx-auto px-4 py-2 flex justify-between items-center">
+    <div className="relative w-8 h-8 sm:w-10 sm:h-10 overflow-hidden rounded-full shadow-lg hover:shadow-xl z-50 transition-shadow duration-300">
       <img
         src={logo}
         alt="SISAN Logo"
