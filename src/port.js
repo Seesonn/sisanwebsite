@@ -248,7 +248,7 @@ export default function Portfolio() {
             </ul>
           </nav>
           <div className="flex items-center space-x-4">
-            <button onClick={toggleTheme} className="p-2 rounded-full hover:bg-gray-700 transition-colors duration-300">
+            <button onClick={toggleTheme} className="p-2 rounded-full  transition-colors duration-300">
               {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
             </button>
             <button 
@@ -269,7 +269,7 @@ export default function Portfolio() {
         <div className="relative container mx-auto px-4 py-20">
           <button 
             onClick={toggleMenu}
-            className={`absolute top-4 right-4 hover:text-yellow-400 transition-colors ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}
+            className={`absolute top-4 right-4  transition-colors ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}
             aria-label="Close menu"
           >
             <span className="sr-only">Close</span>
