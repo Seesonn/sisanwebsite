@@ -31,6 +31,7 @@ import ea2 from "./assets/ea2.png"
 import ea3 from "./assets/ea3.png"
 import ea4 from "./assets/ea4.png"
 import ea5 from "./assets/ea5.png"
+import logo from"./assets/logo.png"
 
 const projects = [
   {
@@ -225,8 +226,15 @@ export default function Portfolio() {
       onTouchMove={handleTouchMove}
     >
     <header className={`fixed w-full z-10 transition-all duration-300 ${isScrolled ? 'bg-opacity-80 backdrop-blur-md' : 'bg-transparent'}`}>
-        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <h1 className="text-xl sm:text-2xl font-bold">SISAN</h1>
+         <div className="container mx-auto px-4 py-2 flex justify-between items-center">
+    <div className="relative w-8 h-8 sm:w-10 sm:h-10 overflow-hidden rounded-full shadow-lg hover:shadow-xl transition-shadow duration-300">
+      <img
+        src={logo}
+        alt="SISAN Logo"
+        className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
+        priority
+      />
+    </div>
           <nav className="hidden md:block">
             <ul className="flex space-x-4 lg:space-x-6">
               <li><button onClick={() => scrollToSection('home')} className="hover:text-yellow-400 transition-colors text-sm lg:text-base">Home</button></li>
