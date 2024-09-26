@@ -226,16 +226,7 @@ export default function Portfolio() {
       onTouchMove={handleTouchMove}
     >
     //<header className={`fixed w-full z-10 transition-all duration-300 ${isScrolled ? 'bg-opacity-80 backdrop-blur-md' : 'bg-transparent'}`}>
-       <header className={`fixed w-full z-10 transition-all duration-300 ${isScrolled ? (theme === 'dark' ? 'bg-gray-900 shadow-md' : 'bg-white shadow-md') : 'bg-transparent'}`}>
-  <div className="container mx-auto px-4 py-2 flex justify-between items-center">
-    <div className="relative w-8 h-8 sm:w-10 sm:h-10 overflow-hidden rounded-full shadow-lg hover:shadow-xl z-50 transition-shadow duration-300">
-      <img
-        src={logo}
-        alt="SISAN Logo"
-        className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
-        priority
-      />
-    </div>
+       
           <nav className="hidden md:block">
             <ul className="flex space-x-4 lg:space-x-6">
               <li><button onClick={() => scrollToSection('home')} className="hover:text-yellow-400 transition-colors text-sm lg:text-base">Home</button></li>
