@@ -218,7 +218,7 @@ export default function Portfolio() {
     ? projects 
     : projects.filter(project => project.type === selectedType)
 
-  const projectTypes = ["All Projects", "Original", "Clone", "Creative"]
+  const projectTypes = ["All Projects", "Original", "Clone"]
 
   return (
     <div 
