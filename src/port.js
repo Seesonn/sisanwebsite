@@ -32,7 +32,7 @@ import ea3 from "./assets/ea3.png"
 import ea4 from "./assets/ea4.png"
 import ea5 from "./assets/ea5.png"
 import logo from"./assets/logo.png"
-import tf11 from "./assets/tf1.png"
+import tf1 from "./assets/tf1.png"
 import tf2 from "./assets/tf2.png"
 import tf3 from "./assets/tf3.png"
 
