@@ -51,8 +51,17 @@ const projects = [
     images: [ms, msm],
     githubUrl: "https://github.com/username/messenger-clone",
     linkedinUrl: "https://linkedin.com/post/messenger-clone"
+  },
+  {
+  id: 3,
+    title: "Online Tiffin Delivery Website",
+    description: "A fully responsive online Tiffin Delivering Website with advanced features.",
+    type: "Original",
+    images: [ea1, ea2, ea3, ea4, ea5],
+    githubUrl: "https://github.com/username/ecommerce-platform",
+    linkedinUrl: "https:// tiffindelivery.vercel.app"
   }
- 
+
 ]
 
 function ProjectCard({ project, theme }) {
