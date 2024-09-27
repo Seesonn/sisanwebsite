@@ -32,6 +32,9 @@ import ea3 from "./assets/ea3.png"
 import ea4 from "./assets/ea4.png"
 import ea5 from "./assets/ea5.png"
 import logo from"./assets/logo.png"
+import tf11 from "./assets/tf1.png"
+import tf2 from "./assets/tf2.png"
+import tf3 from "./assets/tf3.png"
 
 const projects = [
   {
@@ -57,7 +60,7 @@ const projects = [
     title: "Online Tiffin Delivery Website",
     description: "A fully responsive online Tiffin Delivering Website with advanced features.",
     type: "Original",
-    images: [ea1, ea2, ea3, ea4, ea5],
+    images: [tf1, tf2, tf3],
     githubUrl: "https://github.com/username/ecommerce-platform",
     linkedinUrl: "https:// tiffindelivery.vercel.app"
   }
