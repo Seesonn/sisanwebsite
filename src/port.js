@@ -35,17 +35,22 @@ import logo from"./assets/logo.png"
 import tf1 from "./assets/tf1.png"
 import tf2 from "./assets/tf2.png"
 import tf3 from "./assets/tf3.png"
+import a1 from "./assets/a1.png"
+import a2 from "./assets/a2.png"
+import a3 from "./assets/a3.png"
+
 
 const projects = [
-  {
+   {
     id: 1,
-    title: "E-commerce Admin Dashboard",
-    description: "A fully responsive online store Admin Dashboard with advanced features.",
+    title: "ANGSTwear Fashison Online shop ",
+    description: "A fully responsive online store  with advanced features.",
     type: "Original",
-    images: [ea1, ea2, ea3, ea4, ea5],
+    images: [a1, a2, a3],
     githubUrl: "https://github.com/username/ecommerce-platform",
-    linkedinUrl: "https://linkedin.com/post/ecommerce-platform"
+    linkedinUrl: "https://https://angstwear.vercel.app/"
   },
+  
   {
     id: 2,
     title: "Messenger Clone",
@@ -56,14 +61,23 @@ const projects = [
     linkedinUrl: "https://linkedin.com/post/messenger-clone"
   },
   {
-  id: 3,
+  id:3 ,
     title: "Online Tiffin Delivery Website",
     description: "A fully responsive online Tiffin Delivering Website with advanced features.",
     type: "Original",
     images: [tf1, tf2, tf3],
     githubUrl: "https://github.com/username/ecommerce-platform",
     linkedinUrl: "https://tiffindelivery.vercel.app/"
-  }
+  },
+  {
+    id: 4,
+    title: "E-commerce Admin Dashboard",
+    description: "A fully responsive online store Admin Dashboard with advanced features.",
+    type: "Original",
+    images: [ea1, ea2, ea3, ea4, ea5],
+    githubUrl: "https://github.com/username/ecommerce-platform",
+    linkedinUrl: "https://linkedin.com/post/ecommerce-platform"
+  },
 
 ]
 
