@@ -43,7 +43,7 @@ import a3 from "./assets/a3.png"
 const projects = [
    {
     id: 1,
-    title: "ANGSTwear Fashison Online shop ",
+    title: "SISANwear Fashison Online shop ",
     description: "A fully responsive online store  with advanced features.",
     type: "Original",
     images: [a1, a2, a3],
