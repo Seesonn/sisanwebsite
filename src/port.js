@@ -48,7 +48,7 @@ const projects = [
     type: "Original",
     images: [a1, a2, a3],
     githubUrl: "https://github.com/username/ecommerce-platform",
-    linkedinUrl: "https://https://angstwear.vercel.app/"
+    linkedinUrl: "https://angstwear.vercel.app/"
   },
   
   {
