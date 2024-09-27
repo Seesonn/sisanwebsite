@@ -62,7 +62,7 @@ const projects = [
     type: "Original",
     images: [tf1, tf2, tf3],
     githubUrl: "https://github.com/username/ecommerce-platform",
-    linkedinUrl: "tiffindelivery.vercel.app"
+    linkedinUrl: "https://tiffindelivery.vercel.app/"
   }
 
 ]
