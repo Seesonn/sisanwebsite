@@ -37,7 +37,6 @@ import tf2 from "./assets/tf2.png"
 import tf3 from "./assets/tf3.png"
 import a1 from "./assets/a1.png"
 import a2 from "./assets/a2.png"
-import a3 from "./assets/a3.png"
 
 
 const projects = [
@@ -46,9 +45,9 @@ const projects = [
     title: "SISANwear Fashison Online shop ",
     description: "A fully responsive online store  with advanced features.",
     type: "Original",
-    images: [a1, a2, a3],
+    images: [a1, a2],
     githubUrl: "https://github.com/username/ecommerce-platform",
-    linkedinUrl: "https://angstwear.vercel.app/"
+    linkedinUrl: "https://mensfashion-indol.vercel.app/"
   },
   
   {
