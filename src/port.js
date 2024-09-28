@@ -42,7 +42,7 @@ import a2 from "./assets/a2.png"
 const projects = [
    {
     id: 1,
-    title: "SISANwear Fashison Online shop ",
+    title: "MortalMen  Online shop ",
     description: "A fully responsive online store  with advanced features.",
     type: "Original",
     images: [a1, a2],
