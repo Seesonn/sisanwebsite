@@ -492,7 +492,8 @@ export default function Portfolio() {
               </div>
             </div>
             <div className="lg:w-1/2">
-              <form className="space-y-4">
+              <form className="space-y-4" action="https://api.web3forms.com/submit" method="POST" >
+                <input type="hidden" name="access_key" value="c95b3f68-9430-43a9-9661-5abef6c872b6">
                 <input 
                   type="text" 
                   placeholder="Full Name" 
