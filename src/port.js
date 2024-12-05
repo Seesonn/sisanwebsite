@@ -74,7 +74,7 @@ const projects = [
     description: "A fully responsive online store Admin Dashboard with advanced features.",
     type: "Original",
     images: [ea1, ea2, ea3, ea4, ea5],
-    githubUrl: "https://github.com/username/ecommerce-platform",
+    githubUrl: "https://github.com/Seesonn/Edashboard.git",
     linkedinUrl: "https://linkedin.com/post/ecommerce-platform"
   },
 
