@@ -46,7 +46,7 @@ const projects = [
     description: "A fully responsive online store  with advanced features.",
     type: "Original",
     images: [a1, a2],
-    githubUrl: "https://github.com/username/ecommerce-platform",
+    githubUrl: "https://github.com/Seesonn/Edashboard.git",
     linkedinUrl: "https://mensfashion-indol.vercel.app/"
   },
   
