@@ -1493,9 +1493,7 @@
 
 
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, Moon, Sun, Music, Book, Feather, BookOpen, Linkedin, Facebook, Instagram, Send, Github, ExternalLink, Code2, Briefcase, Palette, ChevronDown, ChevronLeft, ChevronRight, X, Lock } from 'lucide-react';
-import Snowfall from './Component/Snowfall';
+import { ArrowRight, Moon, Sun, Music, Book, Feather, BookOpen, Linkedin, Facebook, Instagram, Send, Github, ExternalLink, Code2, Briefcase, ChevronDown, ChevronLeft, ChevronRight, X, Lock } from 'lucide-react';
 
 // Import images (unchanged)
 import riyan from "./assets/riyan.jpg"
@@ -1571,7 +1569,7 @@ const projects = [
   },
 ];
 
-function ProjectCard({ project, theme }) {
+function ProjectCard({ project }) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const nextImage = () => {
@@ -1592,107 +1590,65 @@ function ProjectCard({ project, theme }) {
   }, []);
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      className="rounded-lg overflow-hidden shadow-lg"
-      style={{
-        backgroundColor: theme === 'dark' ? '#1a1a1a' : '#ffffff',
-        border: `2px solid ${theme === 'dark' ? '#333' : '#e0e0e0'}`,
-      }}
-    >
+    <div className="rounded-lg overflow-hidden shadow-lg bg-zinc-900 border-2 border-zinc-800">
       <div className="relative h-48 sm:h-56 md:h-64 overflow-hidden group">
-        <AnimatePresence initial={false}>
-          <motion.img
-            key={currentImageIndex}
-            src={project.images[currentImageIndex]}
-            alt={`${project.title} - Image ${currentImageIndex + 1}`}
-            className="absolute top-0 left-0 w-full h-full object-cover"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}
-          />
-        </AnimatePresence>
-        <motion.div
-          className="absolute top-2 left-2 px-2 py-1 rounded-full text-xs font-semibold flex items-center"
-          style={{
-            backgroundColor: theme === 'dark' ? 'rgba(255, 255, 255, 0.2)' : 'rgba(0, 0, 0, 0.2)',
-            color: theme === 'dark' ? '#ffffff' : '#000000',
-          }}
-        >
+        <img
+          src={project.images[currentImageIndex]}
+          alt={${project.title} - Image ${currentImageIndex + 1}}
+          className="absolute top-0 left-0 w-full h-full object-cover"
+        />
+        <div className="absolute top-2 left-2 px-2 py-1 rounded-full text-xs font-semibold flex items-center bg-zinc-800 text-white">
           {project.type === 'Original' && <Code2 className="mr-1 h-3 w-3" />}
           {project.type === 'Clone' && <Briefcase className="mr-1 h-3 w-3" />}
           {project.type}
-        </motion.div>
-        <motion.div
-          className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-between px-4"
-          initial={{ opacity: 0 }}
-          whileHover={{ opacity: 1 }}
-        >
-          <motion.button
+        </div>
+        <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-between px-4">
+          <button
             onClick={prevImage}
             className="text-white p-1 rounded-full bg-black bg-opacity-50 hover:bg-opacity-75 transition-all duration-300"
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
           >
             <ChevronLeft className="h-6 w-6" />
-          </motion.button>
-          <motion.button
+          </button>
+          <button
             onClick={nextImage}
             className="text-white p-1 rounded-full bg-black bg-opacity-50 hover:bg-opacity-75 transition-all duration-300"
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
           >
             <ChevronRight className="h-6 w-6" />
-          </motion.button>
-        </motion.div>
+          </button>
+        </div>
       </div>
       <div className="p-6">
-        <h3 className="text-xl font-bold mb-2" style={{ color: theme === 'dark' ? '#f0f0f0' : '#1a1a1a' }}>{project.title}</h3>
-        <p className="text-sm mb-4" style={{ color: theme === 'dark' ? '#d0d0d0' : '#4a4a4a' }}>{project.description}</p>
+        <h3 className="text-xl font-bold mb-2 text-white">{project.title}</h3>
+        <p className="text-sm mb-4 text-zinc-300">{project.description}</p>
         <div className="flex space-x-4">
-          <motion.a
+          <a
             href={project.githubUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500"
-            style={{
-              backgroundColor: theme === 'dark' ? '#4a0e0b' : '#db3a34',
-            }}
-            whileHover={{ scale: 1.05, backgroundColor: theme === 'dark' ? '#5c1108' : '#c42f2a' }}
-            whileTap={{ scale: 0.95 }}
+            className="flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-red-900 hover:bg-red-800 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500"
           >
             <Github className="mr-2 h-4 w-4" />
             Source Code
-          </motion.a>
-          <motion.a
+          </a>
+          <a
             href={project.linkedinUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center justify-center px-4 py-2 border text-sm font-medium rounded-md transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500"
-            style={{
-              backgroundColor: theme === 'dark' ? '#0a2342' : '#4a8fe7',
-              color: '#ffffff',
-              borderColor: theme === 'dark' ? '#0a2342' : '#4a8fe7',
-            }}
-            whileHover={{ scale: 1.05, backgroundColor: theme === 'dark' ? '#0d2d5e' : '#3a7fd9' }}
-            whileTap={{ scale: 0.95 }}
+            className="flex items-center justify-center px-4 py-2 border text-sm font-medium rounded-md text-white bg-blue-900 hover:bg-blue-800 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500"
           >
             <ExternalLink className="mr-2 h-4 w-4" />
             Preview
-          </motion.a>
+          </a>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 }
 
 export default function Portfolio() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [theme, setTheme] = useState('dark');
+  const theme = 'dark';
   const [touchPosition, setTouchPosition] = useState({ x: 0, y: 0 });
   const [isScrolling, setIsScrolling] = useState(false);
   const [activeTab, setActiveTab] = useState('skills');
@@ -1731,7 +1687,7 @@ export default function Portfolio() {
   };
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-  const toggleTheme = () => setTheme(theme === 'dark' ? 'light' : 'dark');
+  //const toggleTheme = () => setTheme(theme === 'dark' ? 'light' : 'dark'); //Removed
 
   const handleTouchMove = (e) => {
     const touch = e.touches[0];
@@ -1758,7 +1714,7 @@ export default function Portfolio() {
       setSelectedOutlet(null);
       setPassword('');
       setError('');
-      alert(`${selectedOutlet?.charAt(0).toUpperCase()}${selectedOutlet?.slice(1)} content unlocked!`);
+      alert(${selectedOutlet?.charAt(0).toUpperCase()}${selectedOutlet?.slice(1)} content unlocked!);
     } else {
       setError('You are not selected for this. Please try again.');
     }
@@ -1787,208 +1743,138 @@ export default function Portfolio() {
   const projectTypes = ["All Projects", "Original", "Clone"];
 
   return (
-    <motion.div 
-      className={`min-h-screen w-full transition-colors duration-500 ease-in-out ${theme === 'dark' ? 'bg-black text-white' : 'bg-white text-black'}`}
+    <div 
+      className="min-h-screen w-full bg-black text-white"
       onTouchMove={handleTouchMove}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
     >
-      {theme === 'dark' && <Snowfall />}
-      <motion.header 
-        className={`fixed w-full z-20 transition-all duration-300 ${isScrolled ? (theme === 'dark' ? 'bg-black bg-opacity-90' : 'bg-white bg-opacity-90') : 'bg-transparent'}`}
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        transition={{ type: 'spring', stiffness: 120, damping: 20 }}
+      <header 
+        className={fixed w-full z-20 ${isScrolled ? 'bg-black bg-opacity-90' : 'bg-transparent'}}
       >
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <motion.div
-            className="relative w-8 h-8 sm:w-10 sm:h-10 overflow-hidden rounded-full z-50 transition-all duration-300"
-            whileHover={{ scale: 1.1, rotate: 360 }}
-            whileTap={{ scale: 0.9 }}
-            transition={{ type: 'spring', stiffness: 300, damping: 15 }}
+          <div
+            className="relative w-8 h-8 sm:w-10 sm:h-10 overflow-hidden rounded-full z-50"
           >
             <img
               src={logo}
               alt="SISAN Logo"
-              className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
+              className="w-full h-full object-cover"
               priority
             />
-          </motion.div>
+          </div>
           <nav className="hidden md:block">
             <ul className="flex space-x-4 lg:space-x-6">
               {['home', 'about', 'skill', 'projects', 'portfolio', 'creative-outlets', 'contact'].map((section) => (
                 <li key={section}>
-                  <motion.button
+                  <button
                     onClick={() => scrollToSection(section)}
-                    className={`hover:text-yellow-400 transition-colors text-sm lg:text-base ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
+                    className={hover:text-yellow-400 transition-colors text-sm lg:text-base text-zinc-300}
                   >
                     {section.charAt(0).toUpperCase() + section.slice(1)}
-                  </motion.button>
+                  </button>
                 </li>
               ))}
             </ul>
           </nav>
           <div className="flex items-center space-x-4">
-            <motion.button
-              onClick={toggleTheme}
-              className={`p-2 rounded-full transition-colors duration-300 ${theme === 'dark' ? 'bg-gray-800 text-yellow-400' : 'bg-gray-200 text-gray-700'}`}
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-            >
-              {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
-            </motion.button>
-            <motion.button 
-              onClick={toggleMenu} 
+            <button
+              onClick={toggleMenu}
               className="md:hidden w-8 h-8 flex flex-col justify-center items-center focus:outline-none"
               aria-label="Toggle menu"
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
             >
-              <span className={`w-6 h-0.5 bg-current transition-all duration-300 ease-out ${isMenuOpen ? 'rotate-45 translate-y-1.5' : ''}`} />
-              <span className={`w-6 h-0.5 bg-current transition-all duration-300 ease-out my-1 ${isMenuOpen ? 'opacity-0' : ''}`} />
-              <span className={`w-6 h-0.5 bg-current transition-all duration-300 ease-out ${isMenuOpen ? '-rotate-45 -translate-y-1.5' : ''}`} />
-            </motion.button>
+              <span className={w-6 h-0.5 bg-current transition-all duration-300 ease-out ${isMenuOpen ? 'rotate-45 translate-y-1.5' : ''}} />
+              <span className={w-6 h-0.5 bg-current transition-all duration-300 ease-out my-1 ${isMenuOpen ? 'opacity-0' : ''}} />
+              <span className={w-6 h-0.5 bg-current transition-all duration-300 ease-out ${isMenuOpen ? '-rotate-45 -translate-y-1.5' : ''}} />
+            </button>
           </div>
         </div>
-      </motion.header>
+      </header>
 
-      <AnimatePresence>
+      <div>
         {isMenuOpen && (
-          <motion.div
+          <div
             className="fixed inset-0 z-30 bg-black bg-opacity-90 backdrop-blur-md flex items-center justify-center"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
           >
-            <motion.div
+            <div
               className="relative container mx-auto px-4 py-20"
-              initial={{ y: -50, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: -50, opacity: 0 }}
-              transition={{ duration: 0.3, delay: 0.1 }}
             >
-              <motion.button 
+              <button 
                 onClick={toggleMenu}
                 className="absolute top-4 right-4 text-white transition-colors"
                 aria-label="Close menu"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
               >
                 <span className="sr-only">Close</span>
                 <X className="h-6 w-6" />
-              </motion.button>
+              </button>
               <ul className="space-y-8 text-2xl">
                 {['home', 'about', 'skill', 'projects', 'portfolio', 'creative-outlets', 'contact'].map((section) => (
-                  <motion.li key={section}>
-                    <motion.button
+                  <li key={section}>
+                    <button
                       onClick={() => scrollToSection(section)}
                       className="block text-white hover:text-yellow-400 transition-colors"
-                      whileHover={{ scale: 1.1, x: 10 }}
-                      whileTap={{ scale: 0.9 }}
                     >
                       {section.charAt(0).toUpperCase() + section.slice(1)}
-                    </motion.button>
-                  </motion.li>
+                    </button>
+                  </li>
                 ))}
               </ul>
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
         )}
-      </AnimatePresence>
+      </div>
 
       <main className="container mx-auto px-4 pt-20">
-        <motion.section
+        <section
           id="home"
           className="min-h-screen flex flex-col justify-center py-20"
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
         >
           <div className="flex flex-col md:flex-row items-center">
             <div className="md:w-1/2 mb-8 md:mb-0">
-              <motion.h2
+              <h2
                 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.2 }}
               >
                 I'M SISAN BHATTARAI
-              </motion.h2>
-              <motion.h3
+              </h2>
+              <h3
                 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-yellow-400 mb-4"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.4 }}
               >
                 Welcome to my website
-              </motion.h3>
-              <motion.p
+              </h3>
+              <p
                 className="mb-6 text-sm sm:text-base lg:text-lg"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.6 }}
               >
                 "Dear Visitor, as you navigate through the content of this website, remember that life is a journey filled with twists, turns, and chapters that shape our unique stories. Embrace the highs, learn from the lows, and know that you're not alone. Just like the ever-changing nature of a webpage, your life is a work in progress. Keep scrolling, keep exploring, and find inspiration in every pixel of your personal narrative. Your story matters, and this space is a reminder that, no matter what, there's always a new page waiting to be written.
-              </motion.p>
-              <motion.button
-                className="bg-yellow-400 text-black px-4 sm:px-6 py-2 rounded-full font-bold flex items-center transition-transform hover:scale-105 text-sm sm:text-base"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.8 }}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+              </p>
+              <button
+                className="bg-yellow-400 text-black px-4 sm:px-6 py-2 rounded-full font-bold flex items-center text-sm sm:text-base"
               >
                 Follow Me <ArrowRight className="ml-2" size={16} />
-              </motion.button>
+              </button>
             </div>
-            <motion.div
+            <div
               className="md:w-1/2"
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5, delay: 0.5 }}
             >
               <img src={home} alt="sisan" className="rounded-lg w-full max-w-md mx-auto" />
-            </motion.div>
+            </div>
           </div>
-        </motion.section>
+        </section>
 
-        <motion.section
+        <section
           id="about"
           className="py-20"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
-          viewport={{ once: true }}
         >
-          <motion.h2
+          <h2
             className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-8"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            viewport={{ once: true }}
           >
             Personal Insights
-          </motion.h2>
+          </h2>
           <div className="flex flex-col md:flex-row gap-8">
-            <motion.div
+            <div
               className="md:w-1/3"
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5 }}
-              viewport={{ once: true }}
             >
               <img src={riyan} alt="Profile" className="rounded-lg w-full max-w-md mx-auto" />
-            </motion.div>
-            <motion.div
+            </div>
+            <div
               className="md:w-2/3"
-              initial={{ opacity: 0, x: 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5 }}
-              viewport={{ once: true }}
             >
               <p className="mb-6 text-sm sm:text-base lg:text-lg">Sisan Bhattarai, born on December 10, 2001, in Nepal.
               Passionate about coding and poetry, I find joy in the intersection of technology and creativity. Exploring the beauty of Nepal while pursuing my interests is what drives me.</p>
@@ -2001,132 +1887,85 @@ export default function Portfolio() {
                 <li>Bachelor in CSIT</li>
                 <li>Learning Cyber Security</li>
               </ul>
-            </motion.div>
+            </div>
           </div>
-        </motion.section>
+        </section>
         
-        <motion.div
+        <div
           id="skill"
           className="md:flex md:items-center md:justify-between py-20"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
-          viewport={{ once: true }}
         >
           <div className="md:w-1/2 mb-6 md:mb-0">
-            <motion.h2
+            <h2
               className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-8"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              viewport={{ once: true }}
             >
               My Programming Arsenal
-            </motion.h2>
-            <motion.p
+            </h2>
+            <p
               className="text-lg md:text-xl mb-6"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              viewport={{ once: true }}
             >
               Crafting intuitive interfaces that adapt swiftly, empowering users to accomplish tasks with unparalleled ease and efficiency.
-            </motion.p>
+            </p>
             <div className="flex space-x-2 mb-6 md:mb-0">
               {['skills', 'tools'].map((tab) => (
-                <motion.button
+                <button
                   key={tab}
                   className={`px-6 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
                     activeTab === tab
                       ? 'bg-yellow-400 text-black'
-                      : theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-gray-200 text-gray-800'
+                      : 'bg-black text-white'
                   }`}
                   onClick={() => setActiveTab(tab)}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
                 >
                   {tab.charAt(0).toUpperCase() + tab.slice(1)}
-                </motion.button>
+                </button>
               ))}
             </div>
           </div>
           <div className="md:w-1/2">
             <div className="overflow-hidden rounded-xl p-4 min-h-[280px]">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={activeTab}
-                  variants={tabVariants}
-                  initial="hidden"
-                  animate="visible"
-                  exit="exit"
-                  transition={{ duration: 0.3 }}
-                >
-                  <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                    {(activeTab === 'skills' ? skills : tools).map((item) => (
-                      <motion.div
-                        key={item.name}
-                        className={`p-4 rounded-lg flex flex-col items-center justify-center transform transition-all duration-300 hover:scale-105 ${
-                          theme === 'dark' ? 'bg-gray-800' : 'bg-gray-200'
-                        }`}
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                      >
-                        <div className="w-12 h-12 md:w-16 md:h-16 mb-2 rounded-full bg-white flex items-center justify-center">
-                          <img src={item.icon} className="w-8 h-8 md:w-10 md:h-10" alt={item.name} />
-                        </div>
-                        <span className={`text-sm font-medium ${theme === 'dark' ? 'text-white' : 'text-gray-800'}`}>{item.name}</span>
-                      </motion.div>
-                    ))}
-                  </div>
-                </motion.div>
-              </AnimatePresence>
+              <div>
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                  {(activeTab === 'skills' ? skills : tools).map((item) => (
+                    <div
+                      key={item.name}
+                      className={p-4 rounded-lg flex flex-col items-center justify-center transform transition-all duration-300 hover:scale-105 bg-black}
+                    >
+                      <div className="w-12 h-12 md:w-16 md:h-16 mb-2 rounded-full bg-white flex items-center justify-center">
+                        <img src={item.icon} className="w-8 h-8 md:w-10 md:h-10" alt={item.name} />
+                      </div>
+                      <span className={text-sm font-medium text-white}>{item.name}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
-        </motion.div>
+        </div>
      
-        <motion.section
+        <section
           id="projects"
           className="py-20"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
-          viewport={{ once: true }}
         >
-          <motion.h2
+          <h2
             className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-8"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            viewport={{ once: true }}
           >
             Recent Projects
-          </motion.h2>
-          <motion.p
+          </h2>
+          <p
             className="text-lg md:text-xl mb-6"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            viewport={{ once: true }}
           >
             Explore our latest web development projects, showcasing our expertise in creating innovative and efficient digital solutions.
-          </motion.p>
+          </p>
           
-          <motion.div
+          <div
             className="flex justify-center mb-8"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-            viewport={{ once: true }}
           >
             <div className="relative inline-block text-left">
               <select
                 value={selectedType}
                 onChange={(e) => setSelectedType(e.target.value)}
-                className={`block appearance-none w-full py-2 px-4 pr-8 rounded-lg leading-tight focus:outline-none focus:ring-2 focus:ring-yellow-400 ${
-                  theme === 'dark'
-                    ? 'bg-gray-800 text-white border-gray-700'
-                    : 'bg-gray-200 text-gray-800 border-gray-300'
-                }`}
+                className={block appearance-none w-full py-2 px-4 pr-8 rounded-lg leading-tight focus:outline-none focus:ring-2 focus:ring-yellow-400 bg-black text-white border-gray-700}
               >
                 {projectTypes.map((type) => (
                   <option key={type} value={type}>{type}</option>
@@ -2136,175 +1975,123 @@ export default function Portfolio() {
                 <ChevronDown className="h-4 w-4" />
               </div>
             </div>
-          </motion.div>
+          </div>
 
-          <motion.div
+          <div
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.6 }}
-            viewport={{ once: true }}
           >
             {filteredProjects.map((project) => (
-              <ProjectCard key={project.id} project={project} theme={theme} />
+              <ProjectCard key={project.id} project={project} />
             ))}
-          </motion.div>
-        </motion.section>
+          </div>
+        </section>
 
-        <motion.section
+        <section
           id="portfolio"
           className="py-20"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
-          viewport={{ once: true }}
         >
-          <motion.h2
+          <h2
             className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-8"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            viewport={{ once: true }}
           >
             Portfolio
-          </motion.h2>
-          <motion.div
+          </h2>
+          <div
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            viewport={{ once: true }}
           >
             {[
               { title: "Website Designing", image: web },
               { title: "UX/UI Designing", image: ui },
               { title: "Cyber Security", image: dev }
             ].map((item, index) => (
-              <motion.div
+              <div
                 key={index}
-                className={`p-4 rounded-lg overflow-hidden group ${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-200'}`}
-                whileHover={{ scale: 1.05 }}
-                transition={{ duration: 0.3 }}
+                className={p-4 rounded-lg overflow-hidden group bg-black}
               >
-                <img src={item.image} alt={item.title} className="w-full h-40 object-cover rounded-lg mb-4 transition-transform duration-300 group-hover:scale-110" />
-                <h3 className="text-lg sm:text-xl lg:text-2xl font-bold">{item.title}</h3>
-              </motion.div>
+                <img src={item.image} alt={item.title} className="w-full h-40 object-cover rounded-lg mb-4" />
+                <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-white">{item.title}</h3>
+              </div>
             ))}
-          </motion.div>
-        </motion.section>
+          </div>
+        </section>
             
-        <motion.section
+        <section
           id="creative-outlets"
           className="py-20"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
-          viewport={{ once: true }}
         >
-          <motion.h2
+          <h2
             className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-8"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            viewport={{ once: true }}
           >
             Creative Outlets
-          </motion.h2>
-          <motion.div
+          </h2>
+          <div
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            viewport={{ once: true }}
           >
             {creativeOutlets.map((outlet) => (
-              <motion.div
+              <div
                 key={outlet.id}
-                className={`rounded-lg overflow-hidden transition-all duration-300 hover:scale-105 p-4 ${
-                  theme === 'dark' ? 'bg-gray-800' : 'bg-gray-200'
-                }`}
-                whileHover={{ scale: 1.05 }}
-                transition={{ duration: 0.3 }}
+                className="rounded-lg overflow-hidden transition-all duration-300 hover:bg-zinc-800 p-4 bg-zinc-900"
               >
                 <img src={outlet.image} alt={outlet.title} className="w-full h-32 sm:h-40 object-cover rounded-lg mb-4" />
-                <h3 className="text-lg sm:text-xl lg:text-2xl font-bold mb-2">{outlet.title}</h3>
-                <p className="mb-4 text-sm sm:text-base">{outlet.description}</p>
-                <motion.button 
+                <h3 className="text-lg sm:text-xl lg:text-2xl font-bold mb-2 text-white">{outlet.title}</h3>
+                <p className="mb-4 text-sm sm:text-base text-zinc-300">{outlet.description}</p>
+                <button 
                   onClick={() => handlePrivateClick(outlet.id)}
                   className="bg-yellow-400 text-black px-3 py-2 rounded-full font-bold flex items-center transition-transform hover:scale-105 text-sm"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
                 >
                   <outlet.icon className="mr-2" size={16} />
                   Private
-                </motion.button>
-              </motion.div>
+                </button>
+              </div>
             ))}
-          </motion.div>
-        </motion.section>
+          </div>
+        </section>
 
-        <motion.section
+        <section
           id="contact"
           className="py-12 sm:py-20"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
-          viewport={{ once: true }}
         >
           <div className="flex flex-col lg:flex-row gap-8">
-            <motion.div
+            <div
               className="lg:w-1/2"
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5 }}
-              viewport={{ once: true }}
             >
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-8">Get in Touch</h2>
-              <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-4">Social Media</h3>
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-8 text-white">Get in Touch</h2>
+              <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-4 text-white">Social Media</h3>
               <div className="flex space-x-4">
                 {[
                   { icon: Linkedin, url: "https://www.linkedin.com/in/sisan-bhattarai-7006242b2" },
                   { icon: Facebook, url: "https://www.facebook.com/seeson.777" },
                   { icon: Instagram, url: "https://www.instagram.com/see_son_" }
                 ].map((social, index) => (
-                  <motion.a
+                  <a
                     key={index}
                     href={social.url}
                     className="text-2xl sm:text-3xl lg:text-4xl hover:text-yellow-400 transition-colors"
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
                   >
                     <social.icon />
-                  </motion.a>
+                  </a>
                 ))}
               </div>
-            </motion.div>
+            </div>
             <div
               className="lg:w-1/2"
-              initial={{ opacity: 0, x: 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5 }}
-              viewport={{ once: true }}
             >
               <form className="space-y-4" action="https://api.web3forms.com/submit" method="POST">
                 <input type="hidden" name="access_key" value="c95b3f68-9430-43a9-9661-5abef6c872b6" />
                 <input 
                   type="text" 
                   placeholder="Full Name" 
-                  className={`w-full p-2 rounded transition-colors duration-300 ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-gray-200 text-gray-800'}`}
-                  whileFocus={{ scale: 1.02 }}
+                  className="w-full p-2 rounded transition-colors duration-300 bg-zinc-800 text-white"
                 />
                 <input 
                   type="email" 
                   placeholder="Email" 
-                  className={`w-full p-2 rounded transition-colors duration-300 ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-gray-200 text-gray-800'}`}
-                  whileFocus={{ scale: 1.02 }}
+                  className="w-full p-2 rounded transition-colors duration-300 bg-zinc-800 text-white"
                 />
                 <textarea 
                   placeholder="Type your message (max 50 words)" 
                   rows={4} 
                   maxLength={250}
-                  className={`w-full p-2 rounded transition-colors duration-300 ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-gray-200 text-gray-800'}`}
+                  className="w-full p-2 rounded transition-colors duration-300 bg-zinc-800 text-white"
                   onInput={(e) => {
                     const words = e.target.value.split(/\s+/).filter(word => word.length > 0);
                     if (words.length > 50) {
@@ -2312,13 +2099,10 @@ export default function Portfolio() {
                     }
                   }}
                   style={{ resize: 'none' }}
-                  whileFocus={{ scale: 1.02 }}
                 />
                 <button
                   type="submit"
                   className="bg-yellow-400 text-black px-4 py-2 rounded-full font-bold w-full transition-transform hover:scale-105 text-sm sm:text-base"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
                 >
                   Submit
                 </button>
@@ -2328,51 +2112,35 @@ export default function Portfolio() {
         </section>
       </main>
 
-      <motion.footer
-        className={`py-6 sm:py-8 text-center transition-colors duration-300 ${theme === 'dark' ? 'bg-gray-900' : 'bg-gray-100'}`}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.5, delay: 0.2 }}
+      <footer
+        className="py-6 sm:py-8 text-center bg-black"
       >
-        <p className="text-sm sm:text-base">&copy; 2024 SISAN. All rights reserved.</p>
-      </motion.footer>
+        <p className="text-sm sm:text-base text-zinc-300">&copy; 2024 SISAN. All rights reserved.</p>
+      </footer>
 
       <div 
-        className={`fixed inset-0 pointer-events-none z-0 transition-opacity duration-600 ease-in-out ${isScrolling ? 'opacity-10' : 'opacity-0'}`}
+        className={fixed inset-0 pointer-events-none z-0 transition-opacity duration-600 ease-in-out ${isScrolling ? 'opacity-10' : 'opacity-0'}}
         style={{
-          background: `radial-gradient(circle at ${touchPosition.x}px ${touchPosition.y}px, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 50%)`,
+          background: radial-gradient(circle at ${touchPosition.x}px ${touchPosition.y}px, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 50%),
         }}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: isScrolling ? 0.1 : 0 }}
-        transition={{ duration: 0.6 }}
       />
 
-     
+      <div>
         {selectedOutlet && (
           <div
             className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-md flex items-center justify-center z-50"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
           >
             <div
-              className={`p-6 rounded-lg max-w-md w-full ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-gray-200 text-gray-800'}`}
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              transition={{ duration: 0.3 }}
+              className={p-6 rounded-lg max-w-md w-full bg-black text-white}
             >
               <div className="flex justify-between items-center mb-4">
                 <h3 className="text-xl font-bold">Enter Password</h3>
-                <motion.button
+                <button
                   onClick={() => setSelectedOutlet(null)}
                   className="text-yellow-400 hover:text-yellow-500"
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
                 >
                   <X size={24} />
-                </motion.button>
+                </button>
               </div>
               <form onSubmit={handlePasswordSubmit}>
                 <div className="relative">
@@ -2381,10 +2149,7 @@ export default function Portfolio() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Enter password"
-                    className={`w-full p-2 mb-4 border rounded focus:outline-none focus:ring-2 focus:ring-yellow-400 ${
-                      theme === 'dark' ? 'bg-gray-700 text-white' : 'bg-white text-gray-800'
-                    }`}
-                    whileFocus={{ scale: 1.02 }}
+                    className={w-full p-2 mb-4 border rounded focus:outline-none focus:ring-2 focus:ring-yellow-400 bg-black text-white}
                   />
                   <Lock className="absolute right-3 top-2.5 text-yellow-400" size={20} />
                 </div>
@@ -2394,8 +2159,6 @@ export default function Portfolio() {
                   type="submit"
                   className="w-full bg-yellow-400 text-black px-4 py-2 rounded-full font-bold transition-transform hover:scale-105"
                   disabled={!password}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
                 >
                   Unlock Content
                 </button>
@@ -2403,7 +2166,7 @@ export default function Portfolio() {
             </div>
           </div>
         )}
- 
+      </div>
     </div>
   );
 }
