@@ -12,10 +12,11 @@ const Snowfall = () => {
 
     const createSnowflake = () => ({
       x: Math.random() * canvas.width,
-      y: 0,
-      radius: Math.random() * 3 + 1,
+      y: Math.random() * canvas.height,
+      radius: Math.random() * 2 + 0.5,
       speed: Math.random() * 1 + 0.5,
       opacity: Math.random() * 0.5 + 0.3,
+      wind: Math.random() * 0.5 - 0.25,
     });
 
     const resizeCanvas = () => {
@@ -24,7 +25,7 @@ const Snowfall = () => {
     };
 
     const initSnowflakes = () => {
-      const flakeCount = Math.floor(canvas.width / 10);
+      const flakeCount = Math.floor(canvas.width * canvas.height / 15000);
       for (let i = 0; i < flakeCount; i++) {
         snowflakes.push(createSnowflake());
       }
@@ -32,11 +33,10 @@ const Snowfall = () => {
 
     const drawSnowflakes = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = '#ffffff';
       snowflakes.forEach((flake) => {
         ctx.beginPath();
         ctx.arc(flake.x, flake.y, flake.radius, 0, Math.PI * 2);
-        ctx.globalAlpha = flake.opacity;
+        ctx.fillStyle = `rgba(255, 255, 255, ${flake.opacity})`;
         ctx.fill();
       });
     };
@@ -44,8 +44,17 @@ const Snowfall = () => {
     const updateSnowflakes = () => {
       snowflakes.forEach((flake) => {
         flake.y += flake.speed;
+        flake.x += flake.wind;
+
         if (flake.y > canvas.height) {
-          Object.assign(flake, createSnowflake());
+          flake.y = -5;
+          flake.x = Math.random() * canvas.width;
+        }
+
+        if (flake.x > canvas.width) {
+          flake.x = 0;
+        } else if (flake.x < 0) {
+          flake.x = canvas.width;
         }
       });
     };
@@ -76,5 +85,3 @@ const Snowfall = () => {
 };
 
 export default Snowfall;
-
-
