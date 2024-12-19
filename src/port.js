@@ -577,18 +577,7 @@
 //   )
 // }
 
-
-
-
-
-
-
-
-
-
-
-
-
+'use client'
 
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -693,10 +682,10 @@ function ProjectCard({ project, theme }) {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="rounded-lg overflow-hidden shadow-lg"
+      className="rounded-lg overflow-hidden"
       style={{
-        backgroundColor: theme === 'dark' ? 'rgba(0, 0, 0, 0.8)' : 'rgba(255, 255, 255, 0.8)',
-        backdropFilter: 'blur(10px)',
+        backgroundColor: theme === 'dark' ? '#1a1a1a' : '#ffffff',
+        border: `2px solid ${theme === 'dark' ? '#333' : '#e0e0e0'}`,
       }}
     >
       <div className="relative h-48 overflow-hidden group">
@@ -716,7 +705,7 @@ function ProjectCard({ project, theme }) {
           className="absolute top-2 left-2 px-2 py-1 rounded-full text-xs font-semibold flex items-center"
           style={{
             backgroundColor: theme === 'dark' ? 'rgba(255, 255, 255, 0.2)' : 'rgba(0, 0, 0, 0.2)',
-            color: theme === 'dark' ? 'white' : 'black',
+            color: theme === 'dark' ? '#ffffff' : '#000000',
           }}
         >
           {project.type === 'Original' && <Code2 className="mr-1 h-3 w-3" />}
@@ -756,9 +745,9 @@ function ProjectCard({ project, theme }) {
             rel="noopener noreferrer"
             className="flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500"
             style={{
-              backgroundColor: theme === 'dark' ? '#333' : '#4a5568',
+              backgroundColor: theme === 'dark' ? '#4a0e0b' : '#db3a34',
             }}
-            whileHover={{ scale: 1.05, backgroundColor: '#555' }}
+            whileHover={{ scale: 1.05, backgroundColor: theme === 'dark' ? '#5c1108' : '#c42f2a' }}
             whileTap={{ scale: 0.95 }}
           >
             <Github className="mr-2 h-4 w-4" />
@@ -770,11 +759,11 @@ function ProjectCard({ project, theme }) {
             rel="noopener noreferrer"
             className="flex items-center justify-center px-4 py-2 border text-sm font-medium rounded-md transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500"
             style={{
-              backgroundColor: theme === 'dark' ? '#f0f0f0' : '#e2e8f0',
-              color: theme === 'dark' ? 'black' : '#4a5568',
-              borderColor: theme === 'dark' ? '#f0f0f0' : '#cbd5e0',
+              backgroundColor: theme === 'dark' ? '#0a2342' : '#4a8fe7',
+              color: '#ffffff',
+              borderColor: theme === 'dark' ? '#0a2342' : '#4a8fe7',
             }}
-            whileHover={{ scale: 1.05, backgroundColor: theme === 'dark' ? '#ffffff' : '#d1d5db' }}
+            whileHover={{ scale: 1.05, backgroundColor: theme === 'dark' ? '#0d2d5e' : '#3a7fd9' }}
             whileTap={{ scale: 0.95 }}
           >
             <ExternalLink className="mr-2 h-4 w-4" />
@@ -885,24 +874,23 @@ export default function Portfolio() {
 
   return (
     <motion.div 
-      className={`min-h-screen w-full transition-colors duration-500 ease-in-out ${theme === 'dark' ? 'bg-black text-white' : 'bg-white text-gray-900'}`}
+      className={`min-h-screen w-full transition-colors duration-500 ease-in-out ${theme === 'dark' ? 'bg-black text-white' : 'bg-white text-black'}`}
       onTouchMove={handleTouchMove}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
     >
       <motion.header 
-        className={`fixed w-full z-10 transition-all duration-300 ${isScrolled ? (theme === 'dark' ? 'bg-black shadow-lg' : 'bg-white shadow-md') : 'bg-transparent'}`}
+        className={`fixed w-full z-10 transition-all duration-300 ${isScrolled ? (theme === 'dark' ? 'bg-black' : 'bg-white') : 'bg-transparent'}`}
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ type: 'spring', stiffness: 120, damping: 20 }}
       >
         <div className="container mx-auto px-4 py-2 flex justify-between items-center">
           <motion.div
-            className="relative w-8 h-8 sm:w-10 sm:h-10 overflow-hidden rounded-full shadow-lg hover:shadow-xl z-50 transition-shadow duration-300"
+            className="relative w-8 h-8 sm:w-10 sm:h-10 overflow-hidden rounded-full z-50 transition-all duration-300"
             whileHover={{ scale: 1.1, rotate: 360 }}
             whileTap={{ scale: 0.9 }}
-          >
             transition={{ type: 'spring', stiffness: 300, damping: 15 }}
           >
             <img
@@ -1032,7 +1020,7 @@ export default function Portfolio() {
                 "Dear Visitor, as you navigate through the content of this website, remember that life is a journey filled with twists, turns, and chapters that shape our unique stories. Embrace the highs, learn from the lows, and know that you're not alone. Just like the ever-changing nature of a webpage, your life is a work in progress. Keep scrolling, keep exploring, and find inspiration in every pixel of your personal narrative. Your story matters, and this space is a reminder that, no matter what, there's always a new page waiting to be written.
               </motion.p>
               <motion.button
-                className="bg-yellow-400 text-gray-900 px-4 sm:px-6 py-2 rounded-full font-bold flex items-center transition-transform hover:scale-105 text-sm sm:text-base"
+                className="bg-yellow-400 text-black px-4 sm:px-6 py-2 rounded-full font-bold flex items-center transition-transform hover:scale-105 text-sm sm:text-base"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.8 }}
@@ -1048,7 +1036,7 @@ export default function Portfolio() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5, delay: 0.5 }}
             >
-              <img src={home} alt="sisan" className="rounded-lg shadow-lg w-full max-w-md mx-auto" />
+              <img src={home} alt="sisan" className="rounded-lg w-full max-w-md mx-auto" />
             </motion.div>
           </div>
         </motion.section>
@@ -1078,7 +1066,7 @@ export default function Portfolio() {
               transition={{ duration: 0.5 }}
               viewport={{ once: true }}
             >
-              <img src={riyan} alt="Profile" className="rounded-lg shadow-lg w-full max-w-md mx-auto" />
+              <img src={riyan} alt="Profile" className="rounded-lg w-full max-w-md mx-auto" />
             </motion.div>
             <motion.div
               className="md:w-2/3"
@@ -1135,8 +1123,8 @@ export default function Portfolio() {
                   key={tab}
                   className={`px-6 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
                     activeTab === tab
-                      ? 'bg-yellow-400 text-gray-900 shadow-lg'
-                      : theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-gray-200 text-gray-700'
+                      ? 'bg-yellow-400 text-black'
+                      : theme === 'dark' ? 'bg-blue-900 text-white' : 'bg-blue-100 text-blue-900'
                   }`}
                   onClick={() => setActiveTab(tab)}
                   whileHover={{ scale: 1.05 }}
@@ -1162,8 +1150,8 @@ export default function Portfolio() {
                     {(activeTab === 'skills' ? skills : tools).map((item) => (
                       <motion.div
                         key={item.name}
-                        className={`p-4 rounded-lg flex flex-col items-center justify-center transform transition-all duration-300 hover:scale-105 hover:shadow-xl ${
-                          theme === 'dark' ? 'bg-gray-800' : 'bg-gray-200'
+                        className={`p-4 rounded-lg flex flex-col items-center justify-center transform transition-all duration-300 hover:scale-105 ${
+                          theme === 'dark' ? 'bg-blue-900' : 'bg-blue-100'
                         }`}
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
@@ -1171,7 +1159,7 @@ export default function Portfolio() {
                         <div className="w-12 h-12 md:w-16 md:h-16 mb-2 rounded-full bg-white flex items-center justify-center">
                           <img src={item.icon} className="w-8 h-8 md:w-10 md:h-10" alt={item.name} />
                         </div>
-                        <span className={`text-sm font-medium ${theme === 'dark' ? 'text-white' : 'text-gray-700'}`}>{item.name}</span>
+                        <span className={`text-sm font-medium ${theme === 'dark' ? 'text-white' : 'text-blue-900'}`}>{item.name}</span>
                       </motion.div>
                     ))}
                   </div>
@@ -1221,16 +1209,16 @@ export default function Portfolio() {
                 onChange={(e) => setSelectedType(e.target.value)}
                 className={`block appearance-none w-full py-2 px-4 pr-8 rounded-lg leading-tight focus:outline-none focus:ring-2 focus:ring-yellow-400 ${
                   theme === 'dark'
-                    ? 'bg-gray-800 text-white border-gray-700'
-                    : 'bg-white text-gray-900 border-gray-300'
+                    ? 'bg-blue-900 text-white border-blue-700'
+                    : 'bg-blue-100 text-blue-900 border-blue-300'
                 }`}
               >
                 {projectTypes.map((type) => (
                   <option key={type} value={type}>{type}</option>
                 ))}
               </select>
-              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                <ChevronDown className={`h-4 w-4 ${theme === 'dark' ? 'text-white' : 'text-gray-400'}`} />
+              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-yellow-400">
+                <ChevronDown className="h-4 w-4" />
               </div>
             </div>
           </motion.div>
@@ -1279,7 +1267,7 @@ export default function Portfolio() {
             ].map((item, index) => (
               <motion.div
                 key={index}
-                className={`p-4 rounded-lg shadow-md overflow-hidden group ${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-100'}`}
+                className={`p-4 rounded-lg overflow-hidden group ${theme === 'dark' ? 'bg-blue-900' : 'bg-blue-100'}`}
                 whileHover={{ scale: 1.05 }}
                 transition={{ duration: 0.3 }}
               >
@@ -1317,8 +1305,8 @@ export default function Portfolio() {
             {creativeOutlets.map((outlet) => (
               <motion.div
                 key={outlet.id}
-                className={`rounded-lg overflow-hidden transition-all duration-300 hover:shadow-lg p-4 ${
-                  theme === 'dark' ? 'bg-gray-800' : 'bg-gray-100'
+                className={`rounded-lg overflow-hidden transition-all duration-300 hover:scale-105 p-4 ${
+                  theme === 'dark' ? 'bg-blue-900' : 'bg-blue-100'
                 }`}
                 whileHover={{ scale: 1.05 }}
                 transition={{ duration: 0.3 }}
@@ -1328,7 +1316,7 @@ export default function Portfolio() {
                 <p className="mb-4 text-sm sm:text-base">{outlet.description}</p>
                 <motion.button 
                   onClick={() => handlePrivateClick(outlet.id)}
-                  className="bg-yellow-400 text-gray-900 px-3 py-2 rounded-full font-bold flex items-center transition-transform hover:scale-105 text-sm"
+                  className="bg-yellow-400 text-black px-3 py-2 rounded-full font-bold flex items-center transition-transform hover:scale-105 text-sm"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
@@ -1388,20 +1376,20 @@ export default function Portfolio() {
                 <motion.input 
                   type="text" 
                   placeholder="Full Name" 
-                  className={`w-full p-2 rounded transition-colors duration-300 ${theme === 'dark' ? 'bg-gray-700 text-white' : 'bg-gray-100 text-gray-900'}`}
+                  className={`w-full p-2 rounded transition-colors duration-300 ${theme === 'dark' ? 'bg-blue-900 text-white' : 'bg-blue-100 text-blue-900'}`}
                   whileFocus={{ scale: 1.02 }}
                 />
                 <motion.input 
                   type="email" 
                   placeholder="Email" 
-                  className={`w-full p-2 rounded transition-colors duration-300 ${theme === 'dark' ? 'bg-gray-700 text-white' : 'bg-gray-100 text-gray-900'}`}
+                  className={`w-full p-2 rounded transition-colors duration-300 ${theme === 'dark' ? 'bg-blue-900 text-white' : 'bg-blue-100 text-blue-900'}`}
                   whileFocus={{ scale: 1.02 }}
                 />
                 <motion.textarea 
                   placeholder="Type your message (max 50 words)" 
                   rows={4} 
                   maxLength={250}
-                  className={`w-full p-2 rounded transition-colors duration-300 ${theme === 'dark' ? 'bg-gray-700 text-white' : 'bg-gray-100 text-gray-900'}`}
+                  className={`w-full p-2 rounded transition-colors duration-300 ${theme === 'dark' ? 'bg-blue-900 text-white' : 'bg-blue-100 text-blue-900'}`}
                   onInput={(e) => {
                     const words = e.target.value.split(/\s+/).filter(word => word.length > 0);
                     if (words.length > 50) {
@@ -1413,7 +1401,7 @@ export default function Portfolio() {
                 />
                 <motion.button
                   type="submit"
-                  className="bg-yellow-400 text-gray-900 px-4 py-2 rounded-full font-bold w-full transition-transform hover:scale-105 text-sm sm:text-base"
+                  className="bg-yellow-400 text-black px-4 py-2 rounded-full font-bold w-full transition-transform hover:scale-105 text-sm sm:text-base"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
@@ -1426,7 +1414,7 @@ export default function Portfolio() {
       </main>
 
       <motion.footer
-        className={`py-6 sm:py-8 text-center transition-colors duration-300 ${theme === 'dark' ? 'bg-gray-900' : 'bg-gray-200'}`}
+        className={`py-6 sm:py-8 text-center transition-colors duration-300 ${theme === 'dark' ? 'bg-blue-900' : 'bg-blue-100'}`}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.2 }}
@@ -1454,7 +1442,7 @@ export default function Portfolio() {
             transition={{ duration: 0.3 }}
           >
             <motion.div
-              className={`p-6 rounded-lg shadow-xl max-w-md w-full ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-white text-gray-900'}`}
+              className={`p-6 rounded-lg max-w-md w-full ${theme === 'dark' ? 'bg-blue-900 text-white' : 'bg-blue-100 text-blue-900'}`}
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
@@ -1464,7 +1452,7 @@ export default function Portfolio() {
                 <h3 className="text-xl font-bold">Enter Password</h3>
                 <motion.button
                   onClick={() => setSelectedOutlet(null)}
-                  className="text-gray-500 hover:text-gray-700"
+                  className="text-yellow-400 hover:text-yellow-500"
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
                 >
@@ -1481,13 +1469,13 @@ export default function Portfolio() {
                     className="w-full p-2 mb-4 border rounded focus:outline-none focus:ring-2 focus:ring-yellow-400"
                     whileFocus={{ scale: 1.02 }}
                   />
-                  <Lock className="absolute right-3 top-2.5 text-gray-400" size={20} />
+                  <Lock className="absolute right-3 top-2.5 text-yellow-400" size={20} />
                 </div>
                 {error && <p className="text-red-500 mb-4">{error}</p>}
                 {!password && <p className="text-yellow-500 mb-4">Password Required</p>}
                 <motion.button
                   type="submit"
-                  className="w-full bg-yellow-400 text-gray-900 px-4 py-2 rounded-full font-bold transition-transform hover:scale-105"
+                  className="w-full bg-yellow-400 text-black px-4 py-2 rounded-full font-bold transition-transform hover:scale-105"
                   disabled={!password}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
@@ -1502,4 +1490,11 @@ export default function Portfolio() {
     </motion.div>
   )
 }
+
+
+
+
+
+
+
 
