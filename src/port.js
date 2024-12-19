@@ -2279,7 +2279,7 @@ export default function Portfolio() {
                 ))}
               </div>
             </motion.div>
-            <motion.div
+            <div
               className="lg:w-1/2"
               initial={{ opacity: 0, x: 50 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -2288,19 +2288,19 @@ export default function Portfolio() {
             >
               <form className="space-y-4" action="https://api.web3forms.com/submit" method="POST">
                 <input type="hidden" name="access_key" value="c95b3f68-9430-43a9-9661-5abef6c872b6" />
-                <motion.input 
+                <input 
                   type="text" 
                   placeholder="Full Name" 
                   className={`w-full p-2 rounded transition-colors duration-300 ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-gray-200 text-gray-800'}`}
                   whileFocus={{ scale: 1.02 }}
                 />
-                <motion.input 
+                <input 
                   type="email" 
                   placeholder="Email" 
                   className={`w-full p-2 rounded transition-colors duration-300 ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-gray-200 text-gray-800'}`}
                   whileFocus={{ scale: 1.02 }}
                 />
-                <motion.textarea 
+                <textarea 
                   placeholder="Type your message (max 50 words)" 
                   rows={4} 
                   maxLength={250}
@@ -2314,18 +2314,18 @@ export default function Portfolio() {
                   style={{ resize: 'none' }}
                   whileFocus={{ scale: 1.02 }}
                 />
-                <motion.button
+                <button
                   type="submit"
                   className="bg-yellow-400 text-black px-4 py-2 rounded-full font-bold w-full transition-transform hover:scale-105 text-sm sm:text-base"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
                   Submit
-                </motion.button>
+                </button>
               </form>
-            </motion.div>
+            </div>
           </div>
-        </motion.section>
+        </section>
       </main>
 
       <motion.footer
@@ -2337,7 +2337,7 @@ export default function Portfolio() {
         <p className="text-sm sm:text-base">&copy; 2024 SISAN. All rights reserved.</p>
       </motion.footer>
 
-      <motion.div 
+      <div 
         className={`fixed inset-0 pointer-events-none z-0 transition-opacity duration-600 ease-in-out ${isScrolling ? 'opacity-10' : 'opacity-0'}`}
         style={{
           background: `radial-gradient(circle at ${touchPosition.x}px ${touchPosition.y}px, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 50%)`,
@@ -2347,16 +2347,16 @@ export default function Portfolio() {
         transition={{ duration: 0.6 }}
       />
 
-      <AnimatePresence>
+     
         {selectedOutlet && (
-          <motion.div
+          <div
             className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-md flex items-center justify-center z-50"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
           >
-            <motion.div
+            <div
               className={`p-6 rounded-lg max-w-md w-full ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-gray-200 text-gray-800'}`}
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
@@ -2376,7 +2376,7 @@ export default function Portfolio() {
               </div>
               <form onSubmit={handlePasswordSubmit}>
                 <div className="relative">
-                  <motion.input
+                  <input
                     type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
@@ -2390,7 +2390,7 @@ export default function Portfolio() {
                 </div>
                 {error && <p className="text-red-500 mb-4">{error}</p>}
                 {!password && <p className="text-yellow-500 mb-4">Password Required</p>}
-                <motion.button
+                <button
                   type="submit"
                   className="w-full bg-yellow-400 text-black px-4 py-2 rounded-full font-bold transition-transform hover:scale-105"
                   disabled={!password}
@@ -2398,13 +2398,13 @@ export default function Portfolio() {
                   whileTap={{ scale: 0.95 }}
                 >
                   Unlock Content
-                </motion.button>
+                </button>
               </form>
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
         )}
-      </AnimatePresence>
-    </motion.div>
+ 
+    </div>
   );
 }
 
