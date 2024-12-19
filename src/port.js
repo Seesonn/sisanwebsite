@@ -1495,7 +1495,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, Moon, Sun, Music, Book, Feather, BookOpen, Linkedin, Facebook, Instagram, Send, Github, ExternalLink, Code2, Briefcase, Palette, ChevronDown, ChevronLeft, ChevronRight, X, Lock } from 'lucide-react';
-import Snowfall from './components/Snowfall';
+import Snowfall from './Component/Snowfall';
 
 // Import images (unchanged)
 import riyan from "./assets/riyan.jpg"
