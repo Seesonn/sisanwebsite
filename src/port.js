@@ -576,6 +576,19 @@
 //     </div>
 //   )
 // }
+
+
+
+
+
+
+
+
+
+
+
+
+
 'use client'
 
 import { useState, useEffect } from 'react'
@@ -672,7 +685,7 @@ function ProjectCard({ project, theme }) {
   }
 
   useEffect(() => {
-    const timer = setInterval(nextImage, 2000)
+    const timer = setInterval(nextImage, 3000)
     return () => clearInterval(timer)
   }, [])
 
@@ -681,29 +694,29 @@ function ProjectCard({ project, theme }) {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="rounded-lg overflow-hidden transition-all duration-300 hover:shadow-lg bg-opacity-10 backdrop-filter backdrop-blur-lg"
+      className="rounded-lg overflow-hidden shadow-lg"
       style={{
-        backgroundColor: theme === 'dark' ? 'rgba(0, 0, 0, 0.6)' : 'rgba(255, 255, 255, 0.6)',
+        backgroundColor: theme === 'dark' ? 'rgba(0, 0, 0, 0.8)' : 'rgba(255, 255, 255, 0.8)',
+        backdropFilter: 'blur(10px)',
       }}
     >
       <div className="relative h-48 overflow-hidden group">
-        {project.images.map((image, index) => (
+        <AnimatePresence initial={false}>
           <motion.img
-            key={index}
-            src={image}
-            alt={`${project.title} - Image ${index + 1}`}
-            className={`absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000 ${
-              index === currentImageIndex ? 'opacity-100' : 'opacity-0'
-            }`}
+            key={currentImageIndex}
+            src={project.images[currentImageIndex]}
+            alt={`${project.title} - Image ${currentImageIndex + 1}`}
+            className="absolute top-0 left-0 w-full h-full object-cover"
             initial={{ opacity: 0 }}
-            animate={{ opacity: index === currentImageIndex ? 1 : 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
             transition={{ duration: 0.5 }}
           />
-        ))}
+        </AnimatePresence>
         <motion.div
-          className="absolute top-2 left-2 px-2 py-1 bg-opacity-75 backdrop-blur-sm rounded-full text-xs font-semibold flex items-center"
+          className="absolute top-2 left-2 px-2 py-1 rounded-full text-xs font-semibold flex items-center"
           style={{
-            backgroundColor: theme === 'dark' ? 'rgba(0, 0, 0, 0.75)' : 'rgba(255, 255, 255, 0.75)',
+            backgroundColor: theme === 'dark' ? 'rgba(255, 255, 255, 0.2)' : 'rgba(0, 0, 0, 0.2)',
             color: theme === 'dark' ? 'white' : 'black',
           }}
         >
@@ -735,18 +748,18 @@ function ProjectCard({ project, theme }) {
         </motion.div>
       </div>
       <div className="p-6">
-        <h3 className="text-xl font-bold mb-2">{project.title}</h3>
-        <p className="text-sm mb-4">{project.description}</p>
+        <h3 className="text-xl font-bold mb-2" style={{ color: theme === 'dark' ? '#f0f0f0' : '#1a1a1a' }}>{project.title}</h3>
+        <p className="text-sm mb-4" style={{ color: theme === 'dark' ? '#d0d0d0' : '#4a4a4a' }}>{project.description}</p>
         <div className="flex space-x-4">
           <motion.a
             href={project.githubUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900"
+            className="flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500"
             style={{
-              backgroundColor: theme === 'dark' ? '#1a1a1a' : '#4a5568',
+              backgroundColor: theme === 'dark' ? '#333' : '#4a5568',
             }}
-            whileHover={{ scale: 1.05 }}
+            whileHover={{ scale: 1.05, backgroundColor: '#555' }}
             whileTap={{ scale: 0.95 }}
           >
             <Github className="mr-2 h-4 w-4" />
@@ -756,13 +769,13 @@ function ProjectCard({ project, theme }) {
             href={project.linkedinUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center justify-center px-4 py-2 border text-sm font-medium rounded-md transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+            className="flex items-center justify-center px-4 py-2 border text-sm font-medium rounded-md transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500"
             style={{
-              backgroundColor: theme === 'dark' ? '#4a5568' : '#e2e8f0',
-              color: theme === 'dark' ? 'white' : 'black',
-              borderColor: theme === 'dark' ? '#4a5568' : '#cbd5e0',
+              backgroundColor: theme === 'dark' ? '#f0f0f0' : '#e2e8f0',
+              color: theme === 'dark' ? 'black' : '#4a5568',
+              borderColor: theme === 'dark' ? '#f0f0f0' : '#cbd5e0',
             }}
-            whileHover={{ scale: 1.05 }}
+            whileHover={{ scale: 1.05, backgroundColor: theme === 'dark' ? '#ffffff' : '#d1d5db' }}
             whileTap={{ scale: 0.95 }}
           >
             <ExternalLink className="mr-2 h-4 w-4" />
@@ -873,18 +886,25 @@ export default function Portfolio() {
 
   return (
     <motion.div 
-      className={`min-h-screen w-full transition-colors duration-300 ease-in-out ${theme === 'dark' ? 'bg-black text-white' : 'bg-white text-gray-900'}`}
+      className={`min-h-screen w-full transition-colors duration-500 ease-in-out ${theme === 'dark' ? 'bg-black text-white' : 'bg-white text-gray-900'}`}
       onTouchMove={handleTouchMove}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
     >
-      <header className={`fixed w-full z-10 transition-all duration-300 ${isScrolled ? (theme === 'dark' ? 'bg-black shadow-md' : 'bg-white shadow-md') : 'bg-transparent'}`}>
+      <motion.header 
+        className={`fixed w-full z-10 transition-all duration-300 ${isScrolled ? (theme === 'dark' ? 'bg-black shadow-lg' : 'bg-white shadow-md') : 'bg-transparent'}`}
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        transition={{ type: 'spring', stiffness: 120, damping: 20 }}
+      >
         <div className="container mx-auto px-4 py-2 flex justify-between items-center">
           <motion.div
             className="relative w-8 h-8 sm:w-10 sm:h-10 overflow-hidden rounded-full shadow-lg hover:shadow-xl z-50 transition-shadow duration-300"
-            whileHover={{ scale: 1.1 }}
+            whileHover={{ scale: 1.1, rotate: 360 }}
             whileTap={{ scale: 0.9 }}
+          >
+            transition={{ type: 'spring', stiffness: 300, damping: 15 }}
           >
             <img
               src={logo}
@@ -931,12 +951,12 @@ export default function Portfolio() {
             </motion.button>
           </div>
         </div>
-      </header>
+      </motion.header>
 
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
-            className="fixed inset-0 z-20 bg-black bg-opacity-50 backdrop-blur-md flex items-center justify-center"
+            className="fixed inset-0 z-20 bg-black bg-opacity-90 backdrop-blur-md flex items-center justify-center"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -951,7 +971,7 @@ export default function Portfolio() {
             >
               <motion.button 
                 onClick={toggleMenu}
-                className={`absolute top-4 right-4 transition-colors ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}
+                className="absolute top-4 right-4 text-white transition-colors"
                 aria-label="Close menu"
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
@@ -964,8 +984,8 @@ export default function Portfolio() {
                   <motion.li key={section}>
                     <motion.button
                       onClick={() => scrollToSection(section)}
-                      className={`block hover:text-yellow-400 transition-colors ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}
-                      whileHover={{ scale: 1.1 }}
+                      className="block text-white hover:text-yellow-400 transition-colors"
+                      whileHover={{ scale: 1.1, x: 10 }}
                       whileTap={{ scale: 0.9 }}
                     >
                       {section.charAt(0).toUpperCase() + section.slice(1)}
