@@ -1489,9 +1489,6 @@
 //   )
 // }
 
-
-//----------------------------------------------------------------------------------------------------------------------------------------------------------
-
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, Moon, Sun, Music, Book, Feather, BookOpen, Linkedin, Facebook, Instagram, Send, Github, ExternalLink, Code2, Briefcase, Palette, ChevronDown, ChevronLeft, ChevronRight, X, Lock } from 'lucide-react';
@@ -1598,8 +1595,8 @@ function ProjectCard({ project, theme }) {
       transition={{ duration: 0.5 }}
       className="rounded-lg overflow-hidden shadow-lg"
       style={{
-        backgroundColor: theme === 'dark' ? '#2a2a2a' : '#ffffff',
-        border: `2px solid ${theme === 'dark' ? '#444' : '#e0e0e0'}`,
+        backgroundColor: theme === 'dark' ? '#1a1a1a' : '#ffffff',
+        border: `2px solid ${theme === 'dark' ? '#333' : '#e0e0e0'}`,
       }}
     >
       <div className="relative h-48 sm:h-56 md:h-64 overflow-hidden group">
@@ -1788,7 +1785,7 @@ export default function Portfolio() {
 
   return (
     <motion.div 
-      className={`min-h-screen w-full transition-colors duration-500 ease-in-out ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-900'}`}
+      className={`min-h-screen w-full transition-colors duration-500 ease-in-out ${theme === 'dark' ? 'bg-black text-white' : 'bg-white text-black'}`}
       onTouchMove={handleTouchMove}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
@@ -1796,7 +1793,7 @@ export default function Portfolio() {
     >
       {theme === 'dark' && <Snowfall />}
       <motion.header 
-        className={`fixed w-full z-20 transition-all duration-300 ${isScrolled ? (theme === 'dark' ? 'bg-gray-900 bg-opacity-90' : 'bg-white bg-opacity-90') : 'bg-transparent'}`}
+        className={`fixed w-full z-20 transition-all duration-300 ${isScrolled ? (theme === 'dark' ? 'bg-black bg-opacity-90' : 'bg-white bg-opacity-90') : 'bg-transparent'}`}
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ type: 'spring', stiffness: 120, damping: 20 }}
@@ -2045,7 +2042,7 @@ export default function Portfolio() {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  {tab.charAt(0).toUpperCase() +tab.slice(1)}
+                  {tab.charAt(0).toUpperCase() + tab.slice(1)}
                 </motion.button>
               ))}
             </div>
@@ -2329,7 +2326,7 @@ export default function Portfolio() {
       </main>
 
       <motion.footer
-        className={`py-6 sm:py-8 text-center transition-colors duration-300 ${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-200'}`}
+        className={`py-6 sm:py-8 text-center transition-colors duration-300 ${theme === 'dark' ? 'bg-gray-900' : 'bg-gray-100'}`}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.2 }}
@@ -2407,6 +2404,8 @@ export default function Portfolio() {
     </motion.div>
   );
 }
+
+
 
 
 
