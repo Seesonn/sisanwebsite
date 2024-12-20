@@ -2471,7 +2471,7 @@ export default function Portfolio() {
                 {(activeTab === 'skills' ? skills : tools).map((item) => (
                   <div
                     key={item.name}
-                    className={`p-4 rounded-lg flex flex-col items-center justify-center transform transition-all duration-300 hover:scale-105 ${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-200'}`}
+                    className={`p-4 rounded-lg flex flex-col items-center justify-center transform transition-all duration-300 hover:scale-105 ${theme === 'dark' ? ' bg-zinc-800' : 'bg-gray-200'}`}
                   >
                     <div className="w-12 h-12 md:w-16 md:h-16 mb-2 rounded-full bg-white flex items-center justify-center">
                       <img src={item.icon} className="w-8 h-8 md:w-10 md:h-10" alt={item.name} />
@@ -2499,7 +2499,7 @@ export default function Portfolio() {
                 onChange={(e) => setSelectedType(e.target.value)}
                 className={`block appearance-none w-full py-2 px-4 pr-8 rounded-lg leading-tight focus:outline-none focus:ring-2 focus:ring-yellow-400 ${
                   theme === 'dark'
-                    ? ' bg-zinc-800 text-white border-gray-700'
+                    ? 'bg-zinc-800 text-white border-gray-700'
                     : 'bg-white text-black border-gray-300'
                 }`}
               >
@@ -2532,7 +2532,7 @@ export default function Portfolio() {
             ].map((item, index) => (
               <div
                 key={index}
-                className={`p-4 rounded-lg overflow-hidden group ${theme === 'dark' ? ' bg-zinc-800' : 'bg-gray-200'}`}
+                className={`p-4 rounded-lg overflow-hidden group ${theme === 'dark' ? 'bg-zinc-800' : 'bg-gray-200'}`}
               >
                 <img src={item.image} alt={item.title} className="w-full h-40 object-cover rounded-lg mb-4" />
                 <h3 className={`text-lg sm:text-xl lg:text-2xl font-bold ${theme === 'dark' ? 'text-white' : 'text-black'}`}>{item.title}</h3>
