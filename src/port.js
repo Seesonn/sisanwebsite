@@ -1491,7 +1491,6 @@
 
 
 
-
 import React, { useState, useEffect } from 'react';
 import { ArrowRight, Moon, Sun, Music, Book, Feather, BookOpen, Linkedin, Facebook, Instagram, Send, Github, ExternalLink, Code2, Briefcase, ChevronDown, ChevronLeft, ChevronRight, X, Lock } from 'lucide-react';
 
@@ -1594,7 +1593,7 @@ function ProjectCard({ project }) {
       <div className="relative h-48 sm:h-56 md:h-64 overflow-hidden group">
         <img
           src={project.images[currentImageIndex]}
-          alt={${project.title} - Image ${currentImageIndex + 1}}
+          alt={`${project.title} - Image ${currentImageIndex + 1}`}
           className="absolute top-0 left-0 w-full h-full object-cover"
         />
         <div className="absolute top-2 left-2 px-2 py-1 rounded-full text-xs font-semibold flex items-center bg-zinc-800 text-white">
@@ -1648,9 +1647,6 @@ function ProjectCard({ project }) {
 export default function Portfolio() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const theme = 'dark';
-  const [touchPosition, setTouchPosition] = useState({ x: 0, y: 0 });
-  const [isScrolling, setIsScrolling] = useState(false);
   const [activeTab, setActiveTab] = useState('skills');
   const [selectedType, setSelectedType] = useState("All Projects");
   const [selectedOutlet, setSelectedOutlet] = useState(null);
@@ -1680,19 +1676,7 @@ export default function Portfolio() {
     { id: 'novel', title: 'Novel', description: 'Delve into the realms of thought-provoking novels.', icon: BookOpen, image: no }
   ];
 
-  const tabVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0 },
-    exit: { opacity: 0, y: -20 }
-  };
-
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-  //const toggleTheme = () => setTheme(theme === 'dark' ? 'light' : 'dark'); //Removed
-
-  const handleTouchMove = (e) => {
-    const touch = e.touches[0];
-    setTouchPosition({ x: touch.clientX, y: touch.clientY });
-  };
 
   const scrollToSection = (sectionId) => {
     const section = document.getElementById(sectionId);
@@ -1714,7 +1698,7 @@ export default function Portfolio() {
       setSelectedOutlet(null);
       setPassword('');
       setError('');
-      alert(${selectedOutlet?.charAt(0).toUpperCase()}${selectedOutlet?.slice(1)} content unlocked!);
+      alert(`${selectedOutlet?.charAt(0).toUpperCase()}${selectedOutlet?.slice(1)} content unlocked!`);
     } else {
       setError('You are not selected for this. Please try again.');
     }
@@ -1723,13 +1707,6 @@ export default function Portfolio() {
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
-      setIsScrolling(true);
-      
-      const scrollTimeout = setTimeout(() => {
-        setIsScrolling(false);
-      }, 150);
-
-      return () => clearTimeout(scrollTimeout);
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -1743,17 +1720,10 @@ export default function Portfolio() {
   const projectTypes = ["All Projects", "Original", "Clone"];
 
   return (
-    <div 
-      className="min-h-screen w-full bg-black text-white"
-      onTouchMove={handleTouchMove}
-    >
-      <header 
-        className={fixed w-full z-20 ${isScrolled ? 'bg-black bg-opacity-90' : 'bg-transparent'}}
-      >
+    <div className="min-h-screen w-full bg-black text-white">
+      <header className={`fixed w-full z-20 ${isScrolled ? 'bg-black bg-opacity-90' : 'bg-transparent'}`}>
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <div
-            className="relative w-8 h-8 sm:w-10 sm:h-10 overflow-hidden rounded-full z-50"
-          >
+          <div className="relative w-8 h-8 sm:w-10 sm:h-10 overflow-hidden rounded-full z-50">
             <img
               src={logo}
               alt="SISAN Logo"
@@ -1767,7 +1737,7 @@ export default function Portfolio() {
                 <li key={section}>
                   <button
                     onClick={() => scrollToSection(section)}
-                    className={hover:text-yellow-400 transition-colors text-sm lg:text-base text-zinc-300}
+                    className="hover:text-yellow-400 transition-colors text-sm lg:text-base text-zinc-300"
                   >
                     {section.charAt(0).toUpperCase() + section.slice(1)}
                   </button>
@@ -1781,101 +1751,73 @@ export default function Portfolio() {
               className="md:hidden w-8 h-8 flex flex-col justify-center items-center focus:outline-none"
               aria-label="Toggle menu"
             >
-              <span className={w-6 h-0.5 bg-current transition-all duration-300 ease-out ${isMenuOpen ? 'rotate-45 translate-y-1.5' : ''}} />
-              <span className={w-6 h-0.5 bg-current transition-all duration-300 ease-out my-1 ${isMenuOpen ? 'opacity-0' : ''}} />
-              <span className={w-6 h-0.5 bg-current transition-all duration-300 ease-out ${isMenuOpen ? '-rotate-45 -translate-y-1.5' : ''}} />
+              <span className={`w-6 h-0.5 bg-current transition-all duration-300 ease-out ${isMenuOpen ? 'rotate-45 translate-y-1.5' : ''}`} />
+              <span className={`w-6 h-0.5 bg-current transition-all duration-300 ease-out my-1 ${isMenuOpen ? 'opacity-0' : ''}`} />
+              <span className={`w-6 h-0.5 bg-current transition-all duration-300 ease-out ${isMenuOpen ? '-rotate-45 -translate-y-1.5' : ''}`} />
             </button>
           </div>
         </div>
       </header>
 
-      <div>
-        {isMenuOpen && (
-          <div
-            className="fixed inset-0 z-30 bg-black bg-opacity-90 backdrop-blur-md flex items-center justify-center"
-          >
-            <div
-              className="relative container mx-auto px-4 py-20"
+      {isMenuOpen && (
+        <div className="fixed inset-0 z-30 bg-black bg-opacity-90 backdrop-blur-md flex items-center justify-center">
+          <div className="relative container mx-auto px-4 py-20">
+            <button 
+              onClick={toggleMenu}
+              className="absolute top-4 right-4 text-white transition-colors"
+              aria-label="Close menu"
             >
-              <button 
-                onClick={toggleMenu}
-                className="absolute top-4 right-4 text-white transition-colors"
-                aria-label="Close menu"
-              >
-                <span className="sr-only">Close</span>
-                <X className="h-6 w-6" />
-              </button>
-              <ul className="space-y-8 text-2xl">
-                {['home', 'about', 'skill', 'projects', 'portfolio', 'creative-outlets', 'contact'].map((section) => (
-                  <li key={section}>
-                    <button
-                      onClick={() => scrollToSection(section)}
-                      className="block text-white hover:text-yellow-400 transition-colors"
-                    >
-                      {section.charAt(0).toUpperCase() + section.slice(1)}
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            </div>
+              <span className="sr-only">Close</span>
+              <X className="h-6 w-6" />
+            </button>
+            <ul className="space-y-8 text-2xl">
+              {['home', 'about', 'skill', 'projects', 'portfolio', 'creative-outlets', 'contact'].map((section) => (
+                <li key={section}>
+                  <button
+                    onClick={() => scrollToSection(section)}
+                    className="block text-white hover:text-yellow-400 transition-colors"
+                  >
+                    {section.charAt(0).toUpperCase() + section.slice(1)}
+                  </button>
+                </li>
+              ))}
+            </ul>
           </div>
-        )}
-      </div>
+        </div>
+      )}
 
       <main className="container mx-auto px-4 pt-20">
-        <section
-          id="home"
-          className="min-h-screen flex flex-col justify-center py-20"
-        >
+        <section id="home" className="min-h-screen flex flex-col justify-center py-20">
           <div className="flex flex-col md:flex-row items-center">
             <div className="md:w-1/2 mb-8 md:mb-0">
-              <h2
-                className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4"
-              >
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">
                 I'M SISAN BHATTARAI
               </h2>
-              <h3
-                className="text-2xl sm:text-3xl lg:text-4xl font-bold text-yellow-400 mb-4"
-              >
+              <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-yellow-400 mb-4">
                 Welcome to my website
               </h3>
-              <p
-                className="mb-6 text-sm sm:text-base lg:text-lg"
-              >
-                "Dear Visitor, as you navigate through the content of this website, remember that life is a journey filled with twists, turns, and chapters that shape our unique stories. Embrace the highs, learn from the lows, and know that you're not alone. Just like the ever-changing nature of a webpage, your life is a work in progress. Keep scrolling, keep exploring, and find inspiration in every pixel of your personal narrative. Your story matters, and this space is a reminder that, no matter what, there's always a new page waiting to be written.
+              <p className="mb-6 text-sm sm:text-base lg:text-lg">
+                "Dear Visitor, as you navigate through the content of this website, remember that life is a journey filled with twists, turns, and chapters that shape our unique stories. Embrace the highs, learn from the lows, and know that you're not alone. Just like the ever-changing nature of a webpage, your life is a work in progress. Keep scrolling, keep exploring, and find inspiration in every pixel of your personal narrative. Your story matters, and this space is a reminder that, no matter what, there's always a new page waiting to be written."
               </p>
-              <button
-                className="bg-yellow-400 text-black px-4 sm:px-6 py-2 rounded-full font-bold flex items-center text-sm sm:text-base"
-              >
+              <button className="bg-yellow-400 text-black px-4 sm:px-6 py-2 rounded-full font-bold flex items-center text-sm sm:text-base">
                 Follow Me <ArrowRight className="ml-2" size={16} />
               </button>
             </div>
-            <div
-              className="md:w-1/2"
-            >
+            <div className="md:w-1/2">
               <img src={home} alt="sisan" className="rounded-lg w-full max-w-md mx-auto" />
             </div>
           </div>
         </section>
 
-        <section
-          id="about"
-          className="py-20"
-        >
-          <h2
-            className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-8"
-          >
+        <section id="about" className="py-20">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-8">
             Personal Insights
           </h2>
           <div className="flex flex-col md:flex-row gap-8">
-            <div
-              className="md:w-1/3"
-            >
+            <div className="md:w-1/3">
               <img src={riyan} alt="Profile" className="rounded-lg w-full max-w-md mx-auto" />
             </div>
-            <div
-              className="md:w-2/3"
-            >
+            <div className="md:w-2/3">
               <p className="mb-6 text-sm sm:text-base lg:text-lg">Sisan Bhattarai, born on December 10, 2001, in Nepal.
               Passionate about coding and poetry, I find joy in the intersection of technology and creativity. Exploring the beauty of Nepal while pursuing my interests is what drives me.</p>
             
@@ -1891,19 +1833,12 @@ export default function Portfolio() {
           </div>
         </section>
         
-        <div
-          id="skill"
-          className="md:flex md:items-center md:justify-between py-20"
-        >
+        <div id="skill" className="md:flex md:items-center md:justify-between py-20">
           <div className="md:w-1/2 mb-6 md:mb-0">
-            <h2
-              className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-8"
-            >
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-8">
               My Programming Arsenal
             </h2>
-            <p
-              className="text-lg md:text-xl mb-6"
-            >
+            <p className="text-lg md:text-xl mb-6">
               Crafting intuitive interfaces that adapt swiftly, empowering users to accomplish tasks with unparalleled ease and efficiency.
             </p>
             <div className="flex space-x-2 mb-6 md:mb-0">
@@ -1924,48 +1859,37 @@ export default function Portfolio() {
           </div>
           <div className="md:w-1/2">
             <div className="overflow-hidden rounded-xl p-4 min-h-[280px]">
-              <div>
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                  {(activeTab === 'skills' ? skills : tools).map((item) => (
-                    <div
-                      key={item.name}
-                      className={p-4 rounded-lg flex flex-col items-center justify-center transform transition-all duration-300 hover:scale-105 bg-black}
-                    >
-                      <div className="w-12 h-12 md:w-16 md:h-16 mb-2 rounded-full bg-white flex items-center justify-center">
-                        <img src={item.icon} className="w-8 h-8 md:w-10 md:h-10" alt={item.name} />
-                      </div>
-                      <span className={text-sm font-medium text-white}>{item.name}</span>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                {(activeTab === 'skills' ? skills : tools).map((item) => (
+                  <div
+                    key={item.name}
+                    className="p-4 rounded-lg flex flex-col items-center justify-center transform transition-all duration-300 hover:scale-105 bg-black"
+                  >
+                    <div className="w-12 h-12 md:w-16 md:h-16 mb-2 rounded-full bg-white flex items-center justify-center">
+                      <img src={item.icon} className="w-8 h-8 md:w-10 md:h-10" alt={item.name} />
                     </div>
-                  ))}
-                </div>
+                    <span className="text-sm font-medium text-white">{item.name}</span>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
         </div>
      
-        <section
-          id="projects"
-          className="py-20"
-        >
-          <h2
-            className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-8"
-          >
+        <section id="projects" className="py-20">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-8">
             Recent Projects
           </h2>
-          <p
-            className="text-lg md:text-xl mb-6"
-          >
+          <p className="text-lg md:text-xl mb-6">
             Explore our latest web development projects, showcasing our expertise in creating innovative and efficient digital solutions.
           </p>
           
-          <div
-            className="flex justify-center mb-8"
-          >
+          <div className="flex justify-center mb-8">
             <div className="relative inline-block text-left">
               <select
                 value={selectedType}
                 onChange={(e) => setSelectedType(e.target.value)}
-                className={block appearance-none w-full py-2 px-4 pr-8 rounded-lg leading-tight focus:outline-none focus:ring-2 focus:ring-yellow-400 bg-black text-white border-gray-700}
+                className="block appearance-none w-full py-2 px-4 pr-8 rounded-lg leading-tight focus:outline-none focus:ring-2 focus:ring-yellow-400 bg-black text-white border-gray-700"
               >
                 {projectTypes.map((type) => (
                   <option key={type} value={type}>{type}</option>
@@ -1977,27 +1901,18 @@ export default function Portfolio() {
             </div>
           </div>
 
-          <div
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-          >
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredProjects.map((project) => (
               <ProjectCard key={project.id} project={project} />
             ))}
           </div>
         </section>
 
-        <section
-          id="portfolio"
-          className="py-20"
-        >
-          <h2
-            className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-8"
-          >
+        <section id="portfolio" className="py-20">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-8">
             Portfolio
           </h2>
-          <div
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
-          >
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {[
               { title: "Website Designing", image: web },
               { title: "UX/UI Designing", image: ui },
@@ -2005,7 +1920,7 @@ export default function Portfolio() {
             ].map((item, index) => (
               <div
                 key={index}
-                className={p-4 rounded-lg overflow-hidden group bg-black}
+                className="p-4 rounded-lg overflow-hidden group bg-black"
               >
                 <img src={item.image} alt={item.title} className="w-full h-40 object-cover rounded-lg mb-4" />
                 <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-white">{item.title}</h3>
@@ -2014,18 +1929,11 @@ export default function Portfolio() {
           </div>
         </section>
             
-        <section
-          id="creative-outlets"
-          className="py-20"
-        >
-          <h2
-            className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-8"
-          >
+        <section id="creative-outlets" className="py-20">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-8">
             Creative Outlets
           </h2>
-          <div
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8"
-          >
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
             {creativeOutlets.map((outlet) => (
               <div
                 key={outlet.id}
@@ -2046,14 +1954,9 @@ export default function Portfolio() {
           </div>
         </section>
 
-        <section
-          id="contact"
-          className="py-12 sm:py-20"
-        >
+        <section id="contact" className="py-12 sm:py-20">
           <div className="flex flex-col lg:flex-row gap-8">
-            <div
-              className="lg:w-1/2"
-            >
+            <div className="lg:w-1/2">
               <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-8 text-white">Get in Touch</h2>
               <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-4 text-white">Social Media</h3>
               <div className="flex space-x-4">
@@ -2072,9 +1975,7 @@ export default function Portfolio() {
                 ))}
               </div>
             </div>
-            <div
-              className="lg:w-1/2"
-            >
+            <div className="lg:w-1/2">
               <form className="space-y-4" action="https://api.web3forms.com/submit" method="POST">
                 <input type="hidden" name="access_key" value="c95b3f68-9430-43a9-9661-5abef6c872b6" />
                 <input 
@@ -2112,62 +2013,49 @@ export default function Portfolio() {
         </section>
       </main>
 
-      <footer
-        className="py-6 sm:py-8 text-center bg-black"
-      >
+      <footer className="py-6 sm:py-8 text-center bg-black">
         <p className="text-sm sm:text-base text-zinc-300">&copy; 2024 SISAN. All rights reserved.</p>
       </footer>
 
-      <div 
-        className={fixed inset-0 pointer-events-none z-0 transition-opacity duration-600 ease-in-out ${isScrolling ? 'opacity-10' : 'opacity-0'}}
-        style={{
-          background: radial-gradient(circle at ${touchPosition.x}px ${touchPosition.y}px, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 50%),
-        }}
-      />
-
-      <div>
-        {selectedOutlet && (
-          <div
-            className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-md flex items-center justify-center z-50"
-          >
-            <div
-              className={p-6 rounded-lg max-w-md w-full bg-black text-white}
-            >
-              <div className="flex justify-between items-center mb-4">
-                <h3 className="text-xl font-bold">Enter Password</h3>
-                <button
-                  onClick={() => setSelectedOutlet(null)}
-                  className="text-yellow-400 hover:text-yellow-500"
-                >
-                  <X size={24} />
-                </button>
-              </div>
-              <form onSubmit={handlePasswordSubmit}>
-                <div className="relative">
-                  <input
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="Enter password"
-                    className={w-full p-2 mb-4 border rounded focus:outline-none focus:ring-2 focus:ring-yellow-400 bg-black text-white}
-                  />
-                  <Lock className="absolute right-3 top-2.5 text-yellow-400" size={20} />
-                </div>
-                {error && <p className="text-red-500 mb-4">{error}</p>}
-                {!password && <p className="text-yellow-500 mb-4">Password Required</p>}
-                <button
-                  type="submit"
-                  className="w-full bg-yellow-400 text-black px-4 py-2 rounded-full font-bold transition-transform hover:scale-105"
-                  disabled={!password}
-                >
-                  Unlock Content
-                </button>
-              </form>
+      {selectedOutlet && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-md flex items-center justify-center z-50">
+          <div className="p-6 rounded-lg max-w-md w-full bg-black text-white">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-xl font-bold">Enter Password</h3>
+              <button
+                onClick={() => setSelectedOutlet(null)}
+                className="text-yellow-400 hover:text-yellow-500"
+              >
+                <X size={24} />
+              </button>
             </div>
+            <form onSubmit={handlePasswordSubmit}>
+              <div className="relative">
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Enter password"
+                  className="w-full p-2 mb-4 border rounded focus:outline-none focus:ring-2 focus:ring-yellow-400 bg-black text-white"
+                />
+                <Lock className="absolute right-3 top-2.5 text-yellow-400" size={20} />
+              </div>
+              {error && <p className="text-red-500 mb-4">{error}</p>}
+              {!password && <p className="text-yellow-500 mb-4">Password Required</p>}
+              <button
+                type="submit"
+                className="w-full bg-yellow-400 text-black px-4 py-2 rounded-full font-bold transition-transform hover:scale-105"
+                disabled={!password}
+              >
+                Unlock Content
+              </button>
+            </form>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 }
+
+
 
