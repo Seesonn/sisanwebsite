@@ -2063,10 +2063,8 @@
 
 
 
-
-
-
 import React, { useState, useEffect, useCallback } from 'react';
+import { motion } from 'framer-motion';
 import { ArrowRight, Moon, Sun, Music, Book, Feather, BookOpen, Linkedin, Facebook, Instagram, Send, Github, ExternalLink, Code2, Briefcase, ChevronDown, ChevronLeft, ChevronRight, X, Lock } from 'lucide-react';
 import Snowfall from './Component/Snowfall';
 
@@ -2388,7 +2386,12 @@ export default function Portfolio() {
 
       <main className="container mx-auto px-4 pt-20">
         <section id="home" className="min-h-screen flex flex-col justify-center py-20">
-          <div className="flex flex-col md:flex-row items-center">
+          <motion.div 
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="flex flex-col md:flex-row items-center"
+          >
             <div className="md:w-1/2 mb-8 md:mb-0">
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">
                 I'M SISAN BHATTARAI
@@ -2406,14 +2409,24 @@ export default function Portfolio() {
             <div className="md:w-1/2">
               <img src={home} alt="sisan" className="rounded-lg w-full max-w-md mx-auto" />
             </div>
-          </div>
+          </motion.div>
         </section>
 
         <section id="about" className="py-20">
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-8">
+          <motion.h2 
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-8"
+          >
             Personal Insights
-          </h2>
-          <div className="flex flex-col md:flex-row gap-8">
+          </motion.h2>
+          <motion.div 
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="flex flex-col md:flex-row gap-8"
+          >
             <div className="md:w-1/3">
               <img src={riyan} alt="Profile" className="rounded-lg w-full max-w-md mx-auto" />
             </div>
@@ -2430,11 +2443,16 @@ export default function Portfolio() {
                 <li>Learning Cyber Security</li>
               </ul>
             </div>
-          </div>
+          </motion.div>
         </section>
         
         <div id="skill" className="md:flex md:items-center md:justify-between py-20">
-          <div className="md:w-1/2 mb-6 md:mb-0">
+          <motion.div 
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
+            className="md:w-1/2 mb-6 md:mb-0"
+          >
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-8">
               My Programming Arsenal
             </h2>
@@ -2456,8 +2474,13 @@ export default function Portfolio() {
                 </button>
               ))}
             </div>
-          </div>
-          <div className="md:w-1/2">
+          </motion.div>
+          <motion.div 
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="md:w-1/2"
+          >
             <div className="overflow-hidden rounded-xl p-4 min-h-[280px]">
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                 {(activeTab === 'skills' ? skills : tools).map((item) => (
@@ -2473,13 +2496,18 @@ export default function Portfolio() {
                 ))}
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
      
         <section id="projects" className="py-20">
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-8">
+          <motion.h2 
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-8"
+          >
             Recent Projects
-          </h2>
+          </motion.h2>
           <p className="text-lg md:text-xl mb-6">
             Explore our latest web development projects, showcasing our expertise in creating innovative and efficient digital solutions.
           </p>
@@ -2505,11 +2533,16 @@ export default function Portfolio() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <motion.div 
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          >
             {filteredProjects.map((project) => (
               <ProjectCard key={project.id} project={project} theme={theme} />
             ))}
-          </div>
+          </motion.div>
         </section>
 
         <section id="portfolio" className="py-20">
