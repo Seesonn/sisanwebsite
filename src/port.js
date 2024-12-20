@@ -2550,7 +2550,7 @@ export default function Portfolio() {
               <div
                 key={outlet.id}
                 className={`rounded-lg overflow-hidden transition-all duration-300 hover:bg-opacity-80 p-4 ${
-                  theme === 'dark' ? 'bg-gray-800' : 'bg-gray-200'
+                  theme === 'dark' ? 'bg-gray-300' : 'bg-gray-200'
                 }`}
               >
                 <img src={outlet.image} alt={outlet.title} className="w-full h-32 sm:h-40 object-cover rounded-lg mb-4" />
@@ -2596,14 +2596,14 @@ export default function Portfolio() {
                   type="text" 
                   name="name"
                   placeholder="Full Name" 
-                  className={`w-full p-2 rounded transition-colors duration-300 ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-gray-200 text-gray-800/60'}`}
+                  className={`w-full p-2 rounded transition-colors duration-300 ${theme === 'dark' ? 'bg-gray-300 text-white' : 'bg-gray-200 text-gray-800'}`}
                   required
                 />
                 <input 
                   type="email" 
                   name="email"
                   placeholder="Email" 
-                  className={`w-full p-2 rounded transition-colors duration-300 ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-gray-200 text-gray-800/60'}`}
+                  className={`w-full p-2 rounded transition-colors duration-300 ${theme === 'dark' ? 'bg-gray-300 text-white' : 'bg-gray-200 text-gray-800'}`}
                   required
                 />
                 <textarea 
@@ -2611,7 +2611,7 @@ export default function Portfolio() {
                   placeholder="Type your message (max 50 words)" 
                   rows={4} 
                   maxLength={250}
-                  className={`w-full p-2 rounded transition-colors duration-300 ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-gray-200 text-gray-800'}`}
+                  className={`w-full p-2 rounded transition-colors duration-300 ${theme === 'dark' ? 'bg-gray-300 text-white' : 'bg-gray-200 text-gray-800'}`}
                   onInput={(e) => {
                     const words = e.target.value.split(/\s+/).filter(word => word.length > 0);
                     if (words.length > 50) {
@@ -2634,13 +2634,13 @@ export default function Portfolio() {
         </section>
       </main>
 
-      <footer className={`py-6 sm:py-8 text-center ${theme === 'dark' ? 'bg-gray-900' : 'bg-gray-100'}`}>
+      <footer className={`py-6 sm:py-8 text-center ${theme === 'dark' ? 'bg-gray-300' : 'bg-gray-100'}`}>
         <p className={`text-sm sm:text-base ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>&copy; 2024 SISAN. All rights reserved.</p>
       </footer>
 
       {selectedOutlet && (
         <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-md flex items-center justify-center z-50">
-          <div className={`p-6 rounded-lg max-w-md w-full ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-gray-200 text-gray-800'}`}>
+          <div className={`p-6 rounded-lg max-w-md w-full ${theme === 'dark' ? 'bg-gray-300 text-white' : 'bg-gray-200 text-gray-800'}`}>
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-xl font-bold">Enter Password</h3>
               <button
@@ -2658,7 +2658,7 @@ export default function Portfolio() {
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Enter password"
                   className={`w-full p-2 mb-4 border rounded focus:outline-none focus:ring-2 focus:ring-yellow-400 ${
-                    theme === 'dark' ? 'bg-gray-700 text-white' : 'bg-white text-gray-800'
+                    theme === 'dark' ? 'bg-gray-300 text-white' : 'bg-white text-gray-800'
                   }`}
                 />
                 <Lock className="absolute right-3 top-2.5 text-yellow-400" size={20} />
