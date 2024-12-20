@@ -2057,7 +2057,16 @@
 //   );
 // }
 
-import React, { useState, useEffect } from 'react';
+
+
+
+
+
+
+
+
+
+import React, { useState, useEffect, useCallback } from 'react';
 import { ArrowRight, Moon, Sun, Music, Book, Feather, BookOpen, Linkedin, Facebook, Instagram, Send, Github, ExternalLink, Code2, Briefcase, ChevronDown, ChevronLeft, ChevronRight, X, Lock } from 'lucide-react';
 import Snowfall from './Component/Snowfall';
 
@@ -2135,35 +2144,35 @@ const projects = [
   },
 ];
 
-function ProjectCard({ project }) {
+function ProjectCard({ project, theme }) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-  const nextImage = () => {
+  const nextImage = useCallback(() => {
     setCurrentImageIndex((prevIndex) => 
       prevIndex === project.images.length - 1 ? 0 : prevIndex + 1
     );
-  };
+  }, [project.images.length]);
 
-  const prevImage = () => {
+  const prevImage = useCallback(() => {
     setCurrentImageIndex((prevIndex) => 
       prevIndex === 0 ? project.images.length - 1 : prevIndex - 1
     );
-  };
+  }, [project.images.length]);
 
   useEffect(() => {
     const timer = setInterval(nextImage, 3000);
     return () => clearInterval(timer);
-  }, []);
+  }, [nextImage]);
 
   return (
-    <div className="rounded-lg overflow-hidden shadow-lg bg-zinc-900 border-2 border-zinc-800">
+    <div className={`rounded-lg overflow-hidden shadow-lg ${theme === 'dark' ? 'bg-zinc-900 border-2 border-zinc-800' : 'bg-white border-2 border-gray-200'}`}>
       <div className="relative h-48 sm:h-56 md:h-64 overflow-hidden group">
         <img
           src={project.images[currentImageIndex]}
           alt={`${project.title} - Image ${currentImageIndex + 1}`}
           className="absolute top-0 left-0 w-full h-full object-cover"
         />
-        <div className="absolute top-2 left-2 px-2 py-1 rounded-full text-xs font-semibold flex items-center bg-zinc-800 text-white">
+        <div className={`absolute top-2 left-2 px-2 py-1 rounded-full text-xs font-semibold flex items-center ${theme === 'dark' ? 'bg-zinc-800 text-white' : 'bg-gray-200 text-black'}`}>
           {project.type === 'Original' && <Code2 className="mr-1 h-3 w-3" />}
           {project.type === 'Clone' && <Briefcase className="mr-1 h-3 w-3" />}
           {project.type}
@@ -2184,14 +2193,14 @@ function ProjectCard({ project }) {
         </div>
       </div>
       <div className="p-6">
-        <h3 className="text-xl font-bold mb-2 text-white">{project.title}</h3>
-        <p className="text-sm mb-4 text-zinc-300">{project.description}</p>
+        <h3 className={`text-xl font-bold mb-2 ${theme === 'dark' ? 'text-white' : 'text-black'}`}>{project.title}</h3>
+        <p className={`text-sm mb-4 ${theme === 'dark' ? 'text-zinc-300' : 'text-gray-600'}`}>{project.description}</p>
         <div className="flex space-x-4">
           <a
             href={project.githubUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-yellow-600 hover:bg-yellow-700 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500"
+            className={`flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 ${theme === 'dark' ? 'bg-yellow-600 hover:bg-yellow-700' : 'bg-yellow-500 hover:bg-yellow-600'}`}
           >
             <Github className="mr-2 h-4 w-4" />
             Source Code
@@ -2200,7 +2209,7 @@ function ProjectCard({ project }) {
             href={project.linkedinUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center justify-center px-4 py-2 border text-sm font-medium rounded-md text-white bg-yellow-600 hover:bg-yellow-700 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500"
+            className={`flex items-center justify-center px-4 py-2 border text-sm font-medium rounded-md text-white transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 ${theme === 'dark' ? 'bg-yellow-600 hover:bg-yellow-700' : 'bg-yellow-500 hover:bg-yellow-600'}`}
           >
             <ExternalLink className="mr-2 h-4 w-4" />
             Preview
@@ -2221,6 +2230,7 @@ export default function Portfolio() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showSnowfall, setShowSnowfall] = useState(true);
 
   const skills = [
     { name: 'JavaScript', icon: ja },
@@ -2245,24 +2255,27 @@ export default function Portfolio() {
     { id: 'novel', title: 'Novel', description: 'Delve into the realms of thought-provoking novels.', icon: BookOpen, image: no }
   ];
 
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-  const toggleTheme = () => setTheme(theme === 'dark' ? 'light' : 'dark');
+  const toggleMenu = useCallback(() => setIsMenuOpen(!isMenuOpen), [isMenuOpen]);
+  const toggleTheme = useCallback(() => {
+    setTheme(prevTheme => prevTheme === 'dark' ? 'light' : 'dark');
+    setShowSnowfall(prevShow => !prevShow);
+  }, []);
 
-  const scrollToSection = (sectionId) => {
+  const scrollToSection = useCallback((sectionId) => {
     const section = document.getElementById(sectionId);
     if (section) {
       section.scrollIntoView({ behavior: 'smooth' });
     }
     setIsMenuOpen(false);
-  };
+  }, []);
 
-  const handlePrivateClick = (id) => {
+  const handlePrivateClick = useCallback((id) => {
     setSelectedOutlet(id);
     setPassword('');
     setError('');
-  };
+  }, []);
 
-  const handlePasswordSubmit = (e) => {
+  const handlePasswordSubmit = useCallback((e) => {
     e.preventDefault();
     if (password === 'sisan0011') {
       setSelectedOutlet(null);
@@ -2272,7 +2285,7 @@ export default function Portfolio() {
     } else {
       setError('You are not selected for this. Please try again.');
     }
-  };
+  }, [password, selectedOutlet]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -2289,7 +2302,7 @@ export default function Portfolio() {
 
   const projectTypes = ["All Projects", "Original", "Clone"];
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = useCallback(async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
     // Simulating form submission
@@ -2297,11 +2310,11 @@ export default function Portfolio() {
     setIsSubmitting(false);
     // Here you would typically handle the actual form submission
     alert('Form submitted successfully!');
-  };
+  }, []);
 
   return (
     <div className={`min-h-screen w-full ${theme === 'dark' ? 'bg-black text-white' : 'bg-white text-black'}`}>
-      {theme === 'dark' && <Snowfall />}
+      {showSnowfall && <Snowfall theme={theme} />}
       <header className={`fixed w-full z-20 ${isScrolled ? (theme === 'dark' ? 'bg-black bg-opacity-90' : 'bg-white bg-opacity-90') : 'bg-transparent'}`}>
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <div className="relative w-8 h-8 sm:w-10 sm:h-10 overflow-hidden rounded-full z-50">
@@ -2435,7 +2448,7 @@ export default function Portfolio() {
                   className={`px-6 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
                     activeTab === tab
                       ? 'bg-yellow-400 text-black'
-                      : 'bg-black text-white'
+                      : theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-gray-200 text-black'
                   }`}
                   onClick={() => setActiveTab(tab)}
                 >
@@ -2450,12 +2463,12 @@ export default function Portfolio() {
                 {(activeTab === 'skills' ? skills : tools).map((item) => (
                   <div
                     key={item.name}
-                    className="p-4 rounded-lg flex flex-col items-center justify-center transform transition-all duration-300 hover:scale-105 bg-black"
+                    className={`p-4 rounded-lg flex flex-col items-center justify-center transform transition-all duration-300 hover:scale-105 ${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-200'}`}
                   >
                     <div className="w-12 h-12 md:w-16 md:h-16 mb-2 rounded-full bg-white flex items-center justify-center">
                       <img src={item.icon} className="w-8 h-8 md:w-10 md:h-10" alt={item.name} />
                     </div>
-                    <span className="text-sm font-medium text-white">{item.name}</span>
+                    <span className={`text-sm font-medium ${theme === 'dark' ? 'text-white' : 'text-black'}`}>{item.name}</span>
                   </div>
                 ))}
               </div>
@@ -2476,7 +2489,11 @@ export default function Portfolio() {
               <select
                 value={selectedType}
                 onChange={(e) => setSelectedType(e.target.value)}
-                className="block appearance-none w-full py-2 px-4 pr-8 rounded-lg leading-tight focus:outline-none focus:ring-2 focus:ring-yellow-400 bg-black text-white border-gray-700"
+                className={`block appearance-none w-full py-2 px-4 pr-8 rounded-lg leading-tight focus:outline-none focus:ring-2 focus:ring-yellow-400 ${
+                  theme === 'dark'
+                    ? 'bg-gray-800 text-white border-gray-700'
+                    : 'bg-white text-black border-gray-300'
+                }`}
               >
                 {projectTypes.map((type) => (
                   <option key={type} value={type}>{type}</option>
@@ -2490,7 +2507,7 @@ export default function Portfolio() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredProjects.map((project) => (
-              <ProjectCard key={project.id} project={project} />
+              <ProjectCard key={project.id} project={project} theme={theme} />
             ))}
           </div>
         </section>
@@ -2507,10 +2524,10 @@ export default function Portfolio() {
             ].map((item, index) => (
               <div
                 key={index}
-                className="p-4 rounded-lg overflow-hidden group bg-black"
+                className={`p-4 rounded-lg overflow-hidden group ${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-200'}`}
               >
                 <img src={item.image} alt={item.title} className="w-full h-40 object-cover rounded-lg mb-4" />
-                <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-white">{item.title}</h3>
+                <h3 className={`text-lg sm:text-xl lg:text-2xl font-bold ${theme === 'dark' ? 'text-white' : 'text-black'}`}>{item.title}</h3>
               </div>
             ))}
           </div>
@@ -2524,11 +2541,13 @@ export default function Portfolio() {
             {creativeOutlets.map((outlet) => (
               <div
                 key={outlet.id}
-                className="rounded-lg overflow-hidden transition-all duration-300 hover:bg-zinc-800 p-4 bg-zinc-900"
+                className={`rounded-lg overflow-hidden transition-all duration-300 hover:bg-opacity-80 p-4 ${
+                  theme === 'dark' ? 'bg-gray-800' : 'bg-gray-200'
+                }`}
               >
                 <img src={outlet.image} alt={outlet.title} className="w-full h-32 sm:h-40 object-cover rounded-lg mb-4" />
-                <h3 className="text-lg sm:text-xl lg:text-2xl font-bold mb-2 text-white">{outlet.title}</h3>
-                <p className="mb-4 text-sm sm:text-base text-zinc-300">{outlet.description}</p>
+                <h3 className={`text-lg sm:text-xl lg:text-2xl font-bold mb-2 ${theme === 'dark' ? 'text-white' : 'text-black'}`}>{outlet.title}</h3>
+                <p className={`mb-4 text-sm sm:text-base ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>{outlet.description}</p>
                 <button 
                   onClick={() => handlePrivateClick(outlet.id)}
                   className="bg-yellow-400 text-black px-3 py-2 rounded-full font-bold flex items-center transition-transform hover:scale-105 text-sm"
@@ -2544,8 +2563,8 @@ export default function Portfolio() {
         <section id="contact" className="py-12 sm:py-20">
           <div className="flex flex-col lg:flex-row gap-8">
             <div className="lg:w-1/2">
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-8 text-white">Get in Touch</h2>
-              <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-4 text-white">Social Media</h3>
+              <h2 className={`text-2xl sm:text-3xl lg:text-4xl font-bold mb-8 ${theme === 'dark' ? 'text-white' : 'text-black'}`}>Get in Touch</h2>
+              <h3 className={`text-xl sm:text-2xl lg:text-3xl font-bold mb-4 ${theme === 'dark' ? 'text-white' : 'text-black'}`}>Social Media</h3>
               <div className="flex space-x-4">
                 {[
                   { icon: Linkedin, url: "https://www.linkedin.com/in/sisan-bhattarai-7006242b2" },
@@ -2555,7 +2574,7 @@ export default function Portfolio() {
                   <a
                     key={index}
                     href={social.url}
-                    className="text-2xl sm:text-3xl lg:text-4xl hover:text-yellow-400 transition-colors"
+                    className={`text-2xl sm:text-3xl lg:text-4xl hover:text-yellow-400 transition-colors ${theme === 'dark' ? 'text-white' : 'text-black'}`}
                   >
                     <social.icon />
                   </a>
