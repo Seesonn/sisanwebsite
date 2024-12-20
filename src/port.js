@@ -2634,7 +2634,7 @@ export default function Portfolio() {
         </section>
       </main>
 
-      <footer className={`py-6 sm:py-8 text-center ${theme === 'dark' ? 'bg-gray-300' : 'bg-gray-100'}`}>
+      <footer className={`py-6 sm:py-8 text-center ${theme === 'dark' ? 'bg-zinc-800' : 'bg-gray-100'}`}>
         <p className={`text-sm sm:text-base ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>&copy; 2024 SISAN. All rights reserved.</p>
       </footer>
 
