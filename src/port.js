@@ -2196,7 +2196,7 @@ function ProjectCard({ project, theme }) {
             href={project.githubUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className={`flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 ${theme === 'dark' ? 'bg-yellow-600 hover:bg-yellow-700' : 'bg-yellow-500 hover:bg-yellow-600'}`}
+            className={`flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-black transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 ${theme === 'dark' ? 'bg-white hover:bg-yellow-200' : 'bg-black/80 hover:bg-yellow-300'}`}
           >
             <Github className="mr-2 h-4 w-4" />
             Source Code
@@ -2205,7 +2205,7 @@ function ProjectCard({ project, theme }) {
             href={project.linkedinUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className={`flex items-center justify-center px-4 py-2 border text-sm font-medium rounded-md text-white transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 ${theme === 'dark' ? 'bg-yellow-600 hover:bg-yellow-700' : 'bg-yellow-500 hover:bg-yellow-600'}`}
+            className={`flex items-center justify-center px-4 py-2 border text-sm font-medium rounded-md text-black transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 ${theme === 'dark' ? 'bg-yellow-200 hover:bg-yellow-400' : 'bg-yellow-200 hover:bg-yellow-400'}`}
           >
             <ExternalLink className="mr-2 h-4 w-4" />
             Preview
