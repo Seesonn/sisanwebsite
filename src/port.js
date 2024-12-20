@@ -2640,7 +2640,7 @@ export default function Portfolio() {
 
       {selectedOutlet && (
         <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-md flex items-center justify-center z-50">
-          <div className={`p-6 rounded-lg max-w-md w-full ${theme === 'dark' ? 'bg-gray-300 text-white' : 'bg-gray-200 text-gray-800'}`}>
+          <div className={`p-6 rounded-lg max-w-md w-full ${theme === 'dark' ? ' bg-zinc-800 text-white' : 'bg-gray-200 text-gray-800'}`}>
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-xl font-bold">Enter Password</h3>
               <button
