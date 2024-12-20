@@ -2596,14 +2596,14 @@ export default function Portfolio() {
                   type="text" 
                   name="name"
                   placeholder="Full Name" 
-                  className={`w-full p-2 rounded transition-colors duration-300 ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-gray-200 text-gray-800'}`}
+                  className={`w-full p-2 rounded transition-colors duration-300 ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-gray-200 text-gray-800/60'}`}
                   required
                 />
                 <input 
                   type="email" 
                   name="email"
                   placeholder="Email" 
-                  className={`w-full p-2 rounded transition-colors duration-300 ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-gray-200 text-gray-800'}`}
+                  className={`w-full p-2 rounded transition-colors duration-300 ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-gray-200 text-gray-800/60'}`}
                   required
                 />
                 <textarea 
