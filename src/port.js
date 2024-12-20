@@ -2550,7 +2550,7 @@ export default function Portfolio() {
               <div
                 key={outlet.id}
                 className={`rounded-lg overflow-hidden transition-all duration-300 hover:bg-opacity-80 p-4 ${
-                  theme === 'dark' ? 'bg-gray-300' : 'bg-gray-200'
+                  theme === 'dark' ? 'bg-gray-800/90' : 'bg-gray-200'
                 }`}
               >
                 <img src={outlet.image} alt={outlet.title} className="w-full h-32 sm:h-40 object-cover rounded-lg mb-4" />
