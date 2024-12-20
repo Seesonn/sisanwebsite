@@ -2064,7 +2064,7 @@
 
 
 import React, { useState, useEffect, useCallback } from 'react';
-import { motion } from 'framer-motion';
+
 import { ArrowRight, Moon, Sun, Music, Book, Feather, BookOpen, Linkedin, Facebook, Instagram, Send, Github, ExternalLink, Code2, Briefcase, ChevronDown, ChevronLeft, ChevronRight, X, Lock } from 'lucide-react';
 import Snowfall from './Component/Snowfall';
 
