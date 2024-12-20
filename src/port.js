@@ -2161,7 +2161,7 @@ function ProjectCard({ project, theme }) {
   }, [nextImage]);
 
   return (
-    <div className={`rounded-lg overflow-hidden shadow-lg ${theme === 'dark' ? 'bg-gray-800' : 'bg-white'}`}>
+    <div className={`rounded-lg overflow-hidden shadow-lg ${theme === 'dark' ? ' bg-zinc-800' : 'bg-white'}`}>
       <div className="relative h-48 sm:h-56 md:h-64 overflow-hidden group">
         <img
           src={project.images[currentImageIndex]}
