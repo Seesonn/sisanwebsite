@@ -2456,7 +2456,7 @@ export default function Portfolio() {
                   className={`px-6 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
                     activeTab === tab
                       ? 'bg-yellow-400 text-black'
-                      : theme === 'dark' ? 'bg-gray-800/60 text-white' : 'bg-gray-200 text-black'
+                      : theme === 'dark' ? ' bg-zinc-800 text-white' : 'bg-gray-200 text-black'
                   }`}
                   onClick={() => setActiveTab(tab)}
                 >
@@ -2499,7 +2499,7 @@ export default function Portfolio() {
                 onChange={(e) => setSelectedType(e.target.value)}
                 className={`block appearance-none w-full py-2 px-4 pr-8 rounded-lg leading-tight focus:outline-none focus:ring-2 focus:ring-yellow-400 ${
                   theme === 'dark'
-                    ? 'bg-gray-800 text-white border-gray-700'
+                    ? ' bg-zinc-800 text-white border-gray-700'
                     : 'bg-white text-black border-gray-300'
                 }`}
               >
@@ -2532,7 +2532,7 @@ export default function Portfolio() {
             ].map((item, index) => (
               <div
                 key={index}
-                className={`p-4 rounded-lg overflow-hidden group ${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-200'}`}
+                className={`p-4 rounded-lg overflow-hidden group ${theme === 'dark' ? ' bg-zinc-800' : 'bg-gray-200'}`}
               >
                 <img src={item.image} alt={item.title} className="w-full h-40 object-cover rounded-lg mb-4" />
                 <h3 className={`text-lg sm:text-xl lg:text-2xl font-bold ${theme === 'dark' ? 'text-white' : 'text-black'}`}>{item.title}</h3>
@@ -2550,7 +2550,7 @@ export default function Portfolio() {
               <div
                 key={outlet.id}
                 className={`rounded-lg overflow-hidden transition-all duration-300 hover:bg-opacity-80 p-4 ${
-                  theme === 'dark' ? 'bg-gray-800/90' : 'bg-gray-200'
+                  theme === 'dark' ? ' bg-zinc-800' : 'bg-gray-200'
                 }`}
               >
                 <img src={outlet.image} alt={outlet.title} className="w-full h-32 sm:h-40 object-cover rounded-lg mb-4" />
@@ -2596,14 +2596,14 @@ export default function Portfolio() {
                   type="text" 
                   name="name"
                   placeholder="Full Name" 
-                  className={`w-full p-2 rounded transition-colors duration-300 ${theme === 'dark' ? 'bg-gray-300 text-white' : 'bg-gray-200 text-gray-800'}`}
+                  className={`w-full p-2 rounded transition-colors duration-300 ${theme === 'dark' ? ' bg-zinc-800 text-white' : 'bg-gray-200 text-gray-800'}`}
                   required
                 />
                 <input 
                   type="email" 
                   name="email"
                   placeholder="Email" 
-                  className={`w-full p-2 rounded transition-colors duration-300 ${theme === 'dark' ? 'bg-gray-300 text-white' : 'bg-gray-200 text-gray-800'}`}
+                  className={`w-full p-2 rounded transition-colors duration-300 ${theme === 'dark' ? ' bg-zinc-800 text-white' : 'bg-gray-200 text-gray-800'}`}
                   required
                 />
                 <textarea 
@@ -2611,7 +2611,7 @@ export default function Portfolio() {
                   placeholder="Type your message (max 50 words)" 
                   rows={4} 
                   maxLength={250}
-                  className={`w-full p-2 rounded transition-colors duration-300 ${theme === 'dark' ? 'bg-gray-300 text-white' : 'bg-gray-200 text-gray-800'}`}
+                  className={`w-full p-2 rounded transition-colors duration-300 ${theme === 'dark' ? ' bg-zinc-800 text-white' : 'bg-gray-200 text-gray-800'}`}
                   onInput={(e) => {
                     const words = e.target.value.split(/\s+/).filter(word => word.length > 0);
                     if (words.length > 50) {
@@ -2658,7 +2658,7 @@ export default function Portfolio() {
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Enter password"
                   className={`w-full p-2 mb-4 border rounded focus:outline-none focus:ring-2 focus:ring-yellow-400 ${
-                    theme === 'dark' ? 'bg-gray-300 text-white' : 'bg-white text-gray-800'
+                    theme === 'dark' ? ' bg-zinc-800 text-white' : 'bg-white text-gray-800'
                   }`}
                 />
                 <Lock className="absolute right-3 top-2.5 text-yellow-400" size={20} />
