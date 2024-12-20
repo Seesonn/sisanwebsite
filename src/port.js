@@ -2456,7 +2456,7 @@ export default function Portfolio() {
                   className={`px-6 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
                     activeTab === tab
                       ? 'bg-yellow-400 text-black'
-                      : theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-gray-200 text-black'
+                      : theme === 'dark' ? 'bg-gray-800/60 text-white' : 'bg-gray-200 text-black'
                   }`}
                   onClick={() => setActiveTab(tab)}
                 >
