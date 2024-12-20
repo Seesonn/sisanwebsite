@@ -2062,9 +2062,7 @@
 
 
 
-
 import React, { useState, useEffect, useCallback } from 'react';
-
 import { ArrowRight, Moon, Sun, Music, Book, Feather, BookOpen, Linkedin, Facebook, Instagram, Send, Github, ExternalLink, Code2, Briefcase, ChevronDown, ChevronLeft, ChevronRight, X, Lock } from 'lucide-react';
 import Snowfall from './Component/Snowfall';
 
@@ -2163,14 +2161,14 @@ function ProjectCard({ project, theme }) {
   }, [nextImage]);
 
   return (
-    <div className={`rounded-lg overflow-hidden shadow-lg ${theme === 'dark' ? 'bg-zinc-900 border-2 border-zinc-800' : 'bg-white border-2 border-gray-200'}`}>
+    <div className={`rounded-lg overflow-hidden shadow-lg ${theme === 'dark' ? 'bg-gray-800' : 'bg-white'}`}>
       <div className="relative h-48 sm:h-56 md:h-64 overflow-hidden group">
         <img
           src={project.images[currentImageIndex]}
           alt={`${project.title} - Image ${currentImageIndex + 1}`}
           className="absolute top-0 left-0 w-full h-full object-cover"
         />
-        <div className={`absolute top-2 left-2 px-2 py-1 rounded-full text-xs font-semibold flex items-center ${theme === 'dark' ? 'bg-zinc-800 text-white' : 'bg-gray-200 text-black'}`}>
+        <div className={`absolute top-2 left-2 px-2 py-1 rounded-full text-xs font-semibold flex items-center ${theme === 'dark' ? 'bg-gray-700 text-white' : 'bg-gray-200 text-black'}`}>
           {project.type === 'Original' && <Code2 className="mr-1 h-3 w-3" />}
           {project.type === 'Clone' && <Briefcase className="mr-1 h-3 w-3" />}
           {project.type}
@@ -2192,7 +2190,7 @@ function ProjectCard({ project, theme }) {
       </div>
       <div className="p-6">
         <h3 className={`text-xl font-bold mb-2 ${theme === 'dark' ? 'text-white' : 'text-black'}`}>{project.title}</h3>
-        <p className={`text-sm mb-4 ${theme === 'dark' ? 'text-zinc-300' : 'text-gray-600'}`}>{project.description}</p>
+        <p className={`text-sm mb-4 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>{project.description}</p>
         <div className="flex space-x-4">
           <a
             href={project.githubUrl}
@@ -2302,12 +2300,24 @@ export default function Portfolio() {
 
   const handleSubmit = useCallback(async (e) => {
     e.preventDefault();
+    const form = e.target;
+    const formData = new FormData(form);
+    const name = formData.get('name');
+    const email = formData.get('email');
+    const message = formData.get('message');
+
+    if (!name || !email || !message) {
+      alert('Please fill in all fields before submitting.');
+      return;
+    }
+
     setIsSubmitting(true);
     // Simulating form submission
     await new Promise(resolve => setTimeout(resolve, 3000));
     setIsSubmitting(false);
     // Here you would typically handle the actual form submission
     alert('Form submitted successfully!');
+    form.reset();
   }, []);
 
   return (
@@ -2386,12 +2396,7 @@ export default function Portfolio() {
 
       <main className="container mx-auto px-4 pt-20">
         <section id="home" className="min-h-screen flex flex-col justify-center py-20">
-          <motion.div 
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="flex flex-col md:flex-row items-center"
-          >
+          <div className="flex flex-col md:flex-row items-center">
             <div className="md:w-1/2 mb-8 md:mb-0">
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">
                 I'M SISAN BHATTARAI
@@ -2409,24 +2414,14 @@ export default function Portfolio() {
             <div className="md:w-1/2">
               <img src={home} alt="sisan" className="rounded-lg w-full max-w-md mx-auto" />
             </div>
-          </motion.div>
+          </div>
         </section>
 
         <section id="about" className="py-20">
-          <motion.h2 
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-8"
-          >
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-8">
             Personal Insights
-          </motion.h2>
-          <motion.div 
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="flex flex-col md:flex-row gap-8"
-          >
+          </h2>
+          <div className="flex flex-col md:flex-row gap-8">
             <div className="md:w-1/3">
               <img src={riyan} alt="Profile" className="rounded-lg w-full max-w-md mx-auto" />
             </div>
@@ -2443,16 +2438,11 @@ export default function Portfolio() {
                 <li>Learning Cyber Security</li>
               </ul>
             </div>
-          </motion.div>
+          </div>
         </section>
         
         <div id="skill" className="md:flex md:items-center md:justify-between py-20">
-          <motion.div 
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            className="md:w-1/2 mb-6 md:mb-0"
-          >
+          <div className="md:w-1/2 mb-6 md:mb-0">
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-8">
               My Programming Arsenal
             </h2>
@@ -2474,13 +2464,8 @@ export default function Portfolio() {
                 </button>
               ))}
             </div>
-          </motion.div>
-          <motion.div 
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="md:w-1/2"
-          >
+          </div>
+          <div className="md:w-1/2">
             <div className="overflow-hidden rounded-xl p-4 min-h-[280px]">
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                 {(activeTab === 'skills' ? skills : tools).map((item) => (
@@ -2496,18 +2481,13 @@ export default function Portfolio() {
                 ))}
               </div>
             </div>
-          </motion.div>
+          </div>
         </div>
      
         <section id="projects" className="py-20">
-          <motion.h2 
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-8"
-          >
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-8">
             Recent Projects
-          </motion.h2>
+          </h2>
           <p className="text-lg md:text-xl mb-6">
             Explore our latest web development projects, showcasing our expertise in creating innovative and efficient digital solutions.
           </p>
@@ -2533,16 +2513,11 @@ export default function Portfolio() {
             </div>
           </div>
 
-          <motion.div 
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-          >
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredProjects.map((project) => (
               <ProjectCard key={project.id} project={project} theme={theme} />
             ))}
-          </motion.div>
+          </div>
         </section>
 
         <section id="portfolio" className="py-20">
@@ -2619,15 +2594,20 @@ export default function Portfolio() {
                 <input type="hidden" name="access_key" value="c95b3f68-9430-43a9-9661-5abef6c872b6" />
                 <input 
                   type="text" 
+                  name="name"
                   placeholder="Full Name" 
                   className={`w-full p-2 rounded transition-colors duration-300 ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-gray-200 text-gray-800'}`}
+                  required
                 />
                 <input 
                   type="email" 
+                  name="email"
                   placeholder="Email" 
                   className={`w-full p-2 rounded transition-colors duration-300 ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-gray-200 text-gray-800'}`}
+                  required
                 />
                 <textarea 
+                  name="message"
                   placeholder="Type your message (max 50 words)" 
                   rows={4} 
                   maxLength={250}
@@ -2639,10 +2619,11 @@ export default function Portfolio() {
                     }
                   }}
                   style={{ resize: 'none' }}
+                  required
                 />
                 <button
                   type="submit"
-                  className={`bg-yellow-400 text-black px-4 py-2 rounded-full font-bold w-full transition-transform hover:scale-105 text-sm sm:text-base ${isSubmitting ? 'opacity-50 cursor-not-allowed' : ''}`}
+                  className={`bg-yellow-400 text-black px-4 py-2 rounded-full font-bold w-full transition-all duration-300 hover:bg-yellow-500 hover:scale-105 text-sm sm:text-base ${isSubmitting ? 'opacity-50 cursor-not-allowed' : ''}`}
                   disabled={isSubmitting}
                 >
                   {isSubmitting ? 'Submitting...' : 'Submit'}
@@ -2698,4 +2679,8 @@ export default function Portfolio() {
     </div>
   );
 }
+
+
+
+
 
