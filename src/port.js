@@ -2161,7 +2161,7 @@ function ProjectCard({ project, theme }) {
   }, [nextImage]);
 
   return (
-    <div className={`rounded-lg overflow-hidden shadow-lg ${theme === 'dark' ? ' bg-zinc-800' : 'bg-white'}`}>
+    <div className={`rounded-lg overflow-hidden shadow-lg ${theme === 'dark' ? ' bg-zinc-800' : 'bg-gray-200'}`}>
       <div className="relative h-48 sm:h-56 md:h-64 overflow-hidden group">
         <img
           src={project.images[currentImageIndex]}
@@ -2196,7 +2196,7 @@ function ProjectCard({ project, theme }) {
             href={project.githubUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className={`flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-black transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 ${theme === 'dark' ? 'bg-white hover:bg-yellow-200' : 'bg-black/40 hover:bg-yellow-300'}`}
+            className={`flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-black transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 ${theme === 'dark' ? 'bg-white hover:bg-yellow-200 ' : 'bg-black/60 text-white hover:bg-zinc-100'}`}
           >
             <Github className="mr-2 h-4 w-4" />
             Source Code
