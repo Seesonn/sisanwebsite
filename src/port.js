@@ -2500,7 +2500,7 @@ export default function Portfolio() {
                 className={`block appearance-none w-full py-2 px-4 pr-8 rounded-lg leading-tight focus:outline-none focus:ring-2 focus:ring-yellow-400 ${
                   theme === 'dark'
                     ? 'bg-zinc-800 text-white border-gray-700'
-                    : 'bg-white text-black border-gray-300'
+                    : 'bg-gray-200 text-black border-gray-300'
                 }`}
               >
                 {projectTypes.map((type) => (
