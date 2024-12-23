@@ -2168,7 +2168,7 @@ function ProjectCard({ project, theme }) {
           alt={`${project.title} - Image ${currentImageIndex + 1}`}
           className="absolute top-0 left-0 w-full h-full object-cover"
         />
-        <div className={`absolute top-2 left-2 px-2 py-1 rounded-full text-xs font-semibold flex items-center ${theme === 'dark' ? 'bg-gray-700 text-white' : 'bg-gray-200 text-black'}`}>
+        <div className={`absolute top-2 left-2 px-2 py-1 rounded-full text-xs font-semibold flex items-center ${theme === 'dark' ? 'bg-zinc-800 text-white' : 'bg-gray-200 text-black'}`}>
           {project.type === 'Original' && <Code2 className="mr-1 h-3 w-3" />}
           {project.type === 'Clone' && <Briefcase className="mr-1 h-3 w-3" />}
           {project.type}
@@ -2196,7 +2196,7 @@ function ProjectCard({ project, theme }) {
             href={project.githubUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className={`flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-black transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 ${theme === 'dark' ? 'bg-white hover:bg-yellow-200 ' : 'bg-black/60 text-white hover:bg-black/80'}`}
+            className={`flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-black transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 ${theme === 'dark' ? 'bg-white/60 hover:bg-white/80 ' : 'bg-black/60 text-white hover:bg-black/80'}`}
           >
             <Github className="mr-2 h-4 w-4" />
             Source Code
@@ -2205,7 +2205,7 @@ function ProjectCard({ project, theme }) {
             href={project.linkedinUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className={`flex items-center justify-center px-4 py-2 border text-sm font-medium rounded-md text-black transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 ${theme === 'dark' ? 'bg-yellow-200 hover:bg-yellow-400' : 'bg-yellow-200 hover:bg-yellow-400'}`}
+            className={`flex items-center justify-center px-4 py-2 border text-sm font-medium rounded-md text-black transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 ${theme === 'dark' ? 'bg-yellow-300 hover:bg-yellow-400' : 'bg-yellow-300 hover:bg-yellow-400'}`}
           >
             <ExternalLink className="mr-2 h-4 w-4" />
             Preview
