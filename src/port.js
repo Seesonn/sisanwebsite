@@ -2196,7 +2196,7 @@ function ProjectCard({ project, theme }) {
             href={project.githubUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className={`flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-black transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 ${theme === 'dark' ? 'bg-white/60 hover:bg-white/80 ' : 'bg-black/60 text-white hover:bg-black/80'}`}
+            className={`flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-black transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 ${theme === 'dark' ? 'bg-white/80 hover:bg-white/90 ' : 'bg-black/60 text-white hover:bg-black/80'}`}
           >
             <Github className="mr-2 h-4 w-4" />
             Source Code
