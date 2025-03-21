@@ -23,7 +23,7 @@ import {
   X,
   Lock,
 } from "lucide-react"
-import Snowfall from "./components/snowfall.jsx"
+import Snowfall from "./Component/snowfall.jsx"
 
 // Import images directly from assets folder
 import riyan from "./assets/riyan.jpg"
