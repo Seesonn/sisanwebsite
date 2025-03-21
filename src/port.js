@@ -1089,7 +1089,7 @@ export default function Portfolio() {
                       <motion.input
                         type="text"
                         name="name"
-                        placeholder="John Doe"
+                        placeholder=" eg.Sisan Bhattarai"
                         className={`w-full p-3 rounded-lg transition-colors duration-300 focus:ring-2 focus:ring-yellow-400 focus:outline-none ${
                           theme === "dark"
                             ? "bg-zinc-700 text-white border border-zinc-600"
@@ -1110,7 +1110,7 @@ export default function Portfolio() {
                       <motion.input
                         type="email"
                         name="email"
-                        placeholder="john@example.com"
+                        placeholder="eg.sisanbhattarai@gmail.comcom"
                         className={`w-full p-3 rounded-lg transition-colors duration-300 focus:ring-2 focus:ring-yellow-400 focus:outline-none ${
                           theme === "dark"
                             ? "bg-zinc-700 text-white border border-zinc-600"
