@@ -1,9 +1,6 @@
-
-
 "use client"
 
-import React from "react"
-import { useState, useEffect, useCallback, useRef } from "react"
+import React, { useState, useEffect, useCallback, useRef } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import {
   ArrowRight,
@@ -26,66 +23,41 @@ import {
   X,
   Lock,
 } from "lucide-react"
-import Snowfall from "./components/snowfall"
-import { cn } from "./utils/cn"
+import Snowfall from "./components/snowfall.jsx"
 
 // Import images directly from assets folder
-import logo from "./assets/logo.png"
-import profile from "./assets/riyan.jpg"
+import riyan from "./assets/riyan.jpg"
 import home from "./assets/home.png"
 import web from "./assets/web.jpg"
 import ui from "./assets/ui.jpg"
 import dev from "./assets/dev.jpg"
-import song from "./assets/so.png"
-import poem from "./assets/po.jpg"
-import story from "./assets/st.png"
-import novel from "./assets/no.png"
-import javascript from "./assets/javascript.png"
-import python from "./assets/py.png"
-import react from "./assets/re.png"
+import po from "./assets/po.jpg"
+import st from "./assets/st.png"
+import so from "./assets/so.png"
+import no from "./assets/no.png"
+import py from "./assets/py.png"
+import ja from "./assets/javascript.png"
+import vs from "./assets/vs.png"
+import re from "./assets/re.png"
+import ca from "./assets/ca.png"
+import poo from "./assets/po.png"
+import mo from "./assets/mo.png"
 import node from "./assets/node.png"
-import mongodb from "./assets/mo.png"
-import vscode from "./assets/vs.png"
-import canva from "./assets/ca.png"
-import photoshop from "./assets/poo.png"
 import git from "./assets/git.png"
-import figma from "./assets/figma.png"
-
-// Import project images
-import mortalmen1 from "./assets/ms.png"
-import mortalmen2 from "./assets/msm.png"
-import messenger1 from "./assets/ea1.png"
-import messenger2 from "./assets/ea2.png"
-import tiffin1 from "./assets/tf1.png"
-import tiffin2 from "./assets/tf2.png"
-import tiffin3 from "./assets/tf3.png"
-import dashboard1 from "./assets/ea3.png"
-import dashboard2 from "./assets/ea4.png"
-import dashboard3 from "./assets/ea5.png"
-
-// Create images object with imported assets
-const images = {
-  logo,
-  profile,
-  home,
-  web,
-  ui,
-  dev,
-  song,
-  poem,
-  story,
-  novel,
-  javascript,
-  python,
-  react,
-  node,
-  mongodb,
-  vscode,
-  canva,
-  photoshop,
-  git,
-  figma,
-}
+import fi from "./assets/figma.png"
+import ms from "./assets/ms.png"
+import msm from "./assets/msm.png"
+import ea1 from "./assets/ea1.png"
+import ea2 from "./assets/ea2.png"
+import ea3 from "./assets/ea3.png"
+import ea4 from "./assets/ea4.png"
+import ea5 from "./assets/ea5.png"
+import logo from "./assets/logo.png"
+import tf1 from "./assets/tf1.png"
+import tf2 from "./assets/tf2.png"
+import tf3 from "./assets/tf3.png"
+import a1 from "./assets/a1.png"
+import a2 from "./assets/a2.png"
 
 // Projects data with imported images
 const projects = [
@@ -94,7 +66,7 @@ const projects = [
     title: "MortalMen Online shop",
     description: "A fully responsive online store with advanced features.",
     type: "Original",
-    images: [mortalmen1, mortalmen2],
+    images: [a1, a2],
     githubUrl: "https://github.com/Seesonn/Edashboard.git",
     linkedinUrl: "https://mensfashion-indol.vercel.app/",
   },
@@ -103,7 +75,7 @@ const projects = [
     title: "Messenger Clone",
     description: "A feature-rich social media platform inspired by Messenger, built with modern web technologies.",
     type: "Clone",
-    images: [messenger1, messenger2],
+    images: [ms, msm],
     githubUrl: "https://github.com/username/messenger-clone",
     linkedinUrl: "https://linkedin.com/post/messenger-clone",
   },
@@ -112,7 +84,7 @@ const projects = [
     title: "Online Tiffin Delivery Website",
     description: "A fully responsive online Tiffin Delivering Website with advanced features.",
     type: "Original",
-    images: [tiffin1, tiffin2, tiffin3],
+    images: [tf1, tf2, tf3],
     githubUrl: "https://github.com/username/ecommerce-platform",
     linkedinUrl: "https://tiffindelivery.vercel.app/",
   },
@@ -121,7 +93,7 @@ const projects = [
     title: "E-commerce Admin Dashboard",
     description: "A fully responsive online store Admin Dashboard with advanced features.",
     type: "Original",
-    images: [dashboard1, dashboard2, dashboard3],
+    images: [ea1, ea2, ea3, ea4, ea5],
     githubUrl: "https://github.com/Seesonn/Edashboard.git",
     linkedinUrl: "https://linkedin.com/post/ecommerce-platform",
   },
@@ -149,12 +121,11 @@ function ProjectCard({ project, theme }) {
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
       viewport={{ once: true }}
-      className={cn(
-        "rounded-lg overflow-hidden shadow-lg transform transition-all duration-300 hover:scale-[1.02]",
+      className={`rounded-lg overflow-hidden shadow-lg transform transition-all duration-300 hover:scale-[1.02] ${
         theme === "dark"
           ? "bg-zinc-800/80 backdrop-blur-sm border border-zinc-700/50"
-          : "bg-white/80 backdrop-blur-sm border border-gray-200",
-      )}
+          : "bg-white/80 backdrop-blur-sm border border-gray-200"
+      }`}
     >
       <div className="relative h-48 sm:h-56 md:h-64 overflow-hidden group">
         <AnimatePresence initial={false} mode="wait">
@@ -170,10 +141,9 @@ function ProjectCard({ project, theme }) {
           />
         </AnimatePresence>
         <motion.div
-          className={cn(
-            "absolute top-2 left-2 px-2 py-1 rounded-full text-xs font-semibold flex items-center",
-            theme === "dark" ? "bg-black/50 text-white backdrop-blur-sm" : "bg-white/50 text-black backdrop-blur-sm",
-          )}
+          className={`absolute top-2 left-2 px-2 py-1 rounded-full text-xs font-semibold flex items-center ${
+            theme === "dark" ? "bg-black/50 text-white backdrop-blur-sm" : "bg-white/50 text-black backdrop-blur-sm"
+          }`}
           initial={{ opacity: 0, x: -10 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.2 }}
@@ -202,23 +172,18 @@ function ProjectCard({ project, theme }) {
         </div>
       </div>
       <div className="p-6">
-        <h3 className={cn("text-xl font-bold mb-2", theme === "dark" ? "text-white" : "text-gray-800")}>
+        <h3 className={`text-xl font-bold mb-2 ${theme === "dark" ? "text-white" : "text-gray-800"}`}>
           {project.title}
         </h3>
-        <p className={cn("text-sm mb-4", theme === "dark" ? "text-gray-300" : "text-gray-600")}>
-          {project.description}
-        </p>
+        <p className={`text-sm mb-4 ${theme === "dark" ? "text-gray-300" : "text-gray-600"}`}>{project.description}</p>
         <div className="flex space-x-4">
           <motion.a
             href={project.githubUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className={cn(
-              "flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500",
-              theme === "dark"
-                ? "bg-zinc-700 text-white hover:bg-zinc-600"
-                : "bg-gray-800 text-white hover:bg-gray-700",
-            )}
+            className={`flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 ${
+              theme === "dark" ? "bg-zinc-700 text-white hover:bg-zinc-600" : "bg-gray-800 text-white hover:bg-gray-700"
+            }`}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
@@ -243,7 +208,6 @@ function ProjectCard({ project, theme }) {
 }
 
 export default function Portfolio() {
-  // Rest of your component remains the same
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
   const [theme, setTheme] = useState("dark")
@@ -261,19 +225,19 @@ export default function Portfolio() {
   const sectionRefs = useRef(sections.map(() => React.createRef()))
 
   const skills = [
-    { name: "JavaScript", icon: images.javascript },
-    { name: "Python", icon: images.python },
-    { name: "React", icon: images.react },
-    { name: "Node", icon: images.node },
-    { name: "MongoDB", icon: images.mongodb },
+    { name: "JavaScript", icon: ja },
+    { name: "Python", icon: py },
+    { name: "React", icon: re },
+    { name: "Node", icon: node },
+    { name: "MongoDB", icon: mo },
   ]
 
   const tools = [
-    { name: "VS Code", icon: images.vscode },
-    { name: "Canva", icon: images.canva },
-    { name: "Photoshop", icon: images.photoshop },
-    { name: "Git", icon: images.git },
-    { name: "Figma", icon: images.figma },
+    { name: "VS Code", icon: vs },
+    { name: "Canva", icon: ca },
+    { name: "Photoshop", icon: poo },
+    { name: "Git", icon: git },
+    { name: "Figma", icon: fi },
   ]
 
   const creativeOutlets = [
@@ -282,28 +246,28 @@ export default function Portfolio() {
       title: "Song",
       description: "Dive into my songs that fuel and inspire your Music Passion.",
       icon: Music,
-      image: images.song,
+      image: so,
     },
     {
       id: "poetry",
       title: "Poem",
       description: "Collection of verses that capture emotions, reflection.",
       icon: Feather,
-      image: images.poem,
+      image: po,
     },
     {
       id: "story",
       title: "Story",
       description: "Collection of stories that blend reality with imagination.",
       icon: Book,
-      image: images.story,
+      image: st,
     },
     {
       id: "novel",
       title: "Novel",
       description: "Delve into the realms of thought-provoking novels.",
       icon: BookOpen,
-      image: images.novel,
+      image: no,
     },
   ]
 
@@ -439,10 +403,9 @@ export default function Portfolio() {
 
   return (
     <div
-      className={cn(
-        "min-h-screen w-full transition-colors duration-500 ease-in-out",
-        theme === "dark" ? "bg-black text-white" : "bg-gray-50 text-gray-900",
-      )}
+      className={`min-h-screen w-full transition-colors duration-500 ease-in-out ${
+        theme === "dark" ? "bg-black text-white" : "bg-gray-50 text-gray-900"
+      }`}
       onMouseMove={handleMouseMove}
     >
       {showSnowfall && <Snowfall theme={theme} />}
@@ -461,14 +424,13 @@ export default function Portfolio() {
       />
 
       <motion.header
-        className={cn(
-          "fixed w-full z-20 transition-all duration-300",
+        className={`fixed w-full z-20 transition-all duration-300 ${
           isScrolled
             ? theme === "dark"
               ? "bg-black/80 backdrop-blur-md border-b border-zinc-800/50"
               : "bg-white/80 backdrop-blur-md border-b border-gray-200/50"
-            : "bg-transparent",
-        )}
+            : "bg-transparent"
+        }`}
         variants={headerVariants}
         initial="hidden"
         animate="visible"
@@ -479,7 +441,7 @@ export default function Portfolio() {
             whileHover={{ scale: 1.1, rotate: 10 }}
             whileTap={{ scale: 0.9 }}
           >
-            <img src={images.logo || "/placeholder.svg"} alt="SISAN Logo" className="w-full h-full object-cover" />
+            <img src={logo || "/placeholder.svg"} alt="SISAN Logo" className="w-full h-full object-cover" />
           </motion.div>
 
           <nav className="hidden md:block">
@@ -488,16 +450,15 @@ export default function Portfolio() {
                 <li key={section}>
                   <motion.button
                     onClick={() => scrollToSection(section)}
-                    className={cn(
-                      "relative px-2 py-1 text-sm lg:text-base transition-colors",
+                    className={`relative px-2 py-1 text-sm lg:text-base transition-colors ${
                       activeSection === section
                         ? theme === "dark"
                           ? "text-yellow-400"
                           : "text-yellow-600"
                         : theme === "dark"
                           ? "text-gray-300 hover:text-white"
-                          : "text-gray-700 hover:text-black",
-                    )}
+                          : "text-gray-700 hover:text-black"
+                    }`}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
@@ -517,12 +478,11 @@ export default function Portfolio() {
           <div className="flex items-center space-x-4">
             <motion.button
               onClick={toggleTheme}
-              className={cn(
-                "p-2 rounded-full transition-colors duration-300",
+              className={`p-2 rounded-full transition-colors duration-300 ${
                 theme === "dark"
                   ? "bg-zinc-800 text-yellow-400 hover:bg-zinc-700"
-                  : "bg-gray-200 text-gray-700 hover:bg-gray-300",
-              )}
+                  : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+              }`}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
               aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
@@ -538,22 +498,19 @@ export default function Portfolio() {
               whileTap={{ scale: 0.9 }}
             >
               <span
-                className={cn(
-                  "w-6 h-0.5 bg-current transition-all duration-300 ease-out",
-                  isMenuOpen ? "rotate-45 translate-y-1.5" : "",
-                )}
+                className={`w-6 h-0.5 bg-current transition-all duration-300 ease-out ${
+                  isMenuOpen ? "rotate-45 translate-y-1.5" : ""
+                }`}
               />
               <span
-                className={cn(
-                  "w-6 h-0.5 bg-current transition-all duration-300 ease-out my-1",
-                  isMenuOpen ? "opacity-0" : "",
-                )}
+                className={`w-6 h-0.5 bg-current transition-all duration-300 ease-out my-1 ${
+                  isMenuOpen ? "opacity-0" : ""
+                }`}
               />
               <span
-                className={cn(
-                  "w-6 h-0.5 bg-current transition-all duration-300 ease-out",
-                  isMenuOpen ? "-rotate-45 -translate-y-1.5" : "",
-                )}
+                className={`w-6 h-0.5 bg-current transition-all duration-300 ease-out ${
+                  isMenuOpen ? "-rotate-45 -translate-y-1.5" : ""
+                }`}
               />
             </motion.button>
           </div>
@@ -612,10 +569,9 @@ export default function Portfolio() {
                   >
                     <motion.button
                       onClick={() => scrollToSection(section)}
-                      className={cn(
-                        "block text-white hover:text-yellow-400 transition-colors",
-                        activeSection === section ? "text-yellow-400" : "",
-                      )}
+                      className={`block text-white hover:text-yellow-400 transition-colors ${
+                        activeSection === section ? "text-yellow-400" : ""
+                      }`}
                       whileHover={{ scale: 1.05, x: 10 }}
                       whileTap={{ scale: 0.95 }}
                     >
@@ -679,7 +635,7 @@ export default function Portfolio() {
               viewport={{ once: true }}
             >
               <img
-                src={images.home || "/placeholder.svg"}
+                src={home || "/placeholder.svg"}
                 alt="Sisan"
                 className="rounded-lg w-full max-w-md mx-auto shadow-xl"
               />
@@ -702,7 +658,7 @@ export default function Portfolio() {
           <div className="flex flex-col md:flex-row gap-8">
             <motion.div className="md:w-1/3" variants={itemVariants}>
               <img
-                src={images.profile || "/placeholder.svg"}
+                src={riyan || "/placeholder.svg"}
                 alt="Profile"
                 className="rounded-lg w-full max-w-md mx-auto shadow-lg"
               />
@@ -759,14 +715,13 @@ export default function Portfolio() {
               {["skills", "tools"].map((tab) => (
                 <motion.button
                   key={tab}
-                  className={cn(
-                    "px-6 py-2 rounded-full text-sm font-medium transition-all duration-300",
+                  className={`px-6 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
                     activeTab === tab
                       ? "bg-yellow-400 text-black shadow-lg shadow-yellow-400/20"
                       : theme === "dark"
                         ? "bg-zinc-800 text-white hover:bg-zinc-700"
-                        : "bg-gray-200 text-black hover:bg-gray-300",
-                  )}
+                        : "bg-gray-200 text-black hover:bg-gray-300"
+                  }`}
                   onClick={() => setActiveTab(tab)}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
@@ -791,12 +746,11 @@ export default function Portfolio() {
                     {(activeTab === "skills" ? skills : tools).map((item, index) => (
                       <motion.div
                         key={item.name}
-                        className={cn(
-                          "p-4 rounded-lg flex flex-col items-center justify-center",
+                        className={`p-4 rounded-lg flex flex-col items-center justify-center ${
                           theme === "dark"
                             ? "bg-zinc-800/80 backdrop-blur-sm border border-zinc-700/50"
-                            : "bg-white/80 backdrop-blur-sm border border-gray-200",
-                        )}
+                            : "bg-white/80 backdrop-blur-sm border border-gray-200"
+                        }`}
                         initial={{ opacity: 0, y: 20 }}
                         animate={{
                           opacity: 1,
@@ -818,7 +772,7 @@ export default function Portfolio() {
                             alt={item.name}
                           />
                         </div>
-                        <span className={cn("text-sm font-medium", theme === "dark" ? "text-white" : "text-black")}>
+                        <span className={`text-sm font-medium ${theme === "dark" ? "text-white" : "text-black"}`}>
                           {item.name}
                         </span>
                       </motion.div>
@@ -852,10 +806,9 @@ export default function Portfolio() {
               <select
                 value={selectedType}
                 onChange={(e) => setSelectedType(e.target.value)}
-                className={cn(
-                  "block appearance-none w-full py-2 px-4 pr-8 rounded-lg leading-tight focus:outline-none focus:ring-2 focus:ring-yellow-400",
-                  theme === "dark" ? "bg-zinc-800 text-white border-zinc-700" : "bg-white text-black border-gray-300",
-                )}
+                className={`block appearance-none w-full py-2 px-4 pr-8 rounded-lg leading-tight focus:outline-none focus:ring-2 focus:ring-yellow-400 ${
+                  theme === "dark" ? "bg-zinc-800 text-white border-zinc-700" : "bg-white text-black border-gray-300"
+                }`}
               >
                 {projectTypes.map((type) => (
                   <option key={type} value={type}>
@@ -914,18 +867,17 @@ export default function Portfolio() {
             }}
           >
             {[
-              { title: "Website Designing", image: images.web },
-              { title: "UX/UI Designing", image: images.ui },
-              { title: "Cyber Security", image: images.dev },
+              { title: "Website Designing", image: web },
+              { title: "UX/UI Designing", image: ui },
+              { title: "Cyber Security", image: dev },
             ].map((item, index) => (
               <motion.div
                 key={index}
-                className={cn(
-                  "p-4 rounded-lg overflow-hidden group",
+                className={`p-4 rounded-lg overflow-hidden group ${
                   theme === "dark"
                     ? "bg-zinc-800/80 backdrop-blur-sm border border-zinc-700/50"
-                    : "bg-white/80 backdrop-blur-sm border border-gray-200",
-                )}
+                    : "bg-white/80 backdrop-blur-sm border border-gray-200"
+                }`}
                 variants={itemVariants}
                 whileHover={{
                   scale: 1.03,
@@ -941,10 +893,9 @@ export default function Portfolio() {
                   />
                 </div>
                 <h3
-                  className={cn(
-                    "text-lg sm:text-xl lg:text-2xl font-bold",
-                    theme === "dark" ? "text-white" : "text-black",
-                  )}
+                  className={`text-lg sm:text-xl lg:text-2xl font-bold ${
+                    theme === "dark" ? "text-white" : "text-black"
+                  }`}
                 >
                   {item.title}
                 </h3>
@@ -981,12 +932,11 @@ export default function Portfolio() {
             {creativeOutlets.map((outlet, index) => (
               <motion.div
                 key={outlet.id}
-                className={cn(
-                  "rounded-lg overflow-hidden transition-all duration-300 p-4",
+                className={`rounded-lg overflow-hidden transition-all duration-300 p-4 ${
                   theme === "dark"
                     ? "bg-zinc-800/80 backdrop-blur-sm border border-zinc-700/50"
-                    : "bg-white/80 backdrop-blur-sm border border-gray-200",
-                )}
+                    : "bg-white/80 backdrop-blur-sm border border-gray-200"
+                }`}
                 variants={itemVariants}
                 whileHover={{
                   scale: 1.03,
@@ -1002,14 +952,13 @@ export default function Portfolio() {
                   />
                 </div>
                 <h3
-                  className={cn(
-                    "text-lg sm:text-xl lg:text-2xl font-bold mb-2",
-                    theme === "dark" ? "text-white" : "text-black",
-                  )}
+                  className={`text-lg sm:text-xl lg:text-2xl font-bold mb-2 ${
+                    theme === "dark" ? "text-white" : "text-black"
+                  }`}
                 >
                   {outlet.title}
                 </h3>
-                <p className={cn("mb-4 text-sm sm:text-base", theme === "dark" ? "text-gray-300" : "text-gray-600")}>
+                <p className={`mb-4 text-sm sm:text-base ${theme === "dark" ? "text-gray-300" : "text-gray-600"}`}>
                   {outlet.description}
                 </p>
                 <motion.button
@@ -1036,18 +985,16 @@ export default function Portfolio() {
         >
           <motion.div className="mb-12 text-center" variants={itemVariants}>
             <h2
-              className={cn(
-                "text-2xl sm:text-3xl lg:text-4xl font-bold mb-4",
-                theme === "dark" ? "text-white" : "text-black",
-              )}
+              className={`text-2xl sm:text-3xl lg:text-4xl font-bold mb-4 ${
+                theme === "dark" ? "text-white" : "text-black"
+              }`}
             >
               Get in Touch
             </h2>
             <p
-              className={cn(
-                "max-w-2xl mx-auto text-sm sm:text-base",
-                theme === "dark" ? "text-gray-300" : "text-gray-600",
-              )}
+              className={`max-w-2xl mx-auto text-sm sm:text-base ${
+                theme === "dark" ? "text-gray-300" : "text-gray-600"
+              }`}
             >
               Have a project in mind or want to collaborate? Feel free to reach out and let's create something amazing
               together.
@@ -1057,12 +1004,11 @@ export default function Portfolio() {
           <div className="flex flex-col lg:flex-row gap-8">
             <motion.div className="lg:w-1/2 space-y-8" variants={itemVariants}>
               <div
-                className={cn(
-                  "p-6 rounded-xl",
+                className={`p-6 rounded-xl ${
                   theme === "dark"
                     ? "bg-zinc-800/80 backdrop-blur-sm border border-zinc-700/50"
-                    : "bg-white/80 backdrop-blur-sm border border-gray-200",
-                )}
+                    : "bg-white/80 backdrop-blur-sm border border-gray-200"
+                }`}
               >
                 <div className="flex items-center mb-4">
                   <div className="relative">
@@ -1073,7 +1019,7 @@ export default function Portfolio() {
                   </div>
                   <h3 className="ml-3 text-lg font-semibold">Available for Freelance</h3>
                 </div>
-                <p className={cn("text-sm mb-4", theme === "dark" ? "text-gray-300" : "text-gray-600")}>
+                <p className={`text-sm mb-4 ${theme === "dark" ? "text-gray-300" : "text-gray-600"}`}>
                   I'm currently available for remote freelance projects. Let's discuss how I can help bring your ideas
                   to life.
                 </p>
@@ -1087,12 +1033,11 @@ export default function Portfolio() {
               </div>
 
               <div
-                className={cn(
-                  "p-6 rounded-xl",
+                className={`p-6 rounded-xl ${
                   theme === "dark"
                     ? "bg-zinc-800/80 backdrop-blur-sm border border-zinc-700/50"
-                    : "bg-white/80 backdrop-blur-sm border border-gray-200",
-                )}
+                    : "bg-white/80 backdrop-blur-sm border border-gray-200"
+                }`}
               >
                 <h3 className="text-xl font-semibold mb-4">Social Media</h3>
                 <div className="flex space-x-6">
@@ -1107,19 +1052,17 @@ export default function Portfolio() {
                       href={social.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className={cn(
-                        "flex flex-col items-center justify-center transition-colors",
-                        theme === "dark" ? "text-white hover:text-yellow-400" : "text-black hover:text-yellow-600",
-                      )}
+                      className={`flex flex-col items-center justify-center transition-colors ${
+                        theme === "dark" ? "text-white hover:text-yellow-400" : "text-black hover:text-yellow-600"
+                      }`}
                       whileHover={{ scale: 1.1, y: -5 }}
                       whileTap={{ scale: 0.9 }}
                       aria-label={social.label}
                     >
                       <div
-                        className={cn(
-                          "p-3 rounded-full mb-2",
-                          theme === "dark" ? "bg-zinc-700 hover:bg-zinc-600" : "bg-gray-200 hover:bg-gray-300",
-                        )}
+                        className={`p-3 rounded-full mb-2 ${
+                          theme === "dark" ? "bg-zinc-700 hover:bg-zinc-600" : "bg-gray-200 hover:bg-gray-300"
+                        }`}
                       >
                         <social.icon className="h-5 w-5" />
                       </div>
@@ -1132,22 +1075,20 @@ export default function Portfolio() {
 
             <motion.div id="contact-form" className="lg:w-1/2" variants={itemVariants}>
               <div
-                className={cn(
-                  "p-6 rounded-xl",
+                className={`p-6 rounded-xl ${
                   theme === "dark"
                     ? "bg-zinc-800/80 backdrop-blur-sm border border-zinc-700/50"
-                    : "bg-white/80 backdrop-blur-sm border border-gray-200",
-                )}
+                    : "bg-white/80 backdrop-blur-sm border border-gray-200"
+                }`}
               >
                 <h3 className="text-xl font-semibold mb-4">Send a Message</h3>
                 <form className="space-y-4" onSubmit={handleSubmit}>
                   <motion.div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label
-                        className={cn(
-                          "block text-sm font-medium mb-1",
-                          theme === "dark" ? "text-gray-300" : "text-gray-700",
-                        )}
+                        className={`block text-sm font-medium mb-1 ${
+                          theme === "dark" ? "text-gray-300" : "text-gray-700"
+                        }`}
                       >
                         Full Name
                       </label>
@@ -1155,22 +1096,20 @@ export default function Portfolio() {
                         type="text"
                         name="name"
                         placeholder="John Doe"
-                        className={cn(
-                          "w-full p-3 rounded-lg transition-colors duration-300 focus:ring-2 focus:ring-yellow-400 focus:outline-none",
+                        className={`w-full p-3 rounded-lg transition-colors duration-300 focus:ring-2 focus:ring-yellow-400 focus:outline-none ${
                           theme === "dark"
                             ? "bg-zinc-700 text-white border border-zinc-600"
-                            : "bg-white text-gray-800 border border-gray-300",
-                        )}
+                            : "bg-white text-gray-800 border border-gray-300"
+                        }`}
                         required
                         whileFocus={{ scale: 1.01 }}
                       />
                     </div>
                     <div>
                       <label
-                        className={cn(
-                          "block text-sm font-medium mb-1",
-                          theme === "dark" ? "text-gray-300" : "text-gray-700",
-                        )}
+                        className={`block text-sm font-medium mb-1 ${
+                          theme === "dark" ? "text-gray-300" : "text-gray-700"
+                        }`}
                       >
                         Email
                       </label>
@@ -1178,12 +1117,11 @@ export default function Portfolio() {
                         type="email"
                         name="email"
                         placeholder="john@example.com"
-                        className={cn(
-                          "w-full p-3 rounded-lg transition-colors duration-300 focus:ring-2 focus:ring-yellow-400 focus:outline-none",
+                        className={`w-full p-3 rounded-lg transition-colors duration-300 focus:ring-2 focus:ring-yellow-400 focus:outline-none ${
                           theme === "dark"
                             ? "bg-zinc-700 text-white border border-zinc-600"
-                            : "bg-white text-gray-800 border border-gray-300",
-                        )}
+                            : "bg-white text-gray-800 border border-gray-300"
+                        }`}
                         required
                         whileFocus={{ scale: 1.01 }}
                       />
@@ -1192,10 +1130,9 @@ export default function Portfolio() {
 
                   <div>
                     <label
-                      className={cn(
-                        "block text-sm font-medium mb-1",
-                        theme === "dark" ? "text-gray-300" : "text-gray-700",
-                      )}
+                      className={`block text-sm font-medium mb-1 ${
+                        theme === "dark" ? "text-gray-300" : "text-gray-700"
+                      }`}
                     >
                       Subject
                     </label>
@@ -1203,12 +1140,11 @@ export default function Portfolio() {
                       type="text"
                       name="subject"
                       placeholder="Project Inquiry"
-                      className={cn(
-                        "w-full p-3 rounded-lg transition-colors duration-300 focus:ring-2 focus:ring-yellow-400 focus:outline-none",
+                      className={`w-full p-3 rounded-lg transition-colors duration-300 focus:ring-2 focus:ring-yellow-400 focus:outline-none ${
                         theme === "dark"
                           ? "bg-zinc-700 text-white border border-zinc-600"
-                          : "bg-white text-gray-800 border border-gray-300",
-                      )}
+                          : "bg-white text-gray-800 border border-gray-300"
+                      }`}
                       required
                       whileFocus={{ scale: 1.01 }}
                     />
@@ -1216,10 +1152,9 @@ export default function Portfolio() {
 
                   <div>
                     <label
-                      className={cn(
-                        "block text-sm font-medium mb-1",
-                        theme === "dark" ? "text-gray-300" : "text-gray-700",
-                      )}
+                      className={`block text-sm font-medium mb-1 ${
+                        theme === "dark" ? "text-gray-300" : "text-gray-700"
+                      }`}
                     >
                       Message
                     </label>
@@ -1228,27 +1163,25 @@ export default function Portfolio() {
                       placeholder="Tell me about your project..."
                       rows={4}
                       maxLength={250}
-                      className={cn(
-                        "w-full p-3 rounded-lg transition-colors duration-300 focus:ring-2 focus:ring-yellow-400 focus:outline-none",
+                      className={`w-full p-3 rounded-lg transition-colors duration-300 focus:ring-2 focus:ring-yellow-400 focus:outline-none ${
                         theme === "dark"
                           ? "bg-zinc-700 text-white border border-zinc-600"
-                          : "bg-white text-gray-800 border border-gray-300",
-                      )}
+                          : "bg-white text-gray-800 border border-gray-300"
+                      }`}
                       style={{ resize: "none" }}
                       required
                       whileFocus={{ scale: 1.01 }}
                     />
-                    <p className={cn("text-xs mt-1", theme === "dark" ? "text-gray-400" : "text-gray-500")}>
+                    <p className={`text-xs mt-1 ${theme === "dark" ? "text-gray-400" : "text-gray-500"}`}>
                       Max 50 words
                     </p>
                   </div>
 
                   <motion.button
                     type="submit"
-                    className={cn(
-                      "bg-yellow-400 text-black px-6 py-3 rounded-full font-bold w-full transition-all duration-300 hover:bg-yellow-500 shadow-lg hover:shadow-yellow-400/20 text-sm sm:text-base",
-                      isSubmitting ? "opacity-70 cursor-not-allowed" : "",
-                    )}
+                    className={`bg-yellow-400 text-black px-6 py-3 rounded-full font-bold w-full transition-all duration-300 hover:bg-yellow-500 shadow-lg hover:shadow-yellow-400/20 text-sm sm:text-base ${
+                      isSubmitting ? "opacity-70 cursor-not-allowed" : ""
+                    }`}
                     disabled={isSubmitting}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
@@ -1289,10 +1222,9 @@ export default function Portfolio() {
       </main>
 
       <motion.footer
-        className={cn(
-          "py-12 sm:py-16",
-          theme === "dark" ? "bg-zinc-900 border-t border-zinc-800" : "bg-gray-100 border-t border-gray-200",
-        )}
+        className={`py-12 sm:py-16 ${
+          theme === "dark" ? "bg-zinc-900 border-t border-zinc-800" : "bg-gray-100 border-t border-gray-200"
+        }`}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.2 }}
@@ -1305,13 +1237,13 @@ export default function Portfolio() {
                 whileHover={{ scale: 1.1, rotate: 10 }}
                 whileTap={{ scale: 0.9 }}
               >
-                <img src={images.logo || "/placeholder.svg"} alt="SISAN Logo" className="w-full h-full object-cover" />
+                <img src={logo || "/placeholder.svg"} alt="SISAN Logo" className="w-full h-full object-cover" />
               </motion.div>
               <div>
-                <h3 className={cn("text-xl font-bold", theme === "dark" ? "text-white" : "text-gray-800")}>
+                <h3 className={`text-xl font-bold ${theme === "dark" ? "text-white" : "text-gray-800"}`}>
                   Sisan Bhattarai
                 </h3>
-                <p className={cn("text-sm", theme === "dark" ? "text-gray-400" : "text-gray-600")}>
+                <p className={`text-sm ${theme === "dark" ? "text-gray-400" : "text-gray-600"}`}>
                   Full Stack Developer
                 </p>
               </div>
@@ -1329,12 +1261,11 @@ export default function Portfolio() {
                   href={social.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={cn(
-                    "p-2 rounded-full transition-colors",
+                  className={`p-2 rounded-full transition-colors ${
                     theme === "dark"
                       ? "bg-zinc-800 text-gray-300 hover:bg-zinc-700 hover:text-white"
-                      : "bg-white text-gray-600 hover:bg-gray-200 hover:text-black",
-                  )}
+                      : "bg-white text-gray-600 hover:bg-gray-200 hover:text-black"
+                  }`}
                   whileHover={{ scale: 1.1, y: -2 }}
                   whileTap={{ scale: 0.9 }}
                 >
@@ -1346,7 +1277,7 @@ export default function Portfolio() {
 
           <div className="border-t border-b py-8 my-8 grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>
-              <h4 className={cn("text-lg font-semibold mb-4", theme === "dark" ? "text-white" : "text-gray-800")}>
+              <h4 className={`text-lg font-semibold mb-4 ${theme === "dark" ? "text-white" : "text-gray-800"}`}>
                 Navigation
               </h4>
               <ul className="space-y-2">
@@ -1354,10 +1285,9 @@ export default function Portfolio() {
                   <li key={section}>
                     <motion.button
                       onClick={() => scrollToSection(section)}
-                      className={cn(
-                        "text-sm transition-colors",
-                        theme === "dark" ? "text-gray-400 hover:text-white" : "text-gray-600 hover:text-black",
-                      )}
+                      className={`text-sm transition-colors ${
+                        theme === "dark" ? "text-gray-400 hover:text-white" : "text-gray-600 hover:text-black"
+                      }`}
                       whileHover={{ x: 5 }}
                     >
                       {section.charAt(0).toUpperCase() + section.slice(1)}
@@ -1368,14 +1298,14 @@ export default function Portfolio() {
             </div>
 
             <div>
-              <h4 className={cn("text-lg font-semibold mb-4", theme === "dark" ? "text-white" : "text-gray-800")}>
+              <h4 className={`text-lg font-semibold mb-4 ${theme === "dark" ? "text-white" : "text-gray-800"}`}>
                 Services
               </h4>
               <ul className="space-y-2">
                 {["Web Development", "UI/UX Design", "Mobile Development", "Cyber Security", "SEO Optimization"].map(
                   (service, index) => (
                     <li key={index}>
-                      <span className={cn("text-sm", theme === "dark" ? "text-gray-400" : "text-gray-600")}>
+                      <span className={`text-sm ${theme === "dark" ? "text-gray-400" : "text-gray-600"}`}>
                         {service}
                       </span>
                     </li>
@@ -1385,12 +1315,12 @@ export default function Portfolio() {
             </div>
 
             <div>
-              <h4 className={cn("text-lg font-semibold mb-4", theme === "dark" ? "text-white" : "text-gray-800")}>
+              <h4 className={`text-lg font-semibold mb-4 ${theme === "dark" ? "text-white" : "text-gray-800"}`}>
                 Contact
               </h4>
               <ul className="space-y-2">
                 <li className="flex items-start">
-                  <span className={cn("mr-2 mt-1", theme === "dark" ? "text-gray-400" : "text-gray-600")}>
+                  <span className={`mr-2 mt-1 ${theme === "dark" ? "text-gray-400" : "text-gray-600"}`}>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       className="h-4 w-4"
@@ -1406,12 +1336,12 @@ export default function Portfolio() {
                       />
                     </svg>
                   </span>
-                  <span className={cn("text-sm", theme === "dark" ? "text-gray-400" : "text-gray-600")}>
+                  <span className={`text-sm ${theme === "dark" ? "text-gray-400" : "text-gray-600"}`}>
                     sisan.bhattarai@example.com
                   </span>
                 </li>
                 <li className="flex items-start">
-                  <span className={cn("mr-2 mt-1", theme === "dark" ? "text-gray-400" : "text-gray-600")}>
+                  <span className={`mr-2 mt-1 ${theme === "dark" ? "text-gray-400" : "text-gray-600"}`}>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       className="h-4 w-4"
@@ -1427,12 +1357,12 @@ export default function Portfolio() {
                       />
                     </svg>
                   </span>
-                  <span className={cn("text-sm", theme === "dark" ? "text-gray-400" : "text-gray-600")}>
+                  <span className={`text-sm ${theme === "dark" ? "text-gray-400" : "text-gray-600"}`}>
                     +977 9800000000
                   </span>
                 </li>
                 <li className="flex items-start">
-                  <span className={cn("mr-2 mt-1", theme === "dark" ? "text-gray-400" : "text-gray-600")}>
+                  <span className={`mr-2 mt-1 ${theme === "dark" ? "text-gray-400" : "text-gray-600"}`}>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       className="h-4 w-4"
@@ -1454,7 +1384,7 @@ export default function Portfolio() {
                       />
                     </svg>
                   </span>
-                  <span className={cn("text-sm", theme === "dark" ? "text-gray-400" : "text-gray-600")}>
+                  <span className={`text-sm ${theme === "dark" ? "text-gray-400" : "text-gray-600"}`}>
                     Kathmandu, Nepal
                   </span>
                 </li>
@@ -1463,19 +1393,18 @@ export default function Portfolio() {
           </div>
 
           <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className={cn("text-sm mb-4 md:mb-0", theme === "dark" ? "text-gray-400" : "text-gray-600")}>
+            <p className={`text-sm mb-4 md:mb-0 ${theme === "dark" ? "text-gray-400" : "text-gray-600"}`}>
               &copy; {new Date().getFullYear()} Sisan Bhattarai. All rights reserved.
             </p>
 
             <div className="flex items-center">
               <motion.button
                 onClick={toggleTheme}
-                className={cn(
-                  "p-2 rounded-full mr-4 transition-colors",
+                className={`p-2 rounded-full mr-4 transition-colors ${
                   theme === "dark"
                     ? "bg-zinc-800 text-yellow-400 hover:bg-zinc-700"
-                    : "bg-gray-200 text-gray-700 hover:bg-gray-300",
-                )}
+                    : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                }`}
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
@@ -1483,7 +1412,7 @@ export default function Portfolio() {
                 {theme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
               </motion.button>
 
-              <span className={cn("text-xs", theme === "dark" ? "text-gray-500" : "text-gray-400")}>
+              <span className={`text-xs ${theme === "dark" ? "text-gray-500" : "text-gray-400"}`}>
                 Designed with ❤️ by Sisan
               </span>
             </div>
@@ -1501,12 +1430,11 @@ export default function Portfolio() {
             transition={{ duration: 0.3 }}
           >
             <motion.div
-              className={cn(
-                "p-6 rounded-lg max-w-md w-full shadow-2xl",
+              className={`p-6 rounded-lg max-w-md w-full shadow-2xl ${
                 theme === "dark"
                   ? "bg-zinc-800 text-white border border-zinc-700"
-                  : "bg-white text-gray-800 border border-gray-200",
-              )}
+                  : "bg-white text-gray-800 border border-gray-200"
+              }`}
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
@@ -1530,12 +1458,11 @@ export default function Portfolio() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Enter password"
-                    className={cn(
-                      "w-full p-3 mb-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400",
+                    className={`w-full p-3 mb-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400 ${
                       theme === "dark"
                         ? "bg-zinc-700 text-white border-zinc-600"
-                        : "bg-white text-gray-800 border-gray-300",
-                    )}
+                        : "bg-white text-gray-800 border-gray-300"
+                    }`}
                     whileFocus={{ scale: 1.01 }}
                   />
                   <Lock className="absolute right-3 top-3 text-yellow-400" size={20} />
@@ -1559,7 +1486,6 @@ export default function Portfolio() {
     </div>
   )
 }
-
 
 
 
