@@ -1,4 +1,3 @@
-"use client"
 
 import React, { useState, useEffect, useCallback, useRef } from "react"
 import { motion, AnimatePresence } from "framer-motion"
@@ -23,7 +22,6 @@ import {
   X,
   Lock,
 } from "lucide-react"
-import Snowfall from "./Component/snowfall.jsx"
 
 // Import images directly from assets folder
 import riyan from "./assets/riyan.jpg"
@@ -217,7 +215,6 @@ export default function Portfolio() {
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [showSnowfall, setShowSnowfall] = useState(true)
   const [activeSection, setActiveSection] = useState("home")
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
 
@@ -279,7 +276,6 @@ export default function Portfolio() {
       document.documentElement.classList.toggle("dark", newTheme === "dark")
       return newTheme
     })
-    setShowSnowfall((prevShow) => !prevShow)
   }, [])
 
   const scrollToSection = useCallback((sectionId) => {
@@ -408,8 +404,6 @@ export default function Portfolio() {
       }`}
       onMouseMove={handleMouseMove}
     >
-      {showSnowfall && <Snowfall theme={theme} />}
-
       {/* Cursor follower */}
       <div
         className="fixed pointer-events-none z-0 w-64 h-64 rounded-full opacity-20 blur-3xl transition-all duration-300"
@@ -559,7 +553,7 @@ export default function Portfolio() {
                 initial="hidden"
                 animate="visible"
               >
-                {sections.map((section, index) => (
+                {sections.map((section) => (
                   <motion.li
                     key={section}
                     variants={{
@@ -600,7 +594,7 @@ export default function Portfolio() {
                 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600"
                 variants={itemVariants}
               >
-                I'M SISAN BHATTARAI
+                I&apos;M SISAN BHATTARAI
               </motion.h2>
               <motion.h3
                 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-yellow-400 mb-4"
@@ -609,12 +603,12 @@ export default function Portfolio() {
                 Welcome to my website
               </motion.h3>
               <motion.p className="mb-6 text-sm sm:text-base lg:text-lg" variants={itemVariants}>
-                "Dear Visitor, as you navigate through the content of this website, remember that life is a journey
+                &quot;Dear Visitor, as you navigate through the content of this website, remember that life is a journey
                 filled with twists, turns, and chapters that shape our unique stories. Embrace the highs, learn from the
-                lows, and know that you're not alone. Just like the ever-changing nature of a webpage, your life is a
-                work in progress. Keep scrolling, keep exploring, and find inspiration in every pixel of your personal
-                narrative. Your story matters, and this space is a reminder that, no matter what, there's always a new
-                page waiting to be written."
+                lows, and know that you&apos;re not alone. Just like the ever-changing nature of a webpage, your life is
+                a work in progress. Keep scrolling, keep exploring, and find inspiration in every pixel of your personal
+                narrative. Your story matters, and this space is a reminder that, no matter what, there&apos;s always a
+                new page waiting to be written.&quot;
               </motion.p>
               <motion.button
                 className="bg-yellow-400 text-black px-6 py-3 rounded-full font-bold flex items-center text-sm sm:text-base shadow-lg hover:shadow-yellow-400/20"
@@ -672,15 +666,15 @@ export default function Portfolio() {
               </motion.p>
 
               <motion.p className="mb-6 text-sm sm:text-base lg:text-lg" variants={itemVariants}>
-                I'm a passionate, self-proclaimed designer who specializes in full stack development (React.js &
+                I&apos;m a passionate, self-proclaimed designer who specializes in full stack development (React.js &
                 Node.js). I am very enthusiastic about bringing the technical and visual aspects of digital products to
                 life. User experience, pixel perfect design, and writing clean, readable, highly performant code matters
                 to me.
               </motion.p>
 
               <motion.p className="mb-6 text-sm sm:text-base lg:text-lg" variants={itemVariants}>
-                I began my journey as a web developer in 2023, and since then, I've continued to grow and evolve as a
-                developer, taking on new challenges and learning the latest technologies along the way.
+                I began my journey as a web developer in 2023, and since then, I&apos;ve continued to grow and evolve as
+                a developer, taking on new challenges and learning the latest technologies along the way.
               </motion.p>
 
               <motion.h3 className="text-xl font-bold mb-2" variants={itemVariants}>
@@ -929,7 +923,7 @@ export default function Portfolio() {
               },
             }}
           >
-            {creativeOutlets.map((outlet, index) => (
+            {creativeOutlets.map((outlet) => (
               <motion.div
                 key={outlet.id}
                 className={`rounded-lg overflow-hidden transition-all duration-300 p-4 ${
@@ -996,8 +990,8 @@ export default function Portfolio() {
                 theme === "dark" ? "text-gray-300" : "text-gray-600"
               }`}
             >
-              Have a project in mind or want to collaborate? Feel free to reach out and let's create something amazing
-              together.
+              Have a project in mind or want to collaborate? Feel free to reach out and let&apos;s create something
+              amazing together.
             </p>
           </motion.div>
 
@@ -1020,8 +1014,8 @@ export default function Portfolio() {
                   <h3 className="ml-3 text-lg font-semibold">Available for Freelance</h3>
                 </div>
                 <p className={`text-sm mb-4 ${theme === "dark" ? "text-gray-300" : "text-gray-600"}`}>
-                  I'm currently available for remote freelance projects. Let's discuss how I can help bring your ideas
-                  to life.
+                  I&apos;m currently available for remote freelance projects. Let&apos;s discuss how I can help bring
+                  your ideas to life.
                 </p>
                 <motion.a
                   href="#contact-form"
@@ -1127,28 +1121,6 @@ export default function Portfolio() {
                       />
                     </div>
                   </motion.div>
-
-                  <div>
-                    <label
-                      className={`block text-sm font-medium mb-1 ${
-                        theme === "dark" ? "text-gray-300" : "text-gray-700"
-                      }`}
-                    >
-                      Subject
-                    </label>
-                    <motion.input
-                      type="text"
-                      name="subject"
-                      placeholder="Project Inquiry"
-                      className={`w-full p-3 rounded-lg transition-colors duration-300 focus:ring-2 focus:ring-yellow-400 focus:outline-none ${
-                        theme === "dark"
-                          ? "bg-zinc-700 text-white border border-zinc-600"
-                          : "bg-white text-gray-800 border border-gray-300"
-                      }`}
-                      required
-                      whileFocus={{ scale: 1.01 }}
-                    />
-                  </div>
 
                   <div>
                     <label
@@ -1396,7 +1368,6 @@ export default function Portfolio() {
             <p className={`text-sm mb-4 md:mb-0 ${theme === "dark" ? "text-gray-400" : "text-gray-600"}`}>
               &copy; {new Date().getFullYear()} Sisan Bhattarai. All rights reserved.
             </p>
-
             <div className="flex items-center">
               <motion.button
                 onClick={toggleTheme}
@@ -1486,7 +1457,6 @@ export default function Portfolio() {
     </div>
   )
 }
-
 
 
 
