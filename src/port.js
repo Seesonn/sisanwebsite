@@ -1274,7 +1274,7 @@ export default function Portfolio() {
                 Services
               </h4>
               <ul className="space-y-2">
-                {["Web Development", "UI/UX Design", "Mobile Development", "Cyber Security", "SEO Optimization"].map(
+                {["Web Development", "DSA", "Cyber Security"].map(
                   (service, index) => (
                     <li key={index}>
                       <span className={`text-sm ${theme === "dark" ? "text-gray-400" : "text-gray-600"}`}>
@@ -1309,7 +1309,7 @@ export default function Portfolio() {
                     </svg>
                   </span>
                   <span className={`text-sm ${theme === "dark" ? "text-gray-400" : "text-gray-600"}`}>
-                    sisan.bhattarai@example.com
+                    sisanbhattarai.dev@gmail.com
                   </span>
                 </li>
                 <li className="flex items-start">
@@ -1384,7 +1384,7 @@ export default function Portfolio() {
               </motion.button>
 
               <span className={`text-xs ${theme === "dark" ? "text-gray-500" : "text-gray-400"}`}>
-                Designed with ❤️ by Sisan
+                Designed by Sisan
               </span>
             </div>
           </div>
