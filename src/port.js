@@ -1,4 +1,4 @@
-
+"use client"
 
 import React, { useState, useEffect, useCallback, useRef } from "react"
 import { motion, AnimatePresence } from "framer-motion"
@@ -379,10 +379,11 @@ export default function Portfolio() {
   )
 
   const handleMouseMove = useCallback((e) => {
-    setMousePosition({ x: e.clientX, y: e.clientY })
+    setMousePosition({ x: e.clientX || 0, y: e.clientY || 0 })
   }, [])
 
   useEffect(() => {
+    // Initialize dark mode on first render
     document.documentElement.classList.toggle("dark", theme === "dark")
 
     const handleScroll = () => {
@@ -395,7 +396,7 @@ export default function Portfolio() {
       sections.forEach((section, index) => {
         const element = document.getElementById(section)
         if (element) {
-          const { offsetTop, offsetHeight } = element
+          const { offsetTop } = element
           if (currentScrollPos >= offsetTop - 100) {
             activeIndex = index
           }
@@ -407,6 +408,9 @@ export default function Portfolio() {
 
     window.addEventListener("scroll", handleScroll)
     window.addEventListener("mousemove", handleMouseMove)
+
+    // Call handleScroll once to set initial active section
+    handleScroll()
 
     return () => {
       window.removeEventListener("scroll", handleScroll)
@@ -631,7 +635,7 @@ export default function Portfolio() {
                   initial="hidden"
                   animate="visible"
                 >
-                  {sections.map((section, index) => (
+                  {sections.map((section) => (
                     <motion.li key={section} variants={itemVariants}>
                       <motion.button
                         onClick={() => scrollToSection(section)}
