@@ -1,4 +1,5 @@
 
+
 import React, { useState, useEffect, useCallback, useRef } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import {
@@ -22,13 +23,9 @@ import {
   X,
   Lock,
 } from "lucide-react"
-import { useTypewriter, Cursor } from "react-simple-typewriter"
 
 // Import images directly from assets folder
 import riyan from "./assets/riyan.jpg"
-import web from "./assets/web.jpg"
-import ui from "./assets/ui.jpg"
-import dev from "./assets/dev.jpg"
 import po from "./assets/po.jpg"
 import st from "./assets/st.png"
 import so from "./assets/so.png"
@@ -220,13 +217,34 @@ export default function Portfolio() {
   const [activeSection, setActiveSection] = useState("home")
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
 
-  const [text] = useTypewriter({
-    words: ["Full Stack Developer", "Web Designer", "UI/UX Designer", "React Developer"],
-    loop: true,
-    delaySpeed: 2000,
-    typeSpeed: 70,
-    deleteSpeed: 50,
-  })
+  const [text, setText] = useState("")
+  const [isDeleting, setIsDeleting] = useState(false)
+  const [loopNum, setLoopNum] = useState(0)
+  const [typingSpeed, setTypingSpeed] = useState(70)
+
+  const phrases = ["Full Stack Developer", "Web Designer", "UI/UX Designer", "React Developer"]
+
+  useEffect(() => {
+    const handleTyping = () => {
+      const i = loopNum % phrases.length
+      const fullText = phrases[i]
+
+      setText(isDeleting ? fullText.substring(0, text.length - 1) : fullText.substring(0, text.length + 1))
+
+      setTypingSpeed(isDeleting ? 50 : 70)
+
+      if (!isDeleting && text === fullText) {
+        // Pause at end of typing
+        setTimeout(() => setIsDeleting(true), 2000)
+      } else if (isDeleting && text === "") {
+        setIsDeleting(false)
+        setLoopNum(loopNum + 1)
+      }
+    }
+
+    const timer = setTimeout(handleTyping, typingSpeed)
+    return () => clearTimeout(timer)
+  }, [text, isDeleting, loopNum, typingSpeed, phrases])
 
   const sections = ["home", "about", "skill", "projects", "portfolio", "creative-outlets", "contact"]
   const sectionRefs = useRef(sections.map(() => React.createRef()))
@@ -596,360 +614,524 @@ export default function Portfolio() {
             >
               <motion.button
                 onClick={toggleMenu}
-                className="absolute top-4 right-4 text-white transition-colors"
-                aria-label="Close menu"
+                className="absolute top-4 right-4 p-2 rounded-full bg-zinc-800 text-white hover:bg-zinc-700 transition-colors duration-300"
                 whileTap={{ scale: 0.9 }}
+                aria-label="Close menu"
               >
-                <span className="sr-only">Close</span>
-                <X className="h-6 w-6" />
+                <X size={20} />
               </motion.button>
 
-              <motion.ul
-                className="space-y-6 text-2xl"
-                variants={staggerContainerVariants}
-                initial="hidden"
-                animate="visible"
-              >
-                {sections.map((section) => (
-                  <motion.li
-                    key={section}
-                    variants={{
-                      hidden: { opacity: 0, x: -50 },
-                      visible: { opacity: 1, x: 0 },
-                    }}
+              <motion.nav className="flex flex-col items-center justify-center h-full">
+                <motion.ul
+                  className="flex flex-col space-y-6 text-center"
+                  variants={staggerContainerVariants}
+                  initial="hidden"
+                  animate="visible"
+                >
+                  {sections.map((section, index) => (
+                    <motion.li key={section} variants={itemVariants}>
+                      <motion.button
+                        onClick={() => scrollToSection(section)}
+                        className={`text-2xl font-medium transition-colors ${
+                          activeSection === section ? "text-yellow-400" : "text-gray-300 hover:text-white"
+                        }`}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        {section.charAt(0).toUpperCase() + section.slice(1)}
+                      </motion.button>
+                    </motion.li>
+                  ))}
+                </motion.ul>
+
+                <motion.div
+                  className="mt-12 flex space-x-6"
+                  variants={fadeInVariants}
+                  initial="hidden"
+                  animate="visible"
+                  transition={{ delay: 0.3 }}
+                >
+                  <motion.a
+                    href="https://github.com/username"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gray-300 hover:text-white transition-colors duration-300"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    aria-label="GitHub"
                   >
-                    <motion.button
-                      onClick={() => scrollToSection(section)}
-                      className={`block text-white hover:text-yellow-400 transition-colors ${
-                        activeSection === section ? "text-yellow-400" : ""
-                      }`}
-                      whileTap={{ scale: 0.95 }}
-                    >
-                      {section.charAt(0).toUpperCase() + section.slice(1)}
-                    </motion.button>
-                  </motion.li>
-                ))}
-              </motion.ul>
+                    <Github size={24} />
+                  </motion.a>
+                  <motion.a
+                    href="https://linkedin.com/in/username"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gray-300 hover:text-white transition-colors duration-300"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    aria-label="LinkedIn"
+                  >
+                    <Linkedin size={24} />
+                  </motion.a>
+                  <motion.a
+                    href="https://instagram.com/username"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gray-300 hover:text-white transition-colors duration-300"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    aria-label="Instagram"
+                  >
+                    <Instagram size={24} />
+                  </motion.a>
+                  <motion.a
+                    href="https://facebook.com/username"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gray-300 hover:text-white transition-colors duration-300"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    aria-label="Facebook"
+                  >
+                    <Facebook size={24} />
+                  </motion.a>
+                </motion.div>
+              </motion.nav>
             </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
 
-      <main className="container mx-auto px-4 pt-16">
-        {/* Hero Section */}
-        <motion.section
-          id="home"
-          className="min-h-screen flex flex-col justify-center py-12"
-          variants={sectionVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-        >
-          <div className="flex flex-col md:flex-row items-center">
-            <motion.div className="md:w-1/2 mb-6 md:mb-0" variants={itemVariants}>
-              <motion.div
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{
-                  duration: 0.6,
-                  ease: "easeOut",
-                }}
-              >
-                <motion.h2
-                  className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-3 bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600"
-                  variants={itemVariants}
-                >
-                  I&apos;M SISAN BHATTARAI
-                </motion.h2>
-                <motion.h3
-                  className="text-2xl sm:text-3xl lg:text-4xl font-bold text-yellow-400 mb-3"
-                  variants={itemVariants}
-                >
-                  Welcome to my website
-                </motion.h3>
-                <motion.p className="mb-4 text-sm sm:text-base lg:text-lg" variants={itemVariants}>
-                  &quot;Dear Visitor, as you navigate through the content of this website, remember that life is a
-                  journey filled with twists, turns, and chapters that shape our unique stories. Embrace the highs,
-                  learn from the lows, and know that you&apos;re not alone. Just like the ever-changing nature of a
-                  webpage, your life is a work in progress. Keep scrolling, keep exploring, and find inspiration in
-                  every pixel of your personal narrative. Your story matters, and this space is a reminder that, no
-                  matter what, there&apos;s always a new page waiting to be written.&quot;
-                </motion.p>
-                <motion.button
-                  className="bg-yellow-400 text-black px-6 py-3 rounded-full font-bold flex items-center text-sm sm:text-base shadow-lg hover:shadow-yellow-400/20"
-                  variants={itemVariants}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  Follow Me
-                  <motion.span
-                    animate={{ x: [0, 5, 0] }}
-                    transition={{ repeat: Number.POSITIVE_INFINITY, duration: 1.5, ease: "easeInOut" }}
-                  >
-                    <ArrowRight className="ml-2" size={16} />
-                  </motion.span>
-                </motion.button>
-              </motion.div>
-            </motion.div>
-
-            <motion.div
-              className="md:w-1/2"
-              initial={{ opacity: 0, x: 50, rotate: -5 }}
-              whileInView={{ opacity: 1, x: 0, rotate: 0 }}
-              transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
-              viewport={{ once: true }}
-            >
-              <motion.div className="relative">
-                <img
-                  src={riyan || "/placeholder.svg"}
-                  alt="Sisan"
-                  className="rounded-lg w-full max-w-md mx-auto shadow-xl"
-                />
-                <motion.div
-                  className="absolute -bottom-4 -right-4 bg-yellow-400 text-black px-4 py-2 rounded-lg shadow-lg"
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.6, duration: 0.4 }}
-                >
-                  <span className="font-bold flex items-center">
-                    <span>{text}</span>
-                    <Cursor cursorColor="#000" />
-                  </span>
-                </motion.div>
-              </motion.div>
-            </motion.div>
-          </div>
-        </motion.section>
-
-        {/* About Section */}
-        <motion.section
-          id="about"
-          className="py-12"
-          variants={sectionVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-        >
-          <motion.h2
-            className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-6"
-            variants={itemVariants}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
-          >
-            Personal Insights
-          </motion.h2>
-
-          <div className="flex flex-col md:flex-row gap-6">
-            <motion.div
-              className="md:w-1/3"
-              variants={itemVariants}
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.4 }}
-              viewport={{ once: true }}
-            >
-              <motion.div className="overflow-hidden rounded-lg shadow-xl">
-                <img src={riyan || "/placeholder.svg"} alt="Profile" className="w-full max-w-md mx-auto" />
-              </motion.div>
-            </motion.div>
-
-            <motion.div
-              className="md:w-2/3"
-              variants={staggerContainerVariants}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-            >
-              <motion.p className="mb-4 text-sm sm:text-base lg:text-lg" variants={fadeInVariants}>
-                Sisan Bhattarai, born on December 10, 2001, in Nepal. Passionate about coding and poetry, I find joy in
-                the intersection of technology and creativity. Exploring the beauty of Nepal while pursuing my interests
-                is what drives me.
-              </motion.p>
-
-              <motion.p className="mb-4 text-sm sm:text-base lg:text-lg" variants={fadeInVariants}>
-                I&apos;m a passionate, self-proclaimed designer who specializes in full stack development (React.js &
-                Node.js). I am very enthusiastic about bringing the technical and visual aspects of digital products to
-                life. User experience, pixel perfect design, and writing clean, readable, highly performant code matters
-                to me.
-              </motion.p>
-
-              <motion.p className="mb-4 text-sm sm:text-base lg:text-lg" variants={fadeInVariants}>
-                I began my journey as a web developer in 2023, and since then, I&apos;ve continued to grow and evolve as
-                a developer, taking on new challenges and learning the latest technologies along the way.
-              </motion.p>
-
-              <motion.h3 className="text-xl font-bold mb-2" variants={fadeInVariants}>
-                Finally, some quick bits about me:
-              </motion.h3>
-
-              <motion.ul className="list-disc list-inside mb-3" variants={staggerContainerVariants}>
-                <motion.li variants={fadeInVariants}>Bachelor in CSIT</motion.li>
-                <motion.li variants={fadeInVariants}>Learning Cyber Security</motion.li>
-              </motion.ul>
-            </motion.div>
-          </div>
-        </motion.section>
-
-        {/* Skills Section */}
-        <motion.div
-          id="skill"
-          className="md:flex md:items-center md:justify-between py-12"
-          variants={sectionVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-        >
-          <div className="md:w-1/2 mb-6 md:mb-0">
-            <motion.h2
-              className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4"
-              variants={itemVariants}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3 }}
-            >
-              My Programming Arsenal
-            </motion.h2>
-            <motion.p
-              className="text-lg md:text-xl mb-4"
-              variants={itemVariants}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, delay: 0.1 }}
-            >
-              Crafting intuitive interfaces that adapt swiftly, empowering users to accomplish tasks with unparalleled
-              ease and efficiency.
-            </motion.p>
-            <motion.div
-              className="flex space-x-2 mb-4 md:mb-0"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, delay: 0.2 }}
-            >
-              {["skills", "tools"].map((tab) => (
-                <motion.button
-                  key={tab}
-                  className={`px-6 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
-                    activeTab === tab
-                      ? "bg-yellow-400 text-black shadow-lg shadow-yellow-400/20"
-                      : theme === "dark"
-                        ? "bg-zinc-800 text-white hover:bg-zinc-700"
-                        : "bg-gray-200 text-black hover:bg-gray-300"
-                  }`}
-                  onClick={() => setActiveTab(tab)}
-                >
-                  {tab.charAt(0).toUpperCase() + tab.slice(1)}
-                </motion.button>
-              ))}
-            </motion.div>
-          </div>
-
-          <div className="md:w-1/2">
-            <div className="overflow-hidden rounded-xl p-4 min-h-[280px]">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={activeTab}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                    {(activeTab === "skills" ? skills : tools).map((item, index) => (
-                      <motion.div
-                        key={item.name}
-                        className={`p-4 rounded-lg flex flex-col items-center justify-center ${
-                          theme === "dark"
-                            ? "bg-zinc-800/80 backdrop-blur-sm border border-zinc-700/50"
-                            : "bg-white/80 backdrop-blur-sm border border-gray-200"
-                        }`}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{
-                          opacity: 1,
-                          y: 0,
-                          transition: { delay: index * 0.05 },
-                        }}
-                      >
-                        <motion.div
-                          className="w-12 h-12 md:w-16 md:h-16 mb-2 rounded-full bg-white flex items-center justify-center shadow-md"
-                          transition={{ duration: 0.3 }}
-                        >
-                          <img
-                            src={item.icon || "/placeholder.svg"}
-                            className="w-8 h-8 md:w-10 md:h-10"
-                            alt={item.name}
-                          />
-                        </motion.div>
-                        <span className={`text-sm font-medium ${theme === "dark" ? "text-white" : "text-black"}`}>
-                          {item.name}
-                        </span>
-                      </motion.div>
-                    ))}
-                  </div>
-                </motion.div>
-              </AnimatePresence>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* Projects Section */}
-        <motion.section
-          id="projects"
-          className="py-12"
-          variants={sectionVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-        >
-          <motion.h2
-            className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4"
-            variants={itemVariants}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
-          >
-            Recent Projects
-          </motion.h2>
-
-          <motion.p
-            className="text-lg md:text-xl mb-4"
-            variants={itemVariants}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, delay: 0.1 }}
-          >
-            Explore our latest web development projects, showcasing our expertise in creating innovative and efficient
-            digital solutions.
-          </motion.p>
-
+      {/* Hero Section */}
+      <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden pt-20">
+        <div className="container mx-auto px-4 py-16 flex flex-col md:flex-row items-center">
           <motion.div
-            className="flex justify-center mb-6"
-            variants={itemVariants}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, delay: 0.2 }}
+            className="md:w-1/2 mb-10 md:mb-0"
+            variants={sectionVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
           >
-            <div className="relative inline-block text-left">
-              <select
-                value={selectedType}
-                onChange={(e) => setSelectedType(e.target.value)}
-                className={`block appearance-none w-full py-2 px-4 pr-8 rounded-lg leading-tight focus:outline-none focus:ring-2 focus:ring-yellow-400 ${
-                  theme === "dark" ? "bg-zinc-800 text-white border-zinc-700" : "bg-white text-black border-gray-300"
-                }`}
+            <motion.h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4" variants={itemVariants}>
+              Hi, I'm <span className="text-yellow-400">Sisan</span>
+            </motion.h1>
+            <motion.div className="text-xl md:text-2xl mb-6 h-10" variants={itemVariants}>
+              <span>I'm a </span>
+              <span className="text-yellow-400">{text}</span>
+              <span className="text-yellow-400 animate-pulse">|</span>
+            </motion.div>
+            <motion.p
+              className={`mb-8 max-w-lg ${theme === "dark" ? "text-gray-300" : "text-gray-600"}`}
+              variants={itemVariants}
+            >
+              Passionate about creating beautiful, functional, and user-friendly digital experiences. Let's bring your
+              ideas to life with modern web technologies.
+            </motion.p>
+            <motion.div className="flex space-x-4" variants={itemVariants}>
+              <motion.button
+                onClick={() => scrollToSection("contact")}
+                className="px-6 py-3 bg-yellow-400 text-black rounded-md font-medium flex items-center hover:bg-yellow-500 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
-                {projectTypes.map((type) => (
-                  <option key={type} value={type}>
-                    {type}
-                  </option>
-                ))}
-              </select>
-              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-yellow-400">
-                <ChevronDown className="h-4 w-4" />
-              </div>
-            </div>
+                Contact Me
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </motion.button>
+              <motion.button
+                onClick={() => scrollToSection("projects")}
+                className={`px-6 py-3 rounded-md font-medium border flex items-center transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 ${
+                  theme === "dark"
+                    ? "border-zinc-700 text-white hover:border-zinc-600"
+                    : "border-gray-300 text-gray-800 hover:border-gray-400"
+                }`}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                My Projects
+                <ChevronDown className="ml-2 h-4 w-4" />
+              </motion.button>
+            </motion.div>
           </motion.div>
 
           <motion.div
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+            className="md:w-1/2 flex justify-center"
+            variants={fadeInVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+          >
+            <motion.div
+              className="relative w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-4 border-yellow-400 shadow-xl"
+              whileHover={{ scale: 1.05 }}
+              transition={{ duration: 0.3 }}
+            >
+              <img src={riyan || "/placeholder.svg"} alt="Sisan" className="w-full h-full object-cover" />
+            </motion.div>
+          </motion.div>
+        </div>
+
+        {/* Scroll indicator */}
+        <motion.div
+          className="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center"
+          animate={{ y: [0, 10, 0] }}
+          transition={{ repeat: Number.POSITIVE_INFINITY, duration: 1.5 }}
+        >
+          <p className={`text-sm mb-2 ${theme === "dark" ? "text-gray-400" : "text-gray-600"}`}>Scroll Down</p>
+          <ChevronDown className={theme === "dark" ? "text-gray-400" : "text-gray-600"} />
+        </motion.div>
+      </section>
+
+      {/* About Section */}
+      <section id="about" className={`py-20 ${theme === "dark" ? "bg-zinc-900/50" : "bg-gray-100/50"}`}>
+        <div className="container mx-auto px-4">
+          <motion.div
+            className="text-center mb-16"
+            variants={sectionVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+          >
+            <motion.h2 className="text-3xl md:text-4xl font-bold mb-4" variants={itemVariants}>
+              About <span className="text-yellow-400">Me</span>
+            </motion.h2>
+            <motion.div
+              className="w-20 h-1 bg-yellow-400 mx-auto rounded-full mb-6"
+              variants={itemVariants}
+            ></motion.div>
+            <motion.p
+              className={`max-w-2xl mx-auto ${theme === "dark" ? "text-gray-300" : "text-gray-600"}`}
+              variants={itemVariants}
+            >
+              Get to know more about me, my background, and what drives my passion for web development.
+            </motion.p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <motion.div
+              className={`rounded-lg p-6 ${
+                theme === "dark"
+                  ? "bg-zinc-800/80 backdrop-blur-sm border border-zinc-700/50"
+                  : "bg-white/80 backdrop-blur-sm border border-gray-200"
+              }`}
+              variants={fadeInVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              whileHover={{ y: -10 }}
+              transition={{ duration: 0.3 }}
+            >
+              <div className="w-16 h-16 rounded-full bg-yellow-400 flex items-center justify-center mb-4 mx-auto">
+                <Code2 size={32} className="text-black" />
+              </div>
+              <h3 className="text-xl font-bold text-center mb-4">Web Development</h3>
+              <p className={`text-center ${theme === "dark" ? "text-gray-300" : "text-gray-600"}`}>
+                I specialize in building modern, responsive websites and web applications using the latest technologies
+                and best practices.
+              </p>
+            </motion.div>
+
+            <motion.div
+              className={`rounded-lg p-6 ${
+                theme === "dark"
+                  ? "bg-zinc-800/80 backdrop-blur-sm border border-zinc-700/50"
+                  : "bg-white/80 backdrop-blur-sm border border-gray-200"
+              }`}
+              variants={fadeInVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              whileHover={{ y: -10 }}
+              transition={{ duration: 0.3, delay: 0.1 }}
+            >
+              <div className="w-16 h-16 rounded-full bg-yellow-400 flex items-center justify-center mb-4 mx-auto">
+                <Briefcase size={32} className="text-black" />
+              </div>
+              <h3 className="text-xl font-bold text-center mb-4">UI/UX Design</h3>
+              <p className={`text-center ${theme === "dark" ? "text-gray-300" : "text-gray-600"}`}>
+                I create intuitive and visually appealing user interfaces that provide excellent user experiences across
+                all devices.
+              </p>
+            </motion.div>
+
+            <motion.div
+              className={`rounded-lg p-6 ${
+                theme === "dark"
+                  ? "bg-zinc-800/80 backdrop-blur-sm border border-zinc-700/50"
+                  : "bg-white/80 backdrop-blur-sm border border-gray-200"
+              }`}
+              variants={fadeInVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              whileHover={{ y: -10 }}
+              transition={{ duration: 0.3, delay: 0.2 }}
+            >
+              <div className="w-16 h-16 rounded-full bg-yellow-400 flex items-center justify-center mb-4 mx-auto">
+                <BookOpen size={32} className="text-black" />
+              </div>
+              <h3 className="text-xl font-bold text-center mb-4">Continuous Learning</h3>
+              <p className={`text-center ${theme === "dark" ? "text-gray-300" : "text-gray-600"}`}>
+                I'm constantly learning new technologies and techniques to stay at the forefront of web development.
+              </p>
+            </motion.div>
+          </div>
+
+          <motion.div
+            className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-8"
+            variants={sectionVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+          >
+            <motion.div variants={itemVariants}>
+              <h3 className="text-2xl font-bold mb-4">
+                My <span className="text-yellow-400">Journey</span>
+              </h3>
+              <p className={`mb-4 ${theme === "dark" ? "text-gray-300" : "text-gray-600"}`}>
+                I started my journey in web development 5 years ago, driven by a passion for creating digital
+                experiences that are both beautiful and functional. Since then, I've worked on a variety of projects,
+                from small business websites to complex web applications.
+              </p>
+              <p className={theme === "dark" ? "text-gray-300" : "text-gray-600"}>
+                My approach combines technical expertise with creative problem-solving, allowing me to build solutions
+                that not only meet but exceed client expectations. I believe in writing clean, maintainable code and
+                creating intuitive user interfaces.
+              </p>
+            </motion.div>
+
+            <motion.div variants={itemVariants}>
+              <h3 className="text-2xl font-bold mb-4">
+                My <span className="text-yellow-400">Skills</span>
+              </h3>
+              <div className="space-y-4">
+                <div>
+                  <div className="flex justify-between mb-1">
+                    <span className="font-medium">Frontend Development</span>
+                    <span>90%</span>
+                  </div>
+                  <div className={`w-full h-2 rounded-full ${theme === "dark" ? "bg-zinc-700" : "bg-gray-200"}`}>
+                    <motion.div
+                      className="h-full bg-yellow-400 rounded-full"
+                      initial={{ width: 0 }}
+                      whileInView={{ width: "90%" }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 1, delay: 0.3 }}
+                    ></motion.div>
+                  </div>
+                </div>
+                <div>
+                  <div className="flex justify-between mb-1">
+                    <span className="font-medium">Backend Development</span>
+                    <span>85%</span>
+                  </div>
+                  <div className={`w-full h-2 rounded-full ${theme === "dark" ? "bg-zinc-700" : "bg-gray-200"}`}>
+                    <motion.div
+                      className="h-full bg-yellow-400 rounded-full"
+                      initial={{ width: 0 }}
+                      whileInView={{ width: "85%" }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 1, delay: 0.4 }}
+                    ></motion.div>
+                  </div>
+                </div>
+                <div>
+                  <div className="flex justify-between mb-1">
+                    <span className="font-medium">UI/UX Design</span>
+                    <span>80%</span>
+                  </div>
+                  <div className={`w-full h-2 rounded-full ${theme === "dark" ? "bg-zinc-700" : "bg-gray-200"}`}>
+                    <motion.div
+                      className="h-full bg-yellow-400 rounded-full"
+                      initial={{ width: 0 }}
+                      whileInView={{ width: "80%" }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 1, delay: 0.5 }}
+                    ></motion.div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Skills Section */}
+      <section id="skill" className="py-20">
+        <div className="container mx-auto px-4">
+          <motion.div
+            className="text-center mb-16"
+            variants={sectionVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+          >
+            <motion.h2 className="text-3xl md:text-4xl font-bold mb-4" variants={itemVariants}>
+              My <span className="text-yellow-400">Skills</span>
+            </motion.h2>
+            <motion.div
+              className="w-20 h-1 bg-yellow-400 mx-auto rounded-full mb-6"
+              variants={itemVariants}
+            ></motion.div>
+            <motion.p
+              className={`max-w-2xl mx-auto ${theme === "dark" ? "text-gray-300" : "text-gray-600"}`}
+              variants={itemVariants}
+            >
+              Here are the technologies and tools I work with to bring ideas to life.
+            </motion.p>
+          </motion.div>
+
+          <div className="flex justify-center mb-8">
+            <div
+              className={`inline-flex p-1 rounded-lg ${
+                theme === "dark"
+                  ? "bg-zinc-800/80 border border-zinc-700/50"
+                  : "bg-gray-200/80 border border-gray-300/50"
+              }`}
+            >
+              <button
+                onClick={() => setActiveTab("skills")}
+                className={`px-4 py-2 rounded-md text-sm font-medium transition-colors duration-300 ${
+                  activeTab === "skills"
+                    ? "bg-yellow-400 text-black"
+                    : theme === "dark"
+                      ? "text-gray-300 hover:text-white"
+                      : "text-gray-700 hover:text-black"
+                }`}
+              >
+                Technologies
+              </button>
+              <button
+                onClick={() => setActiveTab("tools")}
+                className={`px-4 py-2 rounded-md text-sm font-medium transition-colors duration-300 ${
+                  activeTab === "tools"
+                    ? "bg-yellow-400 text-black"
+                    : theme === "dark"
+                      ? "text-gray-300 hover:text-white"
+                      : "text-gray-700 hover:text-black"
+                }`}
+              >
+                Tools
+              </button>
+            </div>
+          </div>
+
+          <AnimatePresence mode="wait">
+            {activeTab === "skills" ? (
+              <motion.div
+                key="skills"
+                className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.3 }}
+              >
+                {skills.map((skill, index) => (
+                  <motion.div
+                    key={skill.name}
+                    className={`flex flex-col items-center p-6 rounded-lg ${
+                      theme === "dark"
+                        ? "bg-zinc-800/80 backdrop-blur-sm border border-zinc-700/50"
+                        : "bg-white/80 backdrop-blur-sm border border-gray-200"
+                    }`}
+                    whileHover={{ y: -10 }}
+                    transition={{ duration: 0.3 }}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 20 }}
+                    transition={{ duration: 0.3, delay: index * 0.1 }}
+                  >
+                    <img src={skill.icon || "/placeholder.svg"} alt={skill.name} className="w-16 h-16 mb-4" />
+                    <h3 className="text-lg font-medium">{skill.name}</h3>
+                  </motion.div>
+                ))}
+              </motion.div>
+            ) : (
+              <motion.div
+                key="tools"
+                className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.3 }}
+              >
+                {tools.map((tool, index) => (
+                  <motion.div
+                    key={tool.name}
+                    className={`flex flex-col items-center p-6 rounded-lg ${
+                      theme === "dark"
+                        ? "bg-zinc-800/80 backdrop-blur-sm border border-zinc-700/50"
+                        : "bg-white/80 backdrop-blur-sm border border-gray-200"
+                    }`}
+                    whileHover={{ y: -10 }}
+                    transition={{ duration: 0.3 }}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 20 }}
+                    transition={{ duration: 0.3, delay: index * 0.1 }}
+                  >
+                    <img src={tool.icon || "/placeholder.svg"} alt={tool.name} className="w-16 h-16 mb-4" />
+                    <h3 className="text-lg font-medium">{tool.name}</h3>
+                  </motion.div>
+                ))}
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+      </section>
+
+      {/* Projects Section */}
+      <section id="projects" className={`py-20 ${theme === "dark" ? "bg-zinc-900/50" : "bg-gray-100/50"}`}>
+        <div className="container mx-auto px-4">
+          <motion.div
+            className="text-center mb-16"
+            variants={sectionVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+          >
+            <motion.h2 className="text-3xl md:text-4xl font-bold mb-4" variants={itemVariants}>
+              My <span className="text-yellow-400">Projects</span>
+            </motion.h2>
+            <motion.div
+              className="w-20 h-1 bg-yellow-400 mx-auto rounded-full mb-6"
+              variants={itemVariants}
+            ></motion.div>
+            <motion.p
+              className={`max-w-2xl mx-auto ${theme === "dark" ? "text-gray-300" : "text-gray-600"}`}
+              variants={itemVariants}
+            >
+              Check out some of my recent work and personal projects.
+            </motion.p>
+          </motion.div>
+
+          <div className="flex justify-center mb-8">
+            <div
+              className={`inline-flex p-1 rounded-lg ${
+                theme === "dark"
+                  ? "bg-zinc-800/80 border border-zinc-700/50"
+                  : "bg-gray-200/80 border border-gray-300/50"
+              }`}
+            >
+              {projectTypes.map((type) => (
+                <button
+                  key={type}
+                  onClick={() => setSelectedType(type)}
+                  className={`px-4 py-2 rounded-md text-sm font-medium transition-colors duration-300 ${
+                    selectedType === type
+                      ? "bg-yellow-400 text-black"
+                      : theme === "dark"
+                        ? "text-gray-300 hover:text-white"
+                        : "text-gray-700 hover:text-black"
+                  }`}
+                >
+                  {type}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
             variants={staggerContainerVariants}
             initial="hidden"
             whileInView="visible"
@@ -959,616 +1141,408 @@ export default function Portfolio() {
               <ProjectCard key={project.id} project={project} theme={theme} />
             ))}
           </motion.div>
-        </motion.section>
+        </div>
+      </section>
 
-        {/* Portfolio Section */}
-        <motion.section
-          id="portfolio"
-          className="py-12"
-          variants={sectionVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-        >
-          <motion.h2
-            className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4"
-            variants={itemVariants}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
-          >
-            Portfolio
-          </motion.h2>
-
+      {/* Creative Outlets Section */}
+      <section id="creative-outlets" className="py-20">
+        <div className="container mx-auto px-4">
           <motion.div
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
-            variants={staggerContainerVariants}
+            className="text-center mb-16"
+            variants={sectionVariants}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: "-100px" }}
           >
-            {[
-              { title: "Website Designing", image: web },
-              { title: "UX/UI Designing", image: ui },
-              { title: "Cyber Security", image: dev },
-            ].map((item, index) => (
-              <motion.div
-                key={index}
-                className={`p-4 rounded-lg overflow-hidden group ${
-                  theme === "dark"
-                    ? "bg-zinc-800/80 backdrop-blur-sm border border-zinc-700/50"
-                    : "bg-white/80 backdrop-blur-sm border border-gray-200"
-                }`}
-                variants={fadeInVariants}
-              >
-                <div className="overflow-hidden rounded-lg mb-3">
-                  <motion.img
-                    src={item.image}
-                    alt={item.title}
-                    className="w-full h-40 object-cover transition-transform duration-700 ease-in-out"
-                    transition={{ duration: 0.7 }}
-                  />
-                </div>
-                <h3
-                  className={`text-lg sm:text-xl lg:text-2xl font-bold ${
-                    theme === "dark" ? "text-white" : "text-black"
-                  }`}
-                >
-                  {item.title}
-                </h3>
-              </motion.div>
-            ))}
+            <motion.h2 className="text-3xl md:text-4xl font-bold mb-4" variants={itemVariants}>
+              Creative <span className="text-yellow-400">Outlets</span>
+            </motion.h2>
+            <motion.div
+              className="w-20 h-1 bg-yellow-400 mx-auto rounded-full mb-6"
+              variants={itemVariants}
+            ></motion.div>
+            <motion.p
+              className={`max-w-2xl mx-auto ${theme === "dark" ? "text-gray-300" : "text-gray-600"}`}
+              variants={itemVariants}
+            >
+              Beyond coding, I express my creativity through various artistic outlets.
+            </motion.p>
           </motion.div>
-        </motion.section>
 
-        {/* Creative Outlets Section */}
-        <motion.section
-          id="creative-outlets"
-          className="py-12"
-          variants={sectionVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-        >
-          <motion.h2
-            className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4"
-            variants={itemVariants}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
-          >
-            Creative Outlets
-          </motion.h2>
-
-          <motion.div
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5"
-            variants={staggerContainerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-          >
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {creativeOutlets.map((outlet) => (
               <motion.div
                 key={outlet.id}
-                className={`rounded-lg overflow-hidden transition-all duration-300 p-4 ${
+                className={`rounded-lg overflow-hidden ${
                   theme === "dark"
                     ? "bg-zinc-800/80 backdrop-blur-sm border border-zinc-700/50"
                     : "bg-white/80 backdrop-blur-sm border border-gray-200"
                 }`}
-                variants={fadeInVariants}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                whileHover={{ y: -10 }}
+                transition={{ duration: 0.3 }}
               >
-                <div className="overflow-hidden rounded-lg mb-3">
-                  <motion.img
-                    src={outlet.image}
+                <div className="relative h-48 overflow-hidden">
+                  <img
+                    src={outlet.image || "/placeholder.svg"}
                     alt={outlet.title}
-                    className="w-full h-32 sm:h-40 object-cover"
-                    transition={{ duration: 0.7 }}
+                    className="w-full h-full object-cover"
                   />
+                  <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+                    <outlet.icon className="text-white h-12 w-12" />
+                  </div>
                 </div>
-                <h3
-                  className={`text-lg sm:text-xl lg:text-2xl font-bold mb-2 ${
-                    theme === "dark" ? "text-white" : "text-black"
-                  }`}
-                >
-                  {outlet.title}
-                </h3>
-                <p className={`mb-3 text-sm sm:text-base ${theme === "dark" ? "text-gray-300" : "text-gray-600"}`}>
-                  {outlet.description}
-                </motion.p>
-                <motion.button
-                  onClick={() => handlePrivateClick(outlet.id)}
-                  className="bg-yellow-400 text-black px-3 py-2 rounded-full font-bold flex items-center text-sm shadow-lg hover:shadow-yellow-400/20"
-                >
-                  <outlet.icon className="mr-2" size={16} />
-                  Private
-                </motion.button>
+                <div className="p-5">
+                  <h3 className="text-xl font-bold mb-2">{outlet.title}</h3>
+                  <p className={`text-sm mb-4 ${theme === "dark" ? "text-gray-300" : "text-gray-600"}`}>
+                    {outlet.description}
+                  </p>
+                  <motion.button
+                    onClick={() => handlePrivateClick(outlet.id)}
+                    className="flex items-center justify-center w-full px-4 py-2 bg-yellow-400 text-black rounded-md font-medium hover:bg-yellow-500 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500"
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <Lock className="mr-2 h-4 w-4" />
+                    View Content
+                  </motion.button>
+                </div>
               </motion.div>
             ))}
-          </motion.div>
-        </motion.section>
+          </div>
+        </div>
+      </section>
 
-        {/* Contact Section */}
-        <motion.section
-          id="contact"
-          className="py-12"
-          variants={sectionVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-        >
+      {/* Contact Section */}
+      <section id="contact" className={`py-20 ${theme === "dark" ? "bg-zinc-900/50" : "bg-gray-100/50"}`}>
+        <div className="container mx-auto px-4">
           <motion.div
-            className="mb-8 text-center"
-            variants={itemVariants}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
+            className="text-center mb-16"
+            variants={sectionVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
           >
-            <h2
-              className={`text-2xl sm:text-3xl lg:text-4xl font-bold mb-3 ${
-                theme === "dark" ? "text-white" : "text-black"
-              }`}
+            <motion.h2 className="text-3xl md:text-4xl font-bold mb-4" variants={itemVariants}>
+              Contact <span className="text-yellow-400">Me</span>
+            </motion.h2>
+            <motion.div
+              className="w-20 h-1 bg-yellow-400 mx-auto rounded-full mb-6"
+              variants={itemVariants}
+            ></motion.div>
+            <motion.p
+              className={`max-w-2xl mx-auto ${theme === "dark" ? "text-gray-300" : "text-gray-600"}`}
+              variants={itemVariants}
             >
-              Get in Touch
-            </h2>
-            <p
-              className={`max-w-2xl mx-auto text-sm sm:text-base ${
-                theme === "dark" ? "text-gray-300" : "text-gray-600"
-              }`}
-            >
-              Have a project in mind or want to collaborate? Feel free to reach out and let&apos;s create something
-              amazing together.
-            </p>
+              Have a project in mind or want to collaborate? Feel free to reach out!
+            </motion.p>
           </motion.div>
 
-          <div className="flex flex-col lg:flex-row gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <motion.div
-              className="lg:w-1/2 space-y-6"
-              variants={staggerContainerVariants}
+              variants={fadeInVariants}
               initial="hidden"
               whileInView="visible"
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: "-100px" }}
             >
-              <motion.div
-                className={`p-5 rounded-xl ${
-                  theme === "dark"
-                    ? "bg-zinc-800/80 backdrop-blur-sm border border-zinc-700/50"
-                    : "bg-white/80 backdrop-blur-sm border border-gray-200"
-                }`}
-                variants={fadeInVariants}
-              >
-                <div className="flex items-center mb-3">
-                  <div className="relative">
-                    <span className="flex h-3 w-3">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                      <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
-                    </span>
+              <h3 className="text-2xl font-bold mb-6">Get In Touch</h3>
+              <div className="space-y-4">
+                <div className="flex items-start">
+                  <div
+                    className={`w-12 h-12 rounded-full flex items-center justify-center mr-4 ${
+                      theme === "dark" ? "bg-zinc-800" : "bg-gray-200"
+                    }`}
+                  >
+                    <Mail className={theme === "dark" ? "text-yellow-400" : "text-yellow-600"} />
                   </div>
-                  <h3 className="ml-3 text-lg font-semibold">Available for Freelance</h3>
+                  <div>
+                    <h4 className="text-lg font-medium mb-1">Email</h4>
+                    <p className={theme === "dark" ? "text-gray-300" : "text-gray-600"}>contact@example.com</p>
+                  </div>
                 </div>
-                <p className={`text-sm mb-3 ${theme === "dark" ? "text-gray-300" : "text-gray-600"}`}>
-                  I&apos;m currently available for remote freelance projects. Let&apos;s discuss how I can help bring
-                  your ideas to life.
-                </p>
-                <motion.a
-                  href="#contact-form"
-                  className="inline-flex items-center text-yellow-400 hover:text-yellow-500 font-medium"
-                >
-                  Contact me <ArrowRight className="ml-2 h-4 w-4" />
-                </motion.a>
-              </motion.div>
+                <div className="flex items-start">
+                  <div
+                    className={`w-12 h-12 rounded-full flex items-center justify-center mr-4 ${
+                      theme === "dark" ? "bg-zinc-800" : "bg-gray-200"
+                    }`}
+                  >
+                    <Phone className={theme === "dark" ? "text-yellow-400" : "text-yellow-600"} />
+                  </div>
+                  <div>
+                    <h4 className="text-lg font-medium mb-1">Phone</h4>
+                    <p className={theme === "dark" ? "text-gray-300" : "text-gray-600"}>+1 (123) 456-7890</p>
+                  </div>
+                </div>
+                <div className="flex items-start">
+                  <div
+                    className={`w-12 h-12 rounded-full flex items-center justify-center mr-4 ${
+                      theme === "dark" ? "bg-zinc-800" : "bg-gray-200"
+                    }`}
+                  >
+                    <MapPin className={theme === "dark" ? "text-yellow-400" : "text-yellow-600"} />
+                  </div>
+                  <div>
+                    <h4 className="text-lg font-medium mb-1">Location</h4>
+                    <p className={theme === "dark" ? "text-gray-300" : "text-gray-600"}>New York, NY, USA</p>
+                  </div>
+                </div>
+              </div>
 
-              <motion.div
-                className={`p-5 rounded-xl ${
-                  theme === "dark"
-                    ? "bg-zinc-800/80 backdrop-blur-sm border border-zinc-700/50"
-                    : "bg-white/80 backdrop-blur-sm border border-gray-200"
-                }`}
-                variants={fadeInVariants}
-              >
-                <h3 className="text-xl font-semibold mb-3">Social Media</h3>
-                <div className="flex space-x-6">
-                  {[
-                    { icon: Linkedin, url: "https://www.linkedin.com/in/sisan-bhattarai-7006242b2", label: "LinkedIn" },
-                    { icon: Facebook, url: "https://www.facebook.com/seeson.777", label: "Facebook" },
-                    { icon: Instagram, url: "https://www.instagram.com/see_son_", label: "Instagram" },
-                    { icon: Github, url: "https://github.com/Seesonn", label: "GitHub" },
-                  ].map((social, index) => (
-                    <motion.a
-                      key={index}
-                      href={social.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={`flex flex-col items-center justify-center transition-colors ${
-                        theme === "dark" ? "text-white hover:text-yellow-400" : "text-black hover:text-yellow-600"
-                      }`}
-                      aria-label={social.label}
-                    >
-                      <div
-                        className={`p-3 rounded-full mb-2 ${
-                          theme === "dark" ? "bg-zinc-700 hover:bg-zinc-600" : "bg-gray-200 hover:bg-gray-300"
-                        }`}
-                      >
-                        <social.icon className="h-5 w-5" />
-                      </div>
-                      <span className="text-xs">{social.label}</span>
-                    </motion.a>
-                  ))}
+              <div className="mt-8">
+                <h4 className="text-lg font-medium mb-4">Follow Me</h4>
+                <div className="flex space-x-4">
+                  <motion.a
+                    href="https://github.com/username"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`w-10 h-10 rounded-full flex items-center justify-center ${
+                      theme === "dark"
+                        ? "bg-zinc-800 text-white hover:bg-zinc-700"
+                        : "bg-gray-200 text-gray-800 hover:bg-gray-300"
+                    } transition-colors duration-300`}
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    aria-label="GitHub"
+                  >
+                    <Github size={20} />
+                  </motion.a>
+                  <motion.a
+                    href="https://linkedin.com/in/username"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`w-10 h-10 rounded-full flex items-center justify-center ${
+                      theme === "dark"
+                        ? "bg-zinc-800 text-white hover:bg-zinc-700"
+                        : "bg-gray-200 text-gray-800 hover:bg-gray-300"
+                    } transition-colors duration-300`}
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    aria-label="LinkedIn"
+                  >
+                    <Linkedin size={20} />
+                  </motion.a>
+                  <motion.a
+                    href="https://instagram.com/username"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`w-10 h-10 rounded-full flex items-center justify-center ${
+                      theme === "dark"
+                        ? "bg-zinc-800 text-white hover:bg-zinc-700"
+                        : "bg-gray-200 text-gray-800 hover:bg-gray-300"
+                    } transition-colors duration-300`}
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    aria-label="Instagram"
+                  >
+                    <Instagram size={20} />
+                  </motion.a>
+                  <motion.a
+                    href="https://facebook.com/username"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`w-10 h-10 rounded-full flex items-center justify-center ${
+                      theme === "dark"
+                        ? "bg-zinc-800 text-white hover:bg-zinc-700"
+                        : "bg-gray-200 text-gray-800 hover:bg-gray-300"
+                    } transition-colors duration-300`}
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    aria-label="Facebook"
+                  >
+                    <Facebook size={20} />
+                  </motion.a>
                 </div>
-              </motion.div>
+              </div>
             </motion.div>
 
             <motion.div
-              id="contact-form"
-              className="lg:w-1/2"
-              variants={itemVariants}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, delay: 0.2 }}
-              viewport={{ once: true }}
+              variants={fadeInVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ delay: 0.2 }}
             >
-              <motion.div
-                className={`p-5 rounded-xl ${
-                  theme === "dark"
-                    ? "bg-zinc-800/80 backdrop-blur-sm border border-zinc-700/50"
-                    : "bg-white/80 backdrop-blur-sm border border-gray-200"
-                }`}
-              >
-                <h3 className="text-xl font-semibold mb-3">Send a Message</h3>
-                <form className="space-y-4" onSubmit={handleSubmit}>
-                  <motion.div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                      <label
-                        className={`block text-sm font-medium mb-1 ${
-                          theme === "dark" ? "text-gray-300" : "text-gray-700"
-                        }`}
-                      >
-                        Full Name
-                      </label>
-                      <motion.input
-                        type="text"
-                        name="name"
-                        placeholder=" eg.Sisan Bhattarai"
-                        className={`w-full p-3 rounded-lg transition-colors duration-300 focus:ring-2 focus:ring-yellow-400 focus:outline-none ${
-                          theme === "dark"
-                            ? "bg-zinc-700 text-white border border-zinc-600"
-                            : "bg-white text-gray-800 border border-gray-300"
-                        }`}
-                        required
-                        whileFocus={{ scale: 1.01 }}
-                      />
-                    </div>
-                    <div>
-                      <label
-                        className={`block text-sm font-medium mb-1 ${
-                          theme === "dark" ? "text-gray-300" : "text-gray-700"
-                        }`}
-                      >
-                        Email
-                      </label>
-                      <motion.input
-                        type="email"
-                        name="email"
-                        placeholder="eg.sisanbhattarai@gmail.com"
-                        className={`w-full p-3 rounded-lg transition-colors duration-300 focus:ring-2 focus:ring-yellow-400 focus:outline-none ${
-                          theme === "dark"
-                            ? "bg-zinc-700 text-white border border-zinc-600"
-                            : "bg-white text-gray-800 border border-gray-300"
-                        }`}
-                        required
-                        whileFocus={{ scale: 1.01 }}
-                      />
-                    </div>
-                  </motion.div>
-
-                  <div>
-                    <label
-                      className={`block text-sm font-medium mb-1 ${
-                        theme === "dark" ? "text-gray-300" : "text-gray-700"
-                      }`}
-                    >
-                      Message
-                    </label>
-                    <motion.textarea
-                      name="message"
-                      placeholder="Tell me about your project..."
-                      rows={4}
-                      maxLength={250}
-                      className={`w-full p-3 rounded-lg transition-colors duration-300 focus:ring-2 focus:ring-yellow-400 focus:outline-none ${
-                        theme === "dark"
-                          ? "bg-zinc-700 text-white border border-zinc-600"
-                          : "bg-white text-gray-800 border border-gray-300"
-                      }`}
-                      style={{ resize: "none" }}
-                      required
-                      whileFocus={{ scale: 1.01 }}
-                    />
-                    <p className={`text-xs mt-1 ${theme === "dark" ? "text-gray-400" : "text-gray-500"}`}>
-                      Max 50 words
-                    </p>
-                  </div>
-
-                  <motion.button
-                    type="submit"
-                    className={`bg-yellow-400 text-black px-6 py-3 rounded-full font-bold w-full transition-all duration-300 hover:bg-yellow-500 shadow-lg hover:shadow-yellow-400/20 text-sm sm:text-base ${
-                      isSubmitting ? "opacity-70 cursor-not-allowed" : ""
-                    }`}
-                    disabled={isSubmitting}
-                  >
-                    {isSubmitting ? (
-                      <span className="flex items-center justify-center">
-                        <svg
-                          className="animate-spin -ml-1 mr-3 h-5 w-5 text-black"
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                        >
-                          <circle
-                            className="opacity-25"
-                            cx="12"
-                            cy="12"
-                            r="10"
-                            stroke="currentColor"
-                            strokeWidth="4"
-                          ></circle>
-                          <path
-                            className="opacity-75"
-                            fill="currentColor"
-                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                          ></path>
-                        </svg>
-                        Submitting...
-                      </span>
-                    ) : (
-                      "Send Message"
-                    )}
-                  </motion.button>
-                </form>
-              </motion.div>
-            </motion.div>
-          </div>
-        </motion.section>
-      </main>
-
-      {/* Footer */}
-      <motion.footer
-        className={`py-10 ${
-          theme === "dark" ? "bg-zinc-900 border-t border-zinc-800" : "bg-gray-100 border-t border-gray-200"
-        }`}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.3, delay: 0.2 }}
-      >
-        <div className="container mx-auto px-4">
-          <div className="flex flex-col md:flex-row justify-between items-center mb-6">
-            <div className="flex items-center mb-4 md:mb-0">
-              <motion.div className="relative w-12 h-12 overflow-hidden rounded-full mr-4" whileTap={{ scale: 0.9 }}>
-                <img src={logo || "/placeholder.svg"} alt="SISAN Logo" className="w-full h-full object-cover" />
-              </motion.div>
-              <div>
-                <h3 className={`text-xl font-bold ${theme === "dark" ? "text-white" : "text-gray-800"}`}>
-                  Sisan Bhattarai
-                </h3>
-                <p className={`text-sm ${theme === "dark" ? "text-gray-400" : "text-gray-600"}`}>
-                  Full Stack Developer
-                </p>
-              </div>
-            </div>
-
-            <div className="flex space-x-4">
-              {[
-                { icon: Linkedin, url: "https://www.linkedin.com/in/sisan-bhattarai-7006242b2" },
-                { icon: Facebook, url: "https://www.facebook.com/seeson.777" },
-                { icon: Instagram, url: "https://www.instagram.com/see_son_" },
-                { icon: Github, url: "https://github.com/Seesonn" },
-              ].map((social, index) => (
-                <motion.a
-                  key={index}
-                  href={social.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`p-2 rounded-full transition-colors ${
+              <form onSubmit={handleSubmit}>
+                <div
+                  className={`p-6 rounded-lg ${
                     theme === "dark"
-                      ? "bg-zinc-800 text-gray-300 hover:bg-zinc-700 hover:text-white"
-                      : "bg-white text-gray-600 hover:bg-gray-200 hover:text-black"
+                      ? "bg-zinc-800/80 backdrop-blur-sm border border-zinc-700/50"
+                      : "bg-white/80 backdrop-blur-sm border border-gray-200"
                   }`}
                 >
-                  <social.icon className="h-5 w-5" />
-                </motion.a>
-              ))}
-            </div>
-          </div>
-
-          <div className="border-t border-b py-6 my-6 grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div>
-              <h4 className={`text-lg font-semibold mb-3 ${theme === "dark" ? "text-white" : "text-gray-800"}`}>
-                Navigation
-              </h4>
-              <ul className="space-y-2">
-                {sections.map((section) => (
-                  <li key={section}>
+                  <h3 className="text-2xl font-bold mb-6">Send Message</h3>
+                  <div className="space-y-4">
+                    <div>
+                      <label
+                        htmlFor="name"
+                        className={`block text-sm font-medium mb-1 ${
+                          theme === "dark" ? "text-gray-300" : "text-gray-700"
+                        }`}
+                      >
+                        Your Name
+                      </label>
+                      <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        className={`w-full px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500 ${
+                          theme === "dark"
+                            ? "bg-zinc-700 border-zinc-600 text-white"
+                            : "bg-white border-gray-300 text-gray-900"
+                        } border`}
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label
+                        htmlFor="email"
+                        className={`block text-sm font-medium mb-1 ${
+                          theme === "dark" ? "text-gray-300" : "text-gray-700"
+                        }`}
+                      >
+                        Your Email
+                      </label>
+                      <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        className={`w-full px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500 ${
+                          theme === "dark"
+                            ? "bg-zinc-700 border-zinc-600 text-white"
+                            : "bg-white border-gray-300 text-gray-900"
+                        } border`}
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label
+                        htmlFor="message"
+                        className={`block text-sm font-medium mb-1 ${
+                          theme === "dark" ? "text-gray-300" : "text-gray-700"
+                        }`}
+                      >
+                        Your Message
+                      </label>
+                      <textarea
+                        id="message"
+                        name="message"
+                        rows={5}
+                        className={`w-full px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500 ${
+                          theme === "dark"
+                            ? "bg-zinc-700 border-zinc-600 text-white"
+                            : "bg-white border-gray-300 text-gray-900"
+                        } border`}
+                        required
+                      ></textarea>
+                    </div>
                     <motion.button
-                      onClick={() => scrollToSection(section)}
-                      className={`text-sm transition-colors ${
-                        theme === "dark" ? "text-gray-400 hover:text-white" : "text-gray-600 hover:text-black"
-                      }`}
+                      type="submit"
+                      className="w-full px-6 py-3 bg-yellow-400 text-black rounded-md font-medium flex items-center justify-center hover:bg-yellow-500 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500"
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      disabled={isSubmitting}
                     >
-                      {section.charAt(0).toUpperCase() + section.slice(1)}
+                      {isSubmitting ? "Sending..." : "Send Message"}
+                      {!isSubmitting && <ArrowRight className="ml-2 h-4 w-4" />}
                     </motion.button>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div>
-              <h4 className={`text-lg font-semibold mb-3 ${theme === "dark" ? "text-white" : "text-gray-800"}`}>
-                Services
-              </h4>
-              <ul className="space-y-2">
-                {["Web Development", "DSA", "Cyber Security"].map((service, index) => (
-                  <li key={index}>
-                    <span className={`text-sm ${theme === "dark" ? "text-gray-400" : "text-gray-600"}`}>{service}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div>
-              <h4 className={`text-lg font-semibold mb-3 ${theme === "dark" ? "text-white" : "text-gray-800"}`}>
-                Contact
-              </h4>
-              <ul className="space-y-2">
-                <li className="flex items-start">
-                  <span className={`mr-2 mt-1 ${theme === "dark" ? "text-gray-400" : "text-gray-600"}`}>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-4 w-4"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                      />
-                    </svg>
-                  </span>
-                  <span className={`text-sm ${theme === "dark" ? "text-gray-400" : "text-gray-600"}`}>
-                    sisanbhattarai.dev@gmail.com
-                  </span>
-                </li>
-                <li className="flex items-start">
-                  <span className={`mr-2 mt-1 ${theme === "dark" ? "text-gray-400" : "text-gray-600"}`}>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-4 w-4"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
-                      />
-                    </svg>
-                  </span>
-                  <span className={`text-sm ${theme === "dark" ? "text-gray-400" : "text-gray-600"}`}>
-                    +977 9815366153
-                  </span>
-                </li>
-                <li className="flex items-start">
-                  <span className={`mr-2 mt-1 ${theme === "dark" ? "text-gray-400" : "text-gray-600"}`}>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-4 w-4"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                      />
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                      />
-                    </svg>
-                  </span>
-                  <span className={`text-sm ${theme === "dark" ? "text-gray-400" : "text-gray-600"}`}>
-                    Kathmandu, Nepal
-                  </span>
-                </li>
-              </ul>
-            </div>
+                  </div>
+                </div>
+              </form>
+            </motion.div>
           </div>
+        </div>
+      </section>
 
+      {/* Footer */}
+      <footer
+        className={`py-8 ${theme === "dark" ? "bg-black border-t border-zinc-800" : "bg-white border-t border-gray-200"}`}
+      >
+        <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className={`text-sm mb-4 md:mb-0 ${theme === "dark" ? "text-gray-400" : "text-gray-600"}`}>
-              &copy; {new Date().getFullYear()} Sisan Bhattarai. All rights reserved.
-            </p>
-            <div className="flex items-center">
-              <motion.button
-                onClick={toggleTheme}
-                className={`p-2 rounded-full mr-4 transition-colors ${
-                  theme === "dark"
-                    ? "bg-zinc-800 text-yellow-400 hover:bg-zinc-700"
-                    : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-                }`}
-                aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+            <div className="mb-4 md:mb-0">
+              <img src={logo || "/placeholder.svg"} alt="SISAN Logo" className="w-10 h-10 rounded-full" />
+            </div>
+            <div className={theme === "dark" ? "text-gray-400" : "text-gray-600"}>
+              &copy; {new Date().getFullYear()} Sisan. All rights reserved.
+            </div>
+            <div className="mt-4 md:mt-0 flex space-x-4">
+              <motion.a
+                href="#"
+                className={theme === "dark" ? "text-gray-400 hover:text-white" : "text-gray-600 hover:text-black"}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
               >
-                {theme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
-              </motion.button>
-
-              <span className={`text-xs ${theme === "dark" ? "text-gray-500" : "text-gray-400"}`}>
-                Designed by Sisan
-              </span>
+                Privacy Policy
+              </motion.a>
+              <motion.a
+                href="#"
+                className={theme === "dark" ? "text-gray-400 hover:text-white" : "text-gray-600 hover:text-black"}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+              >
+                Terms of Service
+              </motion.a>
             </div>
           </div>
         </div>
-      </motion.footer>
+      </footer>
 
       {/* Password Modal */}
       <AnimatePresence>
         {selectedOutlet && (
           <motion.div
-            className="fixed inset-0 bg-black/70 backdrop-blur-md flex items-center justify-center z-50"
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
+            onClick={() => setSelectedOutlet(null)}
           >
             <motion.div
-              className={`p-5 rounded-lg max-w-md w-full shadow-2xl ${
-                theme === "dark"
-                  ? "bg-zinc-800 text-white border border-zinc-700"
-                  : "bg-white text-gray-800 border border-gray-200"
+              className={`w-full max-w-md p-6 rounded-lg ${
+                theme === "dark" ? "bg-zinc-800 border border-zinc-700" : "bg-white border border-gray-200"
               }`}
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
-              transition={{ duration: 0.3 }}
+              onClick={(e) => e.stopPropagation()}
             >
               <div className="flex justify-between items-center mb-4">
-                <h3 className="text-xl font-bold">Enter Password</h3>
+                <h3 className="text-xl font-bold">Password Required</h3>
                 <motion.button
                   onClick={() => setSelectedOutlet(null)}
-                  className="text-yellow-400 hover:text-yellow-500"
+                  className={`p-1 rounded-full ${theme === "dark" ? "hover:bg-zinc-700" : "hover:bg-gray-200"}`}
+                  whileTap={{ scale: 0.9 }}
                 >
-                  <X size={24} />
+                  <X className="h-5 w-5" />
                 </motion.button>
               </div>
+              <p className={`mb-4 ${theme === "dark" ? "text-gray-300" : "text-gray-600"}`}>
+                This content is password protected. Please enter the password to view it.
+              </p>
               <form onSubmit={handlePasswordSubmit}>
-                <div className="relative">
-                  <motion.input
+                <div className="mb-4">
+                  <input
                     type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    placeholder="Enter password"
-                    className={`w-full p-3 mb-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400 ${
+                    className={`w-full px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500 ${
                       theme === "dark"
-                        ? "bg-zinc-700 text-white border-zinc-600"
-                        : "bg-white text-gray-800 border-gray-300"
-                    }`}
-                    whileFocus={{ scale: 1.01 }}
+                        ? "bg-zinc-700 border-zinc-600 text-white"
+                        : "bg-white border-gray-300 text-gray-900"
+                    } border`}
+                    placeholder="Enter password"
+                    required
                   />
-                  <Lock className="absolute right-3 top-3 text-yellow-400" size={20} />
                 </div>
-                {error && <p className="text-red-500 mb-4">{error}</p>}
-                {!password && <p className="text-yellow-500 mb-4">Password Required</p>}
+                {error && <p className="text-red-500 mb-4 text-sm">{error}</p>}
                 <motion.button
                   type="submit"
-                  className="w-full bg-yellow-400 text-black px-4 py-3 rounded-full font-bold transition-transform hover:bg-yellow-500 shadow-lg hover:shadow-yellow-400/20"
-                  disabled={!password}
+                  className="w-full px-4 py-2 bg-yellow-400 text-black rounded-md font-medium hover:bg-yellow-500 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
                 >
-                  Unlock Content
+                  Submit
                 </motion.button>
               </form>
             </motion.div>
@@ -1576,6 +1550,66 @@ export default function Portfolio() {
         )}
       </AnimatePresence>
     </div>
+  )
+}
+
+// Missing imports for the Contact section
+function Mail(props) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      {...props}
+    >
+      <rect width="20" height="16" x="2" y="4" rx="2" />
+      <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+    </svg>
+  )
+}
+
+function Phone(props) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      {...props}
+    >
+      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+    </svg>
+  )
+}
+
+function MapPin(props) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      {...props}
+    >
+      <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
+      <circle cx="12" cy="10" r="3" />
+    </svg>
   )
 }
 
