@@ -1,5 +1,3 @@
-
-
 import React, { useState, useEffect, useCallback, useRef } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import {
@@ -231,6 +229,7 @@ export default function Portfolio() {
 
       setText(isDeleting ? fullText.substring(0, text.length - 1) : fullText.substring(0, text.length + 1))
 
+      // Adjust typing speed
       setTypingSpeed(isDeleting ? 50 : 70)
 
       if (!isDeleting && text === fullText) {
@@ -239,6 +238,8 @@ export default function Portfolio() {
       } else if (isDeleting && text === "") {
         setIsDeleting(false)
         setLoopNum(loopNum + 1)
+        // Small pause before typing next word
+        setTypingSpeed(500)
       }
     }
 
@@ -1034,7 +1035,6 @@ export default function Portfolio() {
                         : "bg-white/80 backdrop-blur-sm border border-gray-200"
                     }`}
                     whileHover={{ y: -10 }}
-                    transition={{ duration: 0.3 }}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 20 }}
@@ -1063,7 +1063,6 @@ export default function Portfolio() {
                         : "bg-white/80 backdrop-blur-sm border border-gray-200"
                     }`}
                     whileHover={{ y: -10 }}
-                    transition={{ duration: 0.3 }}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 20 }}
@@ -1496,6 +1495,7 @@ export default function Portfolio() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
             onClick={() => setSelectedOutlet(null)}
           >
             <motion.div
