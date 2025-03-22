@@ -1456,7 +1456,7 @@ export default function Portfolio() {
                     </svg>
                   </span>
                   <span className={`text-sm ${theme === "dark" ? "text-gray-400" : "text-gray-600"}`}>
-                    +977 9800000000
+                    +977 9815366153
                   </span>
                 </li>
                 <li className="flex items-start">
