@@ -1,3 +1,4 @@
+"use client"
 
 import React, { useState, useEffect, useCallback, useRef } from "react"
 import { motion, AnimatePresence } from "framer-motion"
@@ -22,10 +23,10 @@ import {
   X,
   Lock,
 } from "lucide-react"
+import { useTypewriter, Cursor } from "react-simple-typewriter"
 
 // Import images directly from assets folder
 import riyan from "./assets/riyan.jpg"
-import home from "./assets/home.png"
 import web from "./assets/web.jpg"
 import ui from "./assets/ui.jpg"
 import dev from "./assets/dev.jpg"
@@ -33,7 +34,7 @@ import po from "./assets/po.jpg"
 import st from "./assets/st.png"
 import so from "./assets/so.png"
 import no from "./assets/no.png"
-import py from "./assets/py.png"
+import py from "./assets/python.png"
 import ja from "./assets/javascript.png"
 import vs from "./assets/vs.png"
 import re from "./assets/re.png"
@@ -47,8 +48,6 @@ import ms from "./assets/ms.png"
 import msm from "./assets/msm.png"
 import ea1 from "./assets/ea1.png"
 import ea2 from "./assets/ea2.png"
-import ea3 from "./assets/ea3.png"
-import ea4 from "./assets/ea4.png"
 import ea5 from "./assets/ea5.png"
 import logo from "./assets/logo.png"
 import tf1 from "./assets/tf1.png"
@@ -57,48 +56,10 @@ import tf3 from "./assets/tf3.png"
 import a1 from "./assets/a1.png"
 import a2 from "./assets/a2.png"
 
-// Projects data with imported images
-const projects = [
-  {
-    id: 1,
-    title: "MortalMen Online shop",
-    description: "A fully responsive online store with advanced features.",
-    type: "Original",
-    images: [a1, a2],
-    githubUrl: "https://github.com/Seesonn/Edashboard.git",
-    linkedinUrl: "https://mensfashion-indol.vercel.app/",
-  },
-  {
-    id: 2,
-    title: "Messenger Clone",
-    description: "A feature-rich social media platform inspired by Messenger, built with modern web technologies.",
-    type: "Clone",
-    images: [ms, msm],
-    githubUrl: "https://github.com/username/messenger-clone",
-    linkedinUrl: "https://linkedin.com/post/messenger-clone",
-  },
-  {
-    id: 3,
-    title: "Online Tiffin Delivery Website",
-    description: "A fully responsive online Tiffin Delivering Website with advanced features.",
-    type: "Original",
-    images: [tf1, tf2, tf3],
-    githubUrl: "https://github.com/username/ecommerce-platform",
-    linkedinUrl: "https://tiffindelivery.vercel.app/",
-  },
-  {
-    id: 4,
-    title: "E-commerce Admin Dashboard",
-    description: "A fully responsive online store Admin Dashboard with advanced features.",
-    type: "Original",
-    images: [ea1, ea2, ea3, ea4, ea5],
-    githubUrl: "https://github.com/Seesonn/Edashboard.git",
-    linkedinUrl: "https://linkedin.com/post/ecommerce-platform",
-  },
-]
-
+// Project Card Component with refined animations
 function ProjectCard({ project, theme }) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
+  const [isHovered, setIsHovered] = useState(false)
 
   const nextImage = useCallback(() => {
     setCurrentImageIndex((prevIndex) => (prevIndex === project.images.length - 1 ? 0 : prevIndex + 1))
@@ -109,21 +70,25 @@ function ProjectCard({ project, theme }) {
   }, [project.images.length])
 
   useEffect(() => {
-    const timer = setInterval(nextImage, 3000)
-    return () => clearInterval(timer)
-  }, [nextImage])
+    if (!isHovered) {
+      const timer = setInterval(nextImage, 3000)
+      return () => clearInterval(timer)
+    }
+  }, [nextImage, isHovered])
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      viewport={{ once: true }}
-      className={`rounded-lg overflow-hidden shadow-lg transform transition-all duration-300 hover:scale-[1.02] ${
+      transition={{ duration: 0.3 }}
+      viewport={{ once: true, margin: "-100px" }}
+      className={`rounded-lg overflow-hidden shadow-lg ${
         theme === "dark"
           ? "bg-zinc-800/80 backdrop-blur-sm border border-zinc-700/50"
           : "bg-white/80 backdrop-blur-sm border border-gray-200"
       }`}
+      onHoverStart={() => setIsHovered(true)}
+      onHoverEnd={() => setIsHovered(false)}
     >
       <div className="relative h-48 sm:h-56 md:h-64 overflow-hidden group">
         <AnimatePresence initial={false} mode="wait">
@@ -132,12 +97,13 @@ function ProjectCard({ project, theme }) {
             src={project.images[currentImageIndex]}
             alt={`${project.title} - Image ${currentImageIndex + 1}`}
             className="absolute top-0 left-0 w-full h-full object-cover"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}
+            initial={{ opacity: 0, scale: 1.05 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            transition={{ duration: 0.3 }}
           />
         </AnimatePresence>
+
         <motion.div
           className={`absolute top-2 left-2 px-2 py-1 rounded-full text-xs font-semibold flex items-center ${
             theme === "dark" ? "bg-black/50 text-white backdrop-blur-sm" : "bg-white/50 text-black backdrop-blur-sm"
@@ -150,11 +116,16 @@ function ProjectCard({ project, theme }) {
           {project.type === "Clone" && <Briefcase className="mr-1 h-3 w-3" />}
           {project.type}
         </motion.div>
-        <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-between px-4 backdrop-blur-sm">
+
+        <motion.div
+          className="absolute inset-0 bg-black/50 flex items-center justify-between px-4 backdrop-blur-sm"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: isHovered ? 1 : 0 }}
+          transition={{ duration: 0.3 }}
+        >
           <motion.button
             onClick={prevImage}
             className="text-white p-2 rounded-full bg-black/50 hover:bg-black/70 transition-all duration-300"
-            whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
           >
             <ChevronLeft className="h-5 w-5" />
@@ -162,19 +133,51 @@ function ProjectCard({ project, theme }) {
           <motion.button
             onClick={nextImage}
             className="text-white p-2 rounded-full bg-black/50 hover:bg-black/70 transition-all duration-300"
-            whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
           >
             <ChevronRight className="h-5 w-5" />
           </motion.button>
+        </motion.div>
+
+        {/* Image counter indicator */}
+        <div className="absolute bottom-2 left-0 right-0 flex justify-center gap-1">
+          {project.images.map((_, index) => (
+            <motion.div
+              key={index}
+              className={`h-1.5 rounded-full ${currentImageIndex === index ? "w-4 bg-yellow-400" : "w-1.5 bg-white/60"}`}
+              initial={false}
+              animate={{ width: currentImageIndex === index ? 16 : 6 }}
+              transition={{ duration: 0.3 }}
+            />
+          ))}
         </div>
       </div>
-      <div className="p-6">
-        <h3 className={`text-xl font-bold mb-2 ${theme === "dark" ? "text-white" : "text-gray-800"}`}>
+
+      <div className="p-5">
+        <motion.h3
+          className={`text-xl font-bold mb-2 ${theme === "dark" ? "text-white" : "text-gray-800"}`}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+        >
           {project.title}
-        </h3>
-        <p className={`text-sm mb-4 ${theme === "dark" ? "text-gray-300" : "text-gray-600"}`}>{project.description}</p>
-        <div className="flex space-x-4">
+        </motion.h3>
+
+        <motion.p
+          className={`text-sm mb-3 ${theme === "dark" ? "text-gray-300" : "text-gray-600"}`}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+        >
+          {project.description}
+        </motion.p>
+
+        <motion.div
+          className="flex space-x-4"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+        >
           <motion.a
             href={project.githubUrl}
             target="_blank"
@@ -182,29 +185,29 @@ function ProjectCard({ project, theme }) {
             className={`flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 ${
               theme === "dark" ? "bg-zinc-700 text-white hover:bg-zinc-600" : "bg-gray-800 text-white hover:bg-gray-700"
             }`}
-            whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
             <Github className="mr-2 h-4 w-4" />
             Source Code
           </motion.a>
+
           <motion.a
             href={project.linkedinUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center justify-center px-4 py-2 border text-sm font-medium rounded-md bg-yellow-400 text-black hover:bg-yellow-500 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500"
-            whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
             <ExternalLink className="mr-2 h-4 w-4" />
             Preview
           </motion.a>
-        </div>
+        </motion.div>
       </div>
     </motion.div>
   )
 }
 
+// Main Portfolio Component
 export default function Portfolio() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
@@ -218,8 +221,56 @@ export default function Portfolio() {
   const [activeSection, setActiveSection] = useState("home")
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
 
+  const [text] = useTypewriter({
+    words: ["Full Stack Developer", "Web Designer", "UI/UX Designer", "React Developer"],
+    loop: true,
+    delaySpeed: 2000,
+    typeSpeed: 70,
+    deleteSpeed: 50,
+  })
+
   const sections = ["home", "about", "skill", "projects", "portfolio", "creative-outlets", "contact"]
   const sectionRefs = useRef(sections.map(() => React.createRef()))
+
+  // Sample data with real images
+  const projects = [
+    {
+      id: 1,
+      title: "MortalMen Online Shop",
+      description: "A fully responsive online store with advanced features.",
+      type: "Original",
+      images: [ea1, ea2],
+      githubUrl: "https://github.com/username/online-shop",
+      linkedinUrl: "https://example.com/online-shop",
+    },
+    {
+      id: 2,
+      title: "Messenger Clone",
+      description: "A feature-rich social media platform inspired by Messenger, built with modern web technologies.",
+      type: "Clone",
+      images: [msm, ms],
+      githubUrl: "https://github.com/username/messenger-clone",
+      linkedinUrl: "https://example.com/messenger-clone",
+    },
+    {
+      id: 3,
+      title: "Online Tiffin Delivery Website",
+      description: "A fully responsive online Tiffin Delivering Website with advanced features.",
+      type: "Original",
+      images: [tf1, tf2, tf3],
+      githubUrl: "https://github.com/username/tiffin-delivery",
+      linkedinUrl: "https://example.com/tiffin-delivery",
+    },
+    {
+      id: 4,
+      title: "E-commerce Admin Dashboard",
+      description: "A fully responsive online store Admin Dashboard with advanced features.",
+      type: "Original",
+      images: [a1, a2, ea5],
+      githubUrl: "https://github.com/username/admin-dashboard",
+      linkedinUrl: "https://example.com/admin-dashboard",
+    },
+  ]
 
   const skills = [
     { name: "JavaScript", icon: ja },
@@ -370,30 +421,54 @@ export default function Portfolio() {
     form.reset()
   }, [])
 
+  // Enhanced animation variants
   const headerVariants = {
     hidden: { y: -100, opacity: 0 },
     visible: { y: 0, opacity: 1, transition: { type: "spring", stiffness: 100, damping: 15 } },
   }
 
   const sectionVariants = {
-    hidden: { opacity: 0, y: 50 },
+    hidden: { opacity: 0, y: 30 },
     visible: {
       opacity: 1,
       y: 0,
       transition: {
-        duration: 0.6,
-        staggerChildren: 0.1,
-        delayChildren: 0.1,
+        duration: 0.4,
+        staggerChildren: 0.05,
+        delayChildren: 0.05,
       },
     },
   }
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
+    hidden: { opacity: 0, y: 15 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.5 },
+      transition: { duration: 0.3 },
+    },
+  }
+
+  const staggerContainerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.05,
+        delayChildren: 0.1,
+      },
+    },
+  }
+
+  const fadeInVariants = {
+    hidden: { opacity: 0, y: 15 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.3,
+        ease: "easeOut",
+      },
     },
   }
 
@@ -429,12 +504,8 @@ export default function Portfolio() {
         initial="hidden"
         animate="visible"
       >
-        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <motion.div
-            className="relative w-10 h-10 overflow-hidden rounded-full z-50"
-            whileHover={{ scale: 1.1, rotate: 10 }}
-            whileTap={{ scale: 0.9 }}
-          >
+        <div className="container mx-auto px-4 py-3 flex justify-between items-center">
+          <motion.div className="relative w-10 h-10 overflow-hidden rounded-full z-50" whileTap={{ scale: 0.9 }}>
             <img src={logo || "/placeholder.svg"} alt="SISAN Logo" className="w-full h-full object-cover" />
           </motion.div>
 
@@ -453,7 +524,6 @@ export default function Portfolio() {
                           ? "text-gray-300 hover:text-white"
                           : "text-gray-700 hover:text-black"
                     }`}
-                    whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
                     {section.charAt(0).toUpperCase() + section.slice(1)}
@@ -477,7 +547,6 @@ export default function Portfolio() {
                   ? "bg-zinc-800 text-yellow-400 hover:bg-zinc-700"
                   : "bg-gray-200 text-gray-700 hover:bg-gray-300"
               }`}
-              whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
               aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
             >
@@ -488,7 +557,6 @@ export default function Portfolio() {
               onClick={toggleMenu}
               className="md:hidden w-10 h-10 flex flex-col justify-center items-center focus:outline-none"
               aria-label="Toggle menu"
-              whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
             >
               <span
@@ -521,7 +589,7 @@ export default function Portfolio() {
             transition={{ duration: 0.3 }}
           >
             <motion.div
-              className="relative container mx-auto px-4 py-20"
+              className="relative container mx-auto px-4 py-16"
               initial={{ y: -50, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: -50, opacity: 0 }}
@@ -531,7 +599,6 @@ export default function Portfolio() {
                 onClick={toggleMenu}
                 className="absolute top-4 right-4 text-white transition-colors"
                 aria-label="Close menu"
-                whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
               >
                 <span className="sr-only">Close</span>
@@ -539,17 +606,8 @@ export default function Portfolio() {
               </motion.button>
 
               <motion.ul
-                className="space-y-8 text-2xl"
-                variants={{
-                  hidden: { opacity: 0 },
-                  visible: {
-                    opacity: 1,
-                    transition: {
-                      staggerChildren: 0.1,
-                      delayChildren: 0.2,
-                    },
-                  },
-                }}
+                className="space-y-6 text-2xl"
+                variants={staggerContainerVariants}
                 initial="hidden"
                 animate="visible"
               >
@@ -566,7 +624,6 @@ export default function Portfolio() {
                       className={`block text-white hover:text-yellow-400 transition-colors ${
                         activeSection === section ? "text-yellow-400" : ""
                       }`}
-                      whileHover={{ scale: 1.05, x: 10 }}
                       whileTap={{ scale: 0.95 }}
                     >
                       {section.charAt(0).toUpperCase() + section.slice(1)}
@@ -579,133 +636,196 @@ export default function Portfolio() {
         )}
       </AnimatePresence>
 
-      <main className="container mx-auto px-4 pt-20">
+      <main className="container mx-auto px-4 pt-16">
+        {/* Hero Section */}
         <motion.section
           id="home"
-          className="min-h-screen flex flex-col justify-center py-20"
+          className="min-h-screen flex flex-col justify-center py-12"
           variants={sectionVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: "-100px" }}
         >
           <div className="flex flex-col md:flex-row items-center">
-            <motion.div className="md:w-1/2 mb-8 md:mb-0" variants={itemVariants}>
-              <motion.h2
-                className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600"
-                variants={itemVariants}
+            <motion.div className="md:w-1/2 mb-6 md:mb-0" variants={itemVariants}>
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{
+                  duration: 0.6,
+                  ease: "easeOut",
+                }}
               >
-                I&apos;M SISAN BHATTARAI
-              </motion.h2>
-              <motion.h3
-                className="text-2xl sm:text-3xl lg:text-4xl font-bold text-yellow-400 mb-4"
-                variants={itemVariants}
-              >
-                Welcome to my website
-              </motion.h3>
-              <motion.p className="mb-6 text-sm sm:text-base lg:text-lg" variants={itemVariants}>
-                &quot;Dear Visitor, as you navigate through the content of this website, remember that life is a journey
-                filled with twists, turns, and chapters that shape our unique stories. Embrace the highs, learn from the
-                lows, and know that you&apos;re not alone. Just like the ever-changing nature of a webpage, your life is
-                a work in progress. Keep scrolling, keep exploring, and find inspiration in every pixel of your personal
-                narrative. Your story matters, and this space is a reminder that, no matter what, there&apos;s always a
-                new page waiting to be written.&quot;
-              </motion.p>
-              <motion.button
-                className="bg-yellow-400 text-black px-6 py-3 rounded-full font-bold flex items-center text-sm sm:text-base shadow-lg hover:shadow-yellow-400/20"
-                variants={itemVariants}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                Follow Me <ArrowRight className="ml-2" size={16} />
-              </motion.button>
+                <motion.h2
+                  className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-3 bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600"
+                  variants={itemVariants}
+                >
+                  I&apos;M SISAN BHATTARAI
+                </motion.h2>
+                <motion.h3
+                  className="text-2xl sm:text-3xl lg:text-4xl font-bold text-yellow-400 mb-3"
+                  variants={itemVariants}
+                >
+                  Welcome to my website
+                </motion.h3>
+                <motion.p className="mb-4 text-sm sm:text-base lg:text-lg" variants={itemVariants}>
+                  &quot;Dear Visitor, as you navigate through the content of this website, remember that life is a
+                  journey filled with twists, turns, and chapters that shape our unique stories. Embrace the highs,
+                  learn from the lows, and know that you&apos;re not alone. Just like the ever-changing nature of a
+                  webpage, your life is a work in progress. Keep scrolling, keep exploring, and find inspiration in
+                  every pixel of your personal narrative. Your story matters, and this space is a reminder that, no
+                  matter what, there&apos;s always a new page waiting to be written.&quot;
+                </motion.p>
+                <motion.button
+                  className="bg-yellow-400 text-black px-6 py-3 rounded-full font-bold flex items-center text-sm sm:text-base shadow-lg hover:shadow-yellow-400/20"
+                  variants={itemVariants}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  Follow Me
+                  <motion.span
+                    animate={{ x: [0, 5, 0] }}
+                    transition={{ repeat: Number.POSITIVE_INFINITY, duration: 1.5, ease: "easeInOut" }}
+                  >
+                    <ArrowRight className="ml-2" size={16} />
+                  </motion.span>
+                </motion.button>
+              </motion.div>
             </motion.div>
 
             <motion.div
               className="md:w-1/2"
-              variants={itemVariants}
-              initial={{ opacity: 0, x: 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
+              initial={{ opacity: 0, x: 50, rotate: -5 }}
+              whileInView={{ opacity: 1, x: 0, rotate: 0 }}
+              transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
               viewport={{ once: true }}
             >
-              <img
-                src={home || "/placeholder.svg"}
-                alt="Sisan"
-                className="rounded-lg w-full max-w-md mx-auto shadow-xl"
-              />
+              <motion.div className="relative">
+                <img
+                  src={riyan || "/placeholder.svg"}
+                  alt="Sisan"
+                  className="rounded-lg w-full max-w-md mx-auto shadow-xl"
+                />
+                <motion.div
+                  className="absolute -bottom-4 -right-4 bg-yellow-400 text-black px-4 py-2 rounded-lg shadow-lg"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.6, duration: 0.4 }}
+                >
+                  <span className="font-bold flex items-center">
+                    <span>{text}</span>
+                    <Cursor cursorColor="#000" />
+                  </span>
+                </motion.div>
+              </motion.div>
             </motion.div>
           </div>
         </motion.section>
 
+        {/* About Section */}
         <motion.section
           id="about"
-          className="py-20"
+          className="py-12"
           variants={sectionVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: "-100px" }}
         >
-          <motion.h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-8" variants={itemVariants}>
+          <motion.h2
+            className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-6"
+            variants={itemVariants}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+          >
             Personal Insights
           </motion.h2>
 
-          <div className="flex flex-col md:flex-row gap-8">
-            <motion.div className="md:w-1/3" variants={itemVariants}>
-              <img
-                src={riyan || "/placeholder.svg"}
-                alt="Profile"
-                className="rounded-lg w-full max-w-md mx-auto shadow-lg"
-              />
+          <div className="flex flex-col md:flex-row gap-6">
+            <motion.div
+              className="md:w-1/3"
+              variants={itemVariants}
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.4 }}
+              viewport={{ once: true }}
+            >
+              <motion.div className="overflow-hidden rounded-lg shadow-xl">
+                <img src={riyan || "/placeholder.svg"} alt="Profile" className="w-full max-w-md mx-auto" />
+              </motion.div>
             </motion.div>
 
-            <motion.div className="md:w-2/3" variants={itemVariants}>
-              <motion.p className="mb-6 text-sm sm:text-base lg:text-lg" variants={itemVariants}>
+            <motion.div
+              className="md:w-2/3"
+              variants={staggerContainerVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+            >
+              <motion.p className="mb-4 text-sm sm:text-base lg:text-lg" variants={fadeInVariants}>
                 Sisan Bhattarai, born on December 10, 2001, in Nepal. Passionate about coding and poetry, I find joy in
                 the intersection of technology and creativity. Exploring the beauty of Nepal while pursuing my interests
                 is what drives me.
               </motion.p>
 
-              <motion.p className="mb-6 text-sm sm:text-base lg:text-lg" variants={itemVariants}>
+              <motion.p className="mb-4 text-sm sm:text-base lg:text-lg" variants={fadeInVariants}>
                 I&apos;m a passionate, self-proclaimed designer who specializes in full stack development (React.js &
                 Node.js). I am very enthusiastic about bringing the technical and visual aspects of digital products to
                 life. User experience, pixel perfect design, and writing clean, readable, highly performant code matters
                 to me.
               </motion.p>
 
-              <motion.p className="mb-6 text-sm sm:text-base lg:text-lg" variants={itemVariants}>
+              <motion.p className="mb-4 text-sm sm:text-base lg:text-lg" variants={fadeInVariants}>
                 I began my journey as a web developer in 2023, and since then, I&apos;ve continued to grow and evolve as
                 a developer, taking on new challenges and learning the latest technologies along the way.
               </motion.p>
 
-              <motion.h3 className="text-xl font-bold mb-2" variants={itemVariants}>
+              <motion.h3 className="text-xl font-bold mb-2" variants={fadeInVariants}>
                 Finally, some quick bits about me:
               </motion.h3>
 
-              <motion.ul className="list-disc list-inside mb-4" variants={itemVariants}>
-                <li>Bachelor in CSIT</li>
-                <li>Learning Cyber Security</li>
+              <motion.ul className="list-disc list-inside mb-3" variants={staggerContainerVariants}>
+                <motion.li variants={fadeInVariants}>Bachelor in CSIT</motion.li>
+                <motion.li variants={fadeInVariants}>Learning Cyber Security</motion.li>
               </motion.ul>
             </motion.div>
           </div>
         </motion.section>
 
+        {/* Skills Section */}
         <motion.div
           id="skill"
-          className="md:flex md:items-center md:justify-between py-20"
+          className="md:flex md:items-center md:justify-between py-12"
           variants={sectionVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: "-100px" }}
         >
           <div className="md:w-1/2 mb-6 md:mb-0">
-            <motion.h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-8" variants={itemVariants}>
+            <motion.h2
+              className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4"
+              variants={itemVariants}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
+            >
               My Programming Arsenal
             </motion.h2>
-            <motion.p className="text-lg md:text-xl mb-6" variants={itemVariants}>
+            <motion.p
+              className="text-lg md:text-xl mb-4"
+              variants={itemVariants}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: 0.1 }}
+            >
               Crafting intuitive interfaces that adapt swiftly, empowering users to accomplish tasks with unparalleled
               ease and efficiency.
             </motion.p>
-            <div className="flex space-x-2 mb-6 md:mb-0">
+            <motion.div
+              className="flex space-x-2 mb-4 md:mb-0"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: 0.2 }}
+            >
               {["skills", "tools"].map((tab) => (
                 <motion.button
                   key={tab}
@@ -717,13 +837,11 @@ export default function Portfolio() {
                         : "bg-gray-200 text-black hover:bg-gray-300"
                   }`}
                   onClick={() => setActiveTab(tab)}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
                 >
                   {tab.charAt(0).toUpperCase() + tab.slice(1)}
                 </motion.button>
               ))}
-            </div>
+            </motion.div>
           </div>
 
           <div className="md:w-1/2">
@@ -749,23 +867,19 @@ export default function Portfolio() {
                         animate={{
                           opacity: 1,
                           y: 0,
-                          transition: { delay: index * 0.1 },
-                        }}
-                        whileHover={{
-                          scale: 1.05,
-                          boxShadow:
-                            theme === "dark"
-                              ? "0 10px 15px -3px rgba(0, 0, 0, 0.5)"
-                              : "0 10px 15px -3px rgba(0, 0, 0, 0.1)",
+                          transition: { delay: index * 0.05 },
                         }}
                       >
-                        <div className="w-12 h-12 md:w-16 md:h-16 mb-2 rounded-full bg-white flex items-center justify-center shadow-md">
+                        <motion.div
+                          className="w-12 h-12 md:w-16 md:h-16 mb-2 rounded-full bg-white flex items-center justify-center shadow-md"
+                          transition={{ duration: 0.3 }}
+                        >
                           <img
                             src={item.icon || "/placeholder.svg"}
                             className="w-8 h-8 md:w-10 md:h-10"
                             alt={item.name}
                           />
-                        </div>
+                        </motion.div>
                         <span className={`text-sm font-medium ${theme === "dark" ? "text-white" : "text-black"}`}>
                           {item.name}
                         </span>
@@ -778,24 +892,43 @@ export default function Portfolio() {
           </div>
         </motion.div>
 
+        {/* Projects Section */}
         <motion.section
           id="projects"
-          className="py-20"
+          className="py-12"
           variants={sectionVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: "-100px" }}
         >
-          <motion.h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-8" variants={itemVariants}>
+          <motion.h2
+            className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4"
+            variants={itemVariants}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+          >
             Recent Projects
           </motion.h2>
 
-          <motion.p className="text-lg md:text-xl mb-6" variants={itemVariants}>
+          <motion.p
+            className="text-lg md:text-xl mb-4"
+            variants={itemVariants}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: 0.1 }}
+          >
             Explore our latest web development projects, showcasing our expertise in creating innovative and efficient
             digital solutions.
           </motion.p>
 
-          <motion.div className="flex justify-center mb-8" variants={itemVariants}>
+          <motion.div
+            className="flex justify-center mb-6"
+            variants={itemVariants}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: 0.2 }}
+          >
             <div className="relative inline-block text-left">
               <select
                 value={selectedType}
@@ -817,17 +950,11 @@ export default function Portfolio() {
           </motion.div>
 
           <motion.div
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-            variants={{
-              hidden: { opacity: 0 },
-              visible: {
-                opacity: 1,
-                transition: {
-                  staggerChildren: 0.1,
-                  delayChildren: 0.2,
-                },
-              },
-            }}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+            variants={staggerContainerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
           >
             {filteredProjects.map((project) => (
               <ProjectCard key={project.id} project={project} theme={theme} />
@@ -835,30 +962,31 @@ export default function Portfolio() {
           </motion.div>
         </motion.section>
 
+        {/* Portfolio Section */}
         <motion.section
           id="portfolio"
-          className="py-20"
+          className="py-12"
           variants={sectionVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: "-100px" }}
         >
-          <motion.h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-8" variants={itemVariants}>
+          <motion.h2
+            className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4"
+            variants={itemVariants}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+          >
             Portfolio
           </motion.h2>
 
           <motion.div
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
-            variants={{
-              hidden: { opacity: 0 },
-              visible: {
-                opacity: 1,
-                transition: {
-                  staggerChildren: 0.1,
-                  delayChildren: 0.2,
-                },
-              },
-            }}
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
+            variants={staggerContainerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
           >
             {[
               { title: "Website Designing", image: web },
@@ -872,18 +1000,14 @@ export default function Portfolio() {
                     ? "bg-zinc-800/80 backdrop-blur-sm border border-zinc-700/50"
                     : "bg-white/80 backdrop-blur-sm border border-gray-200"
                 }`}
-                variants={itemVariants}
-                whileHover={{
-                  scale: 1.03,
-                  boxShadow:
-                    theme === "dark" ? "0 20px 25px -5px rgba(0, 0, 0, 0.5)" : "0 20px 25px -5px rgba(0, 0, 0, 0.1)",
-                }}
+                variants={fadeInVariants}
               >
-                <div className="overflow-hidden rounded-lg mb-4">
+                <div className="overflow-hidden rounded-lg mb-3">
                   <motion.img
                     src={item.image}
                     alt={item.title}
-                    className="w-full h-40 object-cover transition-transform duration-700 ease-in-out group-hover:scale-110"
+                    className="w-full h-40 object-cover transition-transform duration-700 ease-in-out"
+                    transition={{ duration: 0.7 }}
                   />
                 </div>
                 <h3
@@ -898,30 +1022,31 @@ export default function Portfolio() {
           </motion.div>
         </motion.section>
 
+        {/* Creative Outlets Section */}
         <motion.section
           id="creative-outlets"
-          className="py-20"
+          className="py-12"
           variants={sectionVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: "-100px" }}
         >
-          <motion.h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-8" variants={itemVariants}>
+          <motion.h2
+            className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4"
+            variants={itemVariants}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+          >
             Creative Outlets
           </motion.h2>
 
           <motion.div
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8"
-            variants={{
-              hidden: { opacity: 0 },
-              visible: {
-                opacity: 1,
-                transition: {
-                  staggerChildren: 0.1,
-                  delayChildren: 0.2,
-                },
-              },
-            }}
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5"
+            variants={staggerContainerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
           >
             {creativeOutlets.map((outlet) => (
               <motion.div
@@ -931,18 +1056,14 @@ export default function Portfolio() {
                     ? "bg-zinc-800/80 backdrop-blur-sm border border-zinc-700/50"
                     : "bg-white/80 backdrop-blur-sm border border-gray-200"
                 }`}
-                variants={itemVariants}
-                whileHover={{
-                  scale: 1.03,
-                  boxShadow:
-                    theme === "dark" ? "0 20px 25px -5px rgba(0, 0, 0, 0.5)" : "0 20px 25px -5px rgba(0, 0, 0, 0.1)",
-                }}
+                variants={fadeInVariants}
               >
-                <div className="overflow-hidden rounded-lg mb-4">
-                  <img
-                    src={outlet.image || "/placeholder.svg"}
+                <div className="overflow-hidden rounded-lg mb-3">
+                  <motion.img
+                    src={outlet.image}
                     alt={outlet.title}
-                    className="w-full h-32 sm:h-40 object-cover transition-transform duration-700 ease-in-out hover:scale-110"
+                    className="w-full h-32 sm:h-40 object-cover"
+                    transition={{ duration: 0.7 }}
                   />
                 </div>
                 <h3
@@ -952,14 +1073,12 @@ export default function Portfolio() {
                 >
                   {outlet.title}
                 </h3>
-                <p className={`mb-4 text-sm sm:text-base ${theme === "dark" ? "text-gray-300" : "text-gray-600"}`}>
+                <p className={`mb-3 text-sm sm:text-base ${theme === "dark" ? "text-gray-300" : "text-gray-600"}`}>
                   {outlet.description}
-                </p>
+                </motion.p>
                 <motion.button
                   onClick={() => handlePrivateClick(outlet.id)}
                   className="bg-yellow-400 text-black px-3 py-2 rounded-full font-bold flex items-center text-sm shadow-lg hover:shadow-yellow-400/20"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
                 >
                   <outlet.icon className="mr-2" size={16} />
                   Private
@@ -969,17 +1088,24 @@ export default function Portfolio() {
           </motion.div>
         </motion.section>
 
+        {/* Contact Section */}
         <motion.section
           id="contact"
-          className="py-12 sm:py-20"
+          className="py-12"
           variants={sectionVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: "-100px" }}
         >
-          <motion.div className="mb-12 text-center" variants={itemVariants}>
+          <motion.div
+            className="mb-8 text-center"
+            variants={itemVariants}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+          >
             <h2
-              className={`text-2xl sm:text-3xl lg:text-4xl font-bold mb-4 ${
+              className={`text-2xl sm:text-3xl lg:text-4xl font-bold mb-3 ${
                 theme === "dark" ? "text-white" : "text-black"
               }`}
             >
@@ -995,16 +1121,23 @@ export default function Portfolio() {
             </p>
           </motion.div>
 
-          <div className="flex flex-col lg:flex-row gap-8">
-            <motion.div className="lg:w-1/2 space-y-8" variants={itemVariants}>
-              <div
-                className={`p-6 rounded-xl ${
+          <div className="flex flex-col lg:flex-row gap-6">
+            <motion.div
+              className="lg:w-1/2 space-y-6"
+              variants={staggerContainerVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+            >
+              <motion.div
+                className={`p-5 rounded-xl ${
                   theme === "dark"
                     ? "bg-zinc-800/80 backdrop-blur-sm border border-zinc-700/50"
                     : "bg-white/80 backdrop-blur-sm border border-gray-200"
                 }`}
+                variants={fadeInVariants}
               >
-                <div className="flex items-center mb-4">
+                <div className="flex items-center mb-3">
                   <div className="relative">
                     <span className="flex h-3 w-3">
                       <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
@@ -1013,27 +1146,27 @@ export default function Portfolio() {
                   </div>
                   <h3 className="ml-3 text-lg font-semibold">Available for Freelance</h3>
                 </div>
-                <p className={`text-sm mb-4 ${theme === "dark" ? "text-gray-300" : "text-gray-600"}`}>
+                <p className={`text-sm mb-3 ${theme === "dark" ? "text-gray-300" : "text-gray-600"}`}>
                   I&apos;m currently available for remote freelance projects. Let&apos;s discuss how I can help bring
                   your ideas to life.
                 </p>
                 <motion.a
                   href="#contact-form"
                   className="inline-flex items-center text-yellow-400 hover:text-yellow-500 font-medium"
-                  whileHover={{ x: 5 }}
                 >
                   Contact me <ArrowRight className="ml-2 h-4 w-4" />
                 </motion.a>
-              </div>
+              </motion.div>
 
-              <div
-                className={`p-6 rounded-xl ${
+              <motion.div
+                className={`p-5 rounded-xl ${
                   theme === "dark"
                     ? "bg-zinc-800/80 backdrop-blur-sm border border-zinc-700/50"
                     : "bg-white/80 backdrop-blur-sm border border-gray-200"
                 }`}
+                variants={fadeInVariants}
               >
-                <h3 className="text-xl font-semibold mb-4">Social Media</h3>
+                <h3 className="text-xl font-semibold mb-3">Social Media</h3>
                 <div className="flex space-x-6">
                   {[
                     { icon: Linkedin, url: "https://www.linkedin.com/in/sisan-bhattarai-7006242b2", label: "LinkedIn" },
@@ -1049,8 +1182,6 @@ export default function Portfolio() {
                       className={`flex flex-col items-center justify-center transition-colors ${
                         theme === "dark" ? "text-white hover:text-yellow-400" : "text-black hover:text-yellow-600"
                       }`}
-                      whileHover={{ scale: 1.1, y: -5 }}
-                      whileTap={{ scale: 0.9 }}
                       aria-label={social.label}
                     >
                       <div
@@ -1064,18 +1195,26 @@ export default function Portfolio() {
                     </motion.a>
                   ))}
                 </div>
-              </div>
+              </motion.div>
             </motion.div>
 
-            <motion.div id="contact-form" className="lg:w-1/2" variants={itemVariants}>
-              <div
-                className={`p-6 rounded-xl ${
+            <motion.div
+              id="contact-form"
+              className="lg:w-1/2"
+              variants={itemVariants}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: 0.2 }}
+              viewport={{ once: true }}
+            >
+              <motion.div
+                className={`p-5 rounded-xl ${
                   theme === "dark"
                     ? "bg-zinc-800/80 backdrop-blur-sm border border-zinc-700/50"
                     : "bg-white/80 backdrop-blur-sm border border-gray-200"
                 }`}
               >
-                <h3 className="text-xl font-semibold mb-4">Send a Message</h3>
+                <h3 className="text-xl font-semibold mb-3">Send a Message</h3>
                 <form className="space-y-4" onSubmit={handleSubmit}>
                   <motion.div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
@@ -1155,8 +1294,6 @@ export default function Portfolio() {
                       isSubmitting ? "opacity-70 cursor-not-allowed" : ""
                     }`}
                     disabled={isSubmitting}
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
                   >
                     {isSubmitting ? (
                       <span className="flex items-center justify-center">
@@ -1187,28 +1324,25 @@ export default function Portfolio() {
                     )}
                   </motion.button>
                 </form>
-              </div>
+              </motion.div>
             </motion.div>
           </div>
         </motion.section>
       </main>
 
+      {/* Footer */}
       <motion.footer
-        className={`py-12 sm:py-16 ${
+        className={`py-10 ${
           theme === "dark" ? "bg-zinc-900 border-t border-zinc-800" : "bg-gray-100 border-t border-gray-200"
         }`}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 0.5, delay: 0.2 }}
+        transition={{ duration: 0.3, delay: 0.2 }}
       >
         <div className="container mx-auto px-4">
-          <div className="flex flex-col md:flex-row justify-between items-center mb-8">
-            <div className="flex items-center mb-6 md:mb-0">
-              <motion.div
-                className="relative w-12 h-12 overflow-hidden rounded-full mr-4"
-                whileHover={{ scale: 1.1, rotate: 10 }}
-                whileTap={{ scale: 0.9 }}
-              >
+          <div className="flex flex-col md:flex-row justify-between items-center mb-6">
+            <div className="flex items-center mb-4 md:mb-0">
+              <motion.div className="relative w-12 h-12 overflow-hidden rounded-full mr-4" whileTap={{ scale: 0.9 }}>
                 <img src={logo || "/placeholder.svg"} alt="SISAN Logo" className="w-full h-full object-cover" />
               </motion.div>
               <div>
@@ -1238,8 +1372,6 @@ export default function Portfolio() {
                       ? "bg-zinc-800 text-gray-300 hover:bg-zinc-700 hover:text-white"
                       : "bg-white text-gray-600 hover:bg-gray-200 hover:text-black"
                   }`}
-                  whileHover={{ scale: 1.1, y: -2 }}
-                  whileTap={{ scale: 0.9 }}
                 >
                   <social.icon className="h-5 w-5" />
                 </motion.a>
@@ -1247,9 +1379,9 @@ export default function Portfolio() {
             </div>
           </div>
 
-          <div className="border-t border-b py-8 my-8 grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="border-t border-b py-6 my-6 grid grid-cols-1 md:grid-cols-3 gap-6">
             <div>
-              <h4 className={`text-lg font-semibold mb-4 ${theme === "dark" ? "text-white" : "text-gray-800"}`}>
+              <h4 className={`text-lg font-semibold mb-3 ${theme === "dark" ? "text-white" : "text-gray-800"}`}>
                 Navigation
               </h4>
               <ul className="space-y-2">
@@ -1260,7 +1392,6 @@ export default function Portfolio() {
                       className={`text-sm transition-colors ${
                         theme === "dark" ? "text-gray-400 hover:text-white" : "text-gray-600 hover:text-black"
                       }`}
-                      whileHover={{ x: 5 }}
                     >
                       {section.charAt(0).toUpperCase() + section.slice(1)}
                     </motion.button>
@@ -1270,24 +1401,20 @@ export default function Portfolio() {
             </div>
 
             <div>
-              <h4 className={`text-lg font-semibold mb-4 ${theme === "dark" ? "text-white" : "text-gray-800"}`}>
+              <h4 className={`text-lg font-semibold mb-3 ${theme === "dark" ? "text-white" : "text-gray-800"}`}>
                 Services
               </h4>
               <ul className="space-y-2">
-                {["Web Development", "DSA", "Cyber Security"].map(
-                  (service, index) => (
-                    <li key={index}>
-                      <span className={`text-sm ${theme === "dark" ? "text-gray-400" : "text-gray-600"}`}>
-                        {service}
-                      </span>
-                    </li>
-                  ),
-                )}
+                {["Web Development", "DSA", "Cyber Security"].map((service, index) => (
+                  <li key={index}>
+                    <span className={`text-sm ${theme === "dark" ? "text-gray-400" : "text-gray-600"}`}>{service}</span>
+                  </li>
+                ))}
               </ul>
             </div>
 
             <div>
-              <h4 className={`text-lg font-semibold mb-4 ${theme === "dark" ? "text-white" : "text-gray-800"}`}>
+              <h4 className={`text-lg font-semibold mb-3 ${theme === "dark" ? "text-white" : "text-gray-800"}`}>
                 Contact
               </h4>
               <ul className="space-y-2">
@@ -1376,8 +1503,6 @@ export default function Portfolio() {
                     ? "bg-zinc-800 text-yellow-400 hover:bg-zinc-700"
                     : "bg-gray-200 text-gray-700 hover:bg-gray-300"
                 }`}
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
                 aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
               >
                 {theme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
@@ -1391,6 +1516,7 @@ export default function Portfolio() {
         </div>
       </motion.footer>
 
+      {/* Password Modal */}
       <AnimatePresence>
         {selectedOutlet && (
           <motion.div
@@ -1401,7 +1527,7 @@ export default function Portfolio() {
             transition={{ duration: 0.3 }}
           >
             <motion.div
-              className={`p-6 rounded-lg max-w-md w-full shadow-2xl ${
+              className={`p-5 rounded-lg max-w-md w-full shadow-2xl ${
                 theme === "dark"
                   ? "bg-zinc-800 text-white border border-zinc-700"
                   : "bg-white text-gray-800 border border-gray-200"
@@ -1416,8 +1542,6 @@ export default function Portfolio() {
                 <motion.button
                   onClick={() => setSelectedOutlet(null)}
                   className="text-yellow-400 hover:text-yellow-500"
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
                 >
                   <X size={24} />
                 </motion.button>
@@ -1444,8 +1568,6 @@ export default function Portfolio() {
                   type="submit"
                   className="w-full bg-yellow-400 text-black px-4 py-3 rounded-full font-bold transition-transform hover:bg-yellow-500 shadow-lg hover:shadow-yellow-400/20"
                   disabled={!password}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
                 >
                   Unlock Content
                 </motion.button>
@@ -1457,6 +1579,4 @@ export default function Portfolio() {
     </div>
   )
 }
-
-
 
